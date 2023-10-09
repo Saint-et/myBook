@@ -1,0 +1,14 @@
+.backgroundImg {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  max-width: 1200px;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
+  //border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.6);
+  flex-shrink: 1;
+  margin: 0;
+  padding: 0;
+}

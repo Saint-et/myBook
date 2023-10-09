@@ -1,0 +1,25 @@
+@import '../../sass/utils/variable';
+
+
+.container_option_parameters{
+    border-radius: 15px;
+    width: 100%;
+    max-width: 500px;
+    min-width: 250px;
+}
+.button_option_parameters {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    width: 100%;
+    cursor: pointer;
+    font-size: 18px;
+    text-decoration: none;
+    &:hover{
+        background-color: #ffffff25;
+    }
+}
+.button_option_parameters.active{
+    background-color: #ffffff25;
+}

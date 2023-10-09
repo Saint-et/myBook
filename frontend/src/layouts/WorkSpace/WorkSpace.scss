@@ -1,0 +1,44 @@
+@import '../../sass/utils/variable';
+
+
+.container_bouton_workPlace{
+    border-radius: 15px;
+    background-color: $secondary;
+    overflow: hidden;
+}
+
+.container_document{
+    width: 100%;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    min-height: 400px;
+    background: $white;
+    color: $text_black;
+}
+.container_document[data-theme='default']{
+    background: $white;
+    color: $text_black;
+}
+.container_document[data-theme='dark']{
+    background: $black;
+    color: $text_white;
+}
+.statistical_content{
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    max-width: 900px;
+    border-bottom: 1px solid $black;
+}
+.statistical_content[data-theme='default']{
+  border-bottom: 1px solid $black;
+}
+.statistical_content[data-theme='dark']{
+  border-bottom: 1px solid $white;
+}
+.statistical_board{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: min-content;
+}

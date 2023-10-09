@@ -1,0 +1,132 @@
+.container{
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .select{
+    position: relative;
+    width: 100%;
+    height: 35px;
+    border-radius: 5px;
+    border: none;
+    text-transform: capitalize;
+    color: #000000;
+    background: #f0f0f0;
+    text-align: left;
+    padding: 0 15px;
+    font-size: 16px;
+    cursor: pointer;
+    &:hover{
+        background: #cde7ff;
+    }
+  }
+  .select[data-theme="dark"]{
+    color: #fff;
+    background: #292929;
+    &:hover{
+        background: #222222;
+    }
+  }
+  .select::after{
+    content: '';
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%) rotate(45deg);
+    width: 6px;
+    height: 6px;
+    border-right: 2px solid #000000;
+    border-bottom: 2px solid #000000;
+  }
+  .select[data-theme="dark"]::after{
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+  }
+  
+  
+  .options{
+    position: absolute;
+    top: 40px;
+    left: 0;
+    width: 100%;
+    height: auto;
+    max-height: 200px;
+    background: rgb(255, 255, 255);
+    border-radius: 5px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: none;
+    z-index: 10;
+    border: 1px solid gray;
+    &::-webkit-scrollbar {
+        background-color: transparent;
+        width: 8px;
+        height: 8px;
+      }
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(rgb(107, 107, 107), 0.3);
+        border-radius: 50px;
+        &:hover {
+          background-color: rgba(rgb(128, 128, 128), 0.5);
+        }
+      }
+  }
+
+  .options[data-theme="dark"]{
+    background: rgb(27, 27, 27);
+  }
+
+  .options.active{
+    display: block;
+  }
+  
+  .options .item{
+    color: #000000;
+    text-transform: capitalize;
+    width: 100%;
+    height: 35px;
+    padding: 0 15px;
+    line-height: 35px;
+    cursor: pointer;
+  }
+  .options[data-theme="dark"] .item{
+    color: #fff;
+  }
+  
+  .options .item.active{
+    background: #0084ff;
+    color: white;
+  }
+  .options[data-theme="dark"] .item.active{
+    background: #292929;
+    color: white;
+  }
+
+  .options .item{
+    &:hover{
+      background: #d6d6d6;
+      color: #000000;
+    }
+  }
+  .options[data-theme="dark"] .item{
+    &:hover{
+      background: #292929;
+      color: white;
+    }
+  }
+
+  .options-element {
+    animation: fadein 250ms ease-in-out;
+    //-moz-animation: fadein 300ms; /* Firefox */
+    //-webkit-animation: fadein 300ms; /* Safari et Chrome */
+    //-o-animation: fadein 300ms; /* Opera */
+  }
+  @keyframes fadein {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }

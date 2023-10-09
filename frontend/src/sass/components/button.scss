@@ -1,0 +1,469 @@
+@import "../utils/variable";
+
+.tagsManage{
+  margin-left: 10px;
+  margin-right: 10px;
+  &:hover{
+    text-decoration: line-through;
+    color: red;
+    cursor: pointer;
+  }
+}
+.button_submit {
+  border-radius: 25px;
+  height: 25px;
+  cursor: pointer;
+  border: none;
+  background-color: $button_light_circle;
+  color: rgb(0, 0, 0);
+  transition: 500ms;
+  &:hover {
+    background-color: $button_light_circle_hover;
+  }
+}
+.button_submit[data-theme="default"] {
+  background-color: $button_light_circle;
+  color: rgb(0, 0, 0);
+  &:hover {
+    background-color: $button_light_circle_hover;
+  }
+}
+.button_submit[data-theme="dark"] {
+  background: $button_black_circle;
+  color: white;
+  &:hover {
+    background-color: $button_black_circle_hover;
+  }
+}
+.button {
+  border-radius: 25px;
+  height: 25px;
+  cursor: pointer;
+  border: none;
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 15px;
+  background-color: $button_light_circle;
+  color: rgb(0, 0, 0);
+  transition: 500ms;
+  &:hover {
+    background-color: $button_light_circle_hover;
+  }
+}
+.button[data-theme="default"] {
+  background-color: $button_light_circle;
+  color: rgb(0, 0, 0);
+  &:hover {
+    background-color: $button_light_circle_hover;
+  }
+}
+.button[data-theme="dark"] {
+  background: $button_black_circle;
+  color: white;
+  &:hover {
+    background-color: $button_black_circle_hover;
+  }
+}
+.faXmark{
+  height: 15px;
+  width: 15px;
+  border-radius: 100%;
+  padding: 2px;
+  color: grey;
+  &:hover{
+    background: rgb(216, 216, 216);
+  }
+}
+.faXmark[data-theme="dark"]{
+  &:hover{
+    background: rgb(75, 75, 75);
+  }
+}
+.button_option_container {
+  color: $text_black;
+  background-color: $navbar_light;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+}
+.button_option_container[data-theme="dark"] {
+  color: $text_white;
+  background-color: #303030;
+  overflow: hidden;
+}
+.button_option_container_free {
+  color: $text_black;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+}
+.button_option_container_free[data-theme="dark"] {
+  color: $text_black;
+  background-color: $background_semi_black;
+  border-radius: 10px;
+  overflow: hidden;
+  width: 100%;
+}
+.button_option_container_Pc {
+  width: 100%;
+  max-width: 200px;
+  display: flex;
+  height: 40px;
+}
+.button_option {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 200ms;
+  height: 30px;
+  text-decoration: none;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  transition: 500ms;
+  width: 100%;
+  &:hover {
+    background-color: $button_light_circle_hover;
+  }
+}
+.button_option[data-theme="dark"] {
+  color: white;
+  &:hover {
+    background-color: $button_black_circle_hover;
+  }
+}
+.button_option.active {
+  transition: 100ms;
+  color: white;
+  cursor: pointer;
+  background-color: rgb(117, 117, 117);
+}
+.button_option_work.active {
+  transition: 100ms;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  background-color: white;
+}
+.button_option_work[data-theme="dark"].active {
+  transition: 100ms;
+  color: white;
+  cursor: pointer;
+  background-color: $background_semi_black;
+}
+.button_optionBlue {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 200ms;
+  height: 30px;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  transition: 500ms;
+  background: #0069cc;
+  &:hover {
+    background-color: #0062bdaf;
+  }
+}
+.button_optionPic_v {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 200ms;
+  height: 30px;
+  width: 100%;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  transition: 500ms;
+  background: #ec1c24;
+  &:hover {
+    background-color: #e26468;
+  }
+}
+.button_optionDisable {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 200ms;
+  height: 30px;
+  text-decoration: none;
+  background: #8b8b8b;
+  color: rgb(255, 255, 255);
+  cursor: default;
+  transition: 500ms;
+}
+.button_optionRed {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 200ms;
+  height: 30px;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  transition: 500ms;
+  background: #aa0000;
+  &:hover {
+    background-color: #aa00008a;
+  }
+}
+.button_optionAdmin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 200ms;
+  height: 30px;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  transition: 500ms;
+  background: #00805a;
+  &:hover {
+    background-color: #00805a80;
+  }
+}
+.button_optionDarkBlue {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 200ms;
+  height: 30px;
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  transition: 500ms;
+  background: #403eb6;
+  &:hover {
+    background-color: rgba(48, 49, 122, 0.6);
+  }
+}
+.buttonCircle_workPlace {
+  color: white;
+  font-size: 35px;
+  cursor: pointer;
+  &:hover {
+    color: $tertiary;
+  }
+}
+
+.buttonCircle {
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 18px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 100%;
+  background-color: $button_light_circle;
+  color: rgb(0, 0, 0);
+  transition: 500ms;
+  &:hover {
+    background-color: $button_light_circle_hover;
+  }
+}
+.buttonCircle[data-theme="default"] {
+  background-color: $button_light_circle;
+  color: rgb(0, 0, 0);
+  &:hover {
+    background-color: $button_light_circle_hover;
+  }
+}
+.buttonCircle[data-theme="dark"] {
+  background: $button_black_circle;
+  color: white;
+  &:hover {
+    background-color: $button_black_circle_hover;
+  }
+}
+.buttonCircleBlue {
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 100%;
+  background: #0058aa;
+  color: rgb(255, 255, 255);
+  transition: 500ms;
+  &:hover {
+    background-color: #0058aa8a;
+  }
+}
+
+.buttonCircleDisable {
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 18px;
+  cursor: default;
+  border-radius: 100%;
+  background: #8b8b8b;
+  color: rgb(255, 255, 255);
+}
+
+.buttonCircleRed {
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 100%;
+  background: #aa0000;
+  color: rgb(255, 255, 255);
+  transition: 500ms;
+  &:hover {
+    background-color: #aa00008a;
+  }
+}
+.buttonCircleDarkBlue {
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 100%;
+  background: #403eb6;
+  color: rgb(255, 255, 255);
+  transition: 500ms;
+  &:hover {
+    background-color: rgba(48, 49, 122, 0.6);
+  }
+}
+//<div className='buttonCircle' style={{ width: 30, height: 30, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 15 }} data-theme={props.localTheme}>
+//<FontAwesomeIcon icon={faBookmark} />
+//</div>
+//<div className={false? 'buttonCircleHeart active' : 'buttonCircleHeart'} style={{ width: 30, height: 30, display: 'flex', justifyContent: 'center', alignItems: 'center' }} data-theme={props.localTheme}>
+//<FontAwesomeIcon icon={faHeart} />
+//</div>
+//#ff0055 Heart color
+.buttonCircleHeart {
+  font-size: 23px;
+  cursor: pointer;
+  border-radius: 100%;
+  color: #646464;
+  transition: 500ms;
+  &:hover {
+    color: #ff0055;
+  }
+}
+.buttonCircleHeart[data-theme="default"] {
+  color: #646464;
+  &:hover {
+    color: #ff0055;
+  }
+}
+.buttonCircleHeart[data-theme="dark"] {
+  color: #ffffff5b;
+  &:hover {
+    color: #ff0055;
+  }
+}
+.buttonCircleHeart.active {
+  color: #ff0055;
+  animation: animateHeart 3s linear infinite;
+}
+@keyframes animateHeart {
+  0% {
+    transform: scale(1);
+    color: #ff0055;
+  }
+  10% {
+    transform: scale(1.4);
+    color: #00ff95;
+  }
+  40% {
+    transform: scale(1);
+    color: #9900ff;
+  }
+  50% {
+    transform: scale(1.2);
+    color: #001aff;
+  }
+  80% {
+    transform: scale(1);
+    color: #ff00bf;
+  }
+  100% {
+    transform: scale(1);
+    color: #ff0055;
+  }
+}
+
+.container_interest {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+  overflow: hidden;
+  max-width: 200px;
+  border-radius: 200px;
+  margin: 5px;
+}
+
+.image_interest {
+  display: block;
+  object-fit: cover;
+  width: 100%;
+  height: 200px;
+}
+
+.overlay_interest {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+.container_interest .overlay_interest {
+  transition: 500ms;
+  &:hover {
+    background-color: #00000073;
+  }
+}
+.mobileHidden {
+  display: none;
+}
+.PcHidden {
+  display: flex;
+}
+@media all and (max-width: 980px) {
+  .button_option_container_Mobile {
+    max-width: 80%;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    align-items: center;
+  }
+  .button_option,
+  .button_optionRed,
+  .button_optionBlue,
+  .button_optionDarkBlue,
+  .button_optionDisable,
+  .button_optionPic_v {
+    font-size: 14px;
+    height: 35px;
+  }
+  .button_optionMobile {
+    width: 100%;
+    max-width: 100%;
+  }
+  .mobileHidden {
+    z-index: 20000;
+    display: flex;
+  }
+  .PcHidden {
+    display: none;
+  }
+  .buttonCircle {
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 14px;
+    height: 25px;
+    width: 25px;
+  }
+}

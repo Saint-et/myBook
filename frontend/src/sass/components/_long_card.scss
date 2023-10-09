@@ -1,0 +1,29 @@
+.long_card {
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 98%;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(109, 109, 109, 0.623);
+}
+.long_cardHover{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: $text_black;
+  transition: 200ms;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  cursor: pointer;
+  &:hover {
+    background: #92929233;
+  }
+}
+.long_cardHover[data-theme="dark"]{
+  color: $text_white;
+  &:hover {
+    background: #35353533;
+  }
+}

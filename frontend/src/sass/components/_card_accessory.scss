@@ -1,0 +1,22 @@
+.faPen {
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+  &:hover {
+    color: rgb(95, 95, 255);
+  }
+}
+.faTrash {
+  cursor: pointer;
+  color: rgb(255, 255, 255);
+  &:hover {
+    color: rgb(255, 118, 118);
+  }
+}
+.cardHover_button {
+  transition: 300ms;
+  opacity: 0;
+}
+.cardHover:hover > .cardHover_button {
+  transition: 300ms;
+  opacity: 1;
+}

@@ -1,0 +1,120 @@
+.card_picture {
+  margin: 20px;
+}
+.card_picture[data-theme="dark"] {
+  color: $text_white;
+}
+.card_picture_img {
+  width: 250px;
+  max-width: 200px;
+  border-radius: 15px;
+  background-color: rgba(129, 129, 129, 0.150);
+  height: 100%;
+  max-height: 200px;
+  object-fit: contain;
+  cursor: grab;
+  transition: 150ms;
+  &:hover{
+    transform: scale(1.02);
+  }
+  &:active{
+    cursor: grabbing;
+  }
+}
+.card_picture_img[data-sizes="small"] {
+  width: 150px;
+  border-radius: 5px;
+  height: 100%;
+  max-height: 150px;
+  object-fit: contain;
+  transition: 500ms;
+}
+.card_picture_img[data-sizes="medium"] {
+  width: 300px;
+  border-radius: 5px;
+  height: 100%;
+  max-height: 250px;
+  object-fit: contain;
+  transition: 500ms;
+}
+.card_picture_img[data-sizes="big"] {
+  width: 400px;
+  border-radius: 5px;
+  height: 100%;
+  max-height: 350px;
+  object-fit: contain;
+  transition: 500ms;
+}
+.picture_hover{
+  border: 2px dashed transparent;
+  transition: 500ms;
+  cursor: pointer;
+  padding: 3px;
+  width: 100%;
+  max-width: 200px;
+  border-radius: 5px;
+  height: 100%;
+  max-height: 200px;
+  &:hover{
+    padding: 3px;
+    transform: scale(1.02);
+    border: 2px dashed #ec5050;
+  }
+}
+.picture_hover[data-sizes="small"] {
+  width: 150px;
+  border-radius: 5px;
+  height: 100%;
+  max-height: 150px;
+  object-fit: contain;
+  transition: 500ms;
+}
+.picture_hover[data-sizes="medium"] {
+  width: 300px;
+  border-radius: 5px;
+  height: 100%;
+  max-height: 250px;
+  object-fit: contain;
+  transition: 500ms;
+}
+.picture_hover[data-sizes="big"] {
+  width: 400px;
+  border-radius: 5px;
+  height: 100%;
+  max-height: 350px;
+  object-fit: contain;
+  transition: 500ms;
+}
+//.backgroundImg {
+//  display: flex;
+//  height: 95%;
+//  width: max-content;
+//  max-width: 1200px;
+//  overflow: hidden;
+//  align-items: center;
+//  justify-content: center;
+//  border-radius: 5px;
+//  background-color: rgba(0, 0, 0, 0.6);
+//}
+@media all and (max-width: 980px) {
+  .card_picture_img[data-sizes="medium"],
+  .card_picture_img[data-sizes="big"],
+  .card_picture_img {
+    width: 100%;
+    max-width: 100px;
+    border-radius: 5px;
+    height: 100%;
+    max-height: 100px;
+    object-fit: contain;
+  }
+  .picture_hover[data-sizes="medium"],
+  .picture_hover[data-sizes="big"],
+  .picture_hover {
+    width: 100%;
+    max-width: 100px;
+    border-radius: 5px;
+    height: 100%;
+    max-height: 100px;
+    object-fit: contain;
+  }
+}

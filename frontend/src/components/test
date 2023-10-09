@@ -1,0 +1,114 @@
+    const handleTouchStart = (e) => {
+        const touch = e.touches[0];
+        setStartPosition({ x: touch.clientX, y: touch.clientY });
+        setIsDragging(true);
+    };
+
+    const handleTouchMove = (e) => {
+        if (isDragging) {
+            const touch = e.touches[0];
+            const dx = touch.clientX - startPosition.x;
+            const dy = touch.clientY - startPosition.y;
+            const newPosX = position.x + dx;
+            const newPosY = position.y + dy;
+
+            setPosition({ x: newPosX, y: newPosY });
+            setStartPosition({ x: touch.clientX, y: touch.clientY });
+        }
+
+        if (e.touches.length === 2) {
+            const [touch1, touch2] = e.touches;
+            const distance = Math.hypot(
+                touch1.clientX - touch2.clientX,
+                touch1.clientY - touch2.clientY
+            );
+
+            // Ajustez la sensibilité du zoom en modifiant la valeur ici
+            const sensitivity = 0.01; // Par exemple, réglez-la sur 0.001 pour une sensibilité plus faible
+
+            // Calculez le facteur de zoom en fonction de la variation de distance avec la sensibilité
+            const zoomFactor = distance / initialDistance * sensitivity;
+
+            // Appliquez le zoom en ajustant le niveau de zoom
+            setZoomLevel((prevZoom) => prevZoom * zoomFactor);
+        }
+    };
+
+
+
+    const handleMouseUp = () => {
+        setIsAnimated(true)
+        setIsDragging(false);
+
+        // Vérifier les limites du cadre
+        const imageRect = imageRef.current.getBoundingClientRect();
+        const containerRect = containerRef.current.getBoundingClientRect();
+
+        const imageWidth = imageRect.width / 2;
+        const imageHeight = imageRect.height / 2;
+
+        const containerWidth = containerRect.width / 2;
+        const containerHeight = containerRect.height / 2;
+
+        const initialX = containerWidth - imageWidth;
+        const initialY = imageHeight - containerHeight;
+
+
+        if (imageRect.height > containerRect.height && imageRect.width > containerRect.width) {
+            // top
+            if (imageRect.top > containerRect.top && imageRect.left < containerRect.left && imageRect.right > containerRect.right) {
+                return setPosition({ x: position.x, y: initialY })
+            }
+            // top,left
+            if (imageRect.top > containerRect.top && imageRect.left > containerRect.left) {
+                return setPosition({ x: -initialX, y: initialY })
+            }
+            // top,right
+            if (imageRect.top > containerRect.top && imageRect.right < containerRect.right) {
+                return setPosition({ x: initialX, y: initialY })
+            }
+
+            // bottom
+            if (imageRect.bottom < containerRect.bottom && imageRect.left < containerRect.left && imageRect.right > containerRect.right) {
+                return setPosition({ x: position.x, y: -initialY })
+            }
+            // bottom,left
+            if (imageRect.bottom < containerRect.bottom && imageRect.left > containerRect.left) {
+                return setPosition({ x: -initialX, y: -initialY })
+            }
+            // bottom,right
+            if (imageRect.bottom < containerRect.bottom && imageRect.right < containerRect.right) {
+                return setPosition({ x: initialX, y: -initialY })
+            }
+
+            // left
+            if (imageRect.left > containerRect.left) {
+                return setPosition({ x: -initialX, y: position.y })
+            }
+            // right
+            if (imageRect.right < containerRect.right) {
+                return setPosition({ x: initialX, y: position.y })
+            }
+
+        } else {
+
+            if (imageRect.height > containerRect.height) {
+                if (imageRect.top > containerRect.top) {
+                    return setPosition({ x: position.x, y: initialY })
+                }
+                if (imageRect.bottom < containerRect.bottom) {
+                    return setPosition({ x: position.x, y: -initialY })
+                }
+            }
+
+            if (imageRect.width > containerRect.width) {
+                if (imageRect.left > containerRect.left) {
+                    return setPosition({ x: -initialX, y: position.y })
+                }
+                if (imageRect.right < containerRect.right) {
+                    return setPosition({ x: initialX, y: position.y })
+                }
+            }
+
+        }
+    };

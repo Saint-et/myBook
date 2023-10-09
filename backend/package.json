@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "connect-session-sequelize": "^7.1.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^3.0.1",
+    "nodemailer": "^6.9.5",
+    "nodemon": "^2.0.20",
+    "sequelize": "^6.28.0",
+    "server": "^1.0.38",
+    "socket.io": "^4.6.1",
+    "uuid": "^9.0.0"
+  },
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "start_io": "nodemon server_io.js",
+    "migration": "npx sequelize-cli db:migrate",
+    "admin": "npx sequelize-cli db:seed:all"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

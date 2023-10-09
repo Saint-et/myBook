@@ -1,0 +1,48 @@
+@import '../../sass/utils/variable';
+
+  .input_text{
+    color: $text_black;
+    //background: $input_light;
+    height: 30px;
+    //border-radius: 25px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    font-size: 16px;
+    outline: none;
+    border: none;
+    text-align: center;
+    width: 100%;
+    background: none;
+    max-width: 500px;
+    border-bottom: 1px solid gray;
+    padding: 5px;
+    transition: 200ms;
+    &:hover{
+      background: #acacac33;
+      border-bottom: 1px solid #ec1c24;
+    }
+}
+.input_text[data-theme='dark']{
+  color: $text_white;
+  //background: $input_black;
+  &:hover{
+  background: #35353533;
+  }
+}
+.textarea_mess {
+  //color: #000000;
+  background-color: #ececec;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 10px;
+  width: 88%;
+}
+.textarea_mess[data-theme="dark"] {
+  //color: #fff;
+  background-color: #333333;
+}
+@media all and (max-width: 980px) {
+  .input_text{
+    height: 30px;
+  }
+}

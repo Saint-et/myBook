@@ -1,0 +1,18 @@
+@mixin square_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
+    margin: 10px;
+    font-size: 18px;
+    color: #fff;
+    transition: 200ms;
+    cursor: pointer;
+    &:hover{
+        transition: 200ms;
+        transform: scale(0.98);
+    }
+}

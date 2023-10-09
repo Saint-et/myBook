@@ -1,0 +1,158 @@
+.badge {
+  color: #000000;
+  width: max-content;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(255, 255, 255);
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 16px;
+}
+.badge[data-theme="dark"] {
+  background-color: rgb(19, 19, 19);
+  color: #ffffff;
+}
+.badgeBlue {
+  color: #ffffff;
+  width: max-content;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  background-color: #0077ff;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.master {
+  color: #ffffff;
+  width: 100%;
+  max-width: 100px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  background-color: #460080;
+  font-weight: 600;
+}
+.admin {
+  color: #ffffff;
+  width: 100%;
+  max-width: 100px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  background-color: #00805a;
+  font-weight: 600;
+}
+.badge_adult {
+  background-color: #a0008b;
+  border-radius: 50px;
+  color: #ffffff;
+  width: 100%;
+  max-width: 100px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  
+}
+.adult {
+  color: #ffffff;
+  width: 30px;
+  font-size: 12px;
+  border-radius: 50px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  background-color: #a0008b;
+  font-weight: 600;
+  text-decoration: none;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.AI {
+  color: #ffffff;
+  width: 30px;
+  font-size: 12px;
+  border-radius: 50px;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  background-color: #800000;
+  font-weight: 600;
+  text-decoration: none;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.badge_require {
+  color: #ffffff;
+  background-color: #800000;
+  border-radius: 50px;
+  font-size: 12px;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 15px;
+}
+.valide {
+  color: #ffffff;
+  border-radius: 50px;
+  font-size: 12px;
+  padding-left: 5px;
+  padding-right: 5px;
+  height: 15px;
+  background-color: #00aa00;
+}
+.professional {
+  color: #ffffff;
+  width: 100%;
+  max-width: 100px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  background-color: #800000;
+  font-weight: 600;
+}
+.free {
+  color: #ffffff;
+  width: 100%;
+  max-width: 100px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  background-color: green;
+  font-weight: 600;
+  text-decoration: none;
+}
+.badge_premium {
+  color: #ffffff;
+  background-color: #d18800;
+  border-radius: 50px;
+}
+.premium {
+  color: #ffffff;
+  width: 100%;
+  max-width: 100px;
+  border-radius: 50px;
+  display: flex;
+  justify-content: center;
+  background-color: #d18800;
+  font-weight: 600;
+  text-decoration: none;
+}
+@media all and (max-width: 980px) {
+  .adult {
+    font-size: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .AI {
+    font-size: 10px;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+  .badge,
+  .badgeBlue {
+    font-size: 12px;
+    padding-left: 2px;
+    padding-right: 2px;
+  }
+}
