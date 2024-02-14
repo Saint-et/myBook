@@ -13,6 +13,7 @@ const app = express();
 const loginRoutes = require('./routes/login.signup');
 const userRoutes = require('./routes/users');
 const fileRoutes = require('./routes/Files_management');
+const profileUserRoutes = require('./routes/profileUser');
 const fileAutoRoutes = require('./routes/Files_management_auto');
 const searchRoutes = require('./routes/search');
 const friendslist = require('./routes/addFriend');
@@ -20,6 +21,7 @@ const notification = require('./routes/notification');
 const discussions = require('./routes/discussions_management');
 const adminroute = require('./routes/adminRoute');
 const postroute = require('./routes/post');
+const fileDisplayRoutes = require('./routes/Files');
 
 // Connection à la Base de donné (DATAbase)
 const db = require('./db/mysql');
@@ -33,10 +35,13 @@ app.use(session({
     table: 'dbsessions',
     modelKey: 'dbsessions',
     db: db,
+    checkExpirationInterval: 15 * 60 * 1000, //15 * 60 * 1000 Vérifier l'expiration toutes les 60 secondes
+    expiration: 15 * 60 * 1000 //24 * 60 * 60 * 7000 Expire la session après 60 secondes
   }),
   resave: false,
   saveUninitialized: false,
-  cookie: { SameSite: 'None' }
+  secure: process.env.HOST === 'production',
+  cookie: { SameSite: 'none' }
 })
 );
 
@@ -49,6 +54,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/api/eventv', fileDisplayRoutes);
 app.use('/api/eventv', postroute);
 app.use('/api/admin', adminroute);
 app.use('/api/eventv', discussions);
@@ -57,12 +63,12 @@ app.use('/api/eventv', friendslist);
 app.use('/api/eventv', searchRoutes);
 app.use('/api/eventv', fileAutoRoutes);
 app.use('/api/eventv', fileRoutes);
+app.use('/api/eventv', profileUserRoutes);
 app.use('/api/eventv', userRoutes);
 app.use('/api/auth', loginRoutes);
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/videos', express.static(path.join(__dirname, 'videos')));
 
 //  https://levelup.gitconnected.com/complete-guide-to-upload-multiple-files-in-node-js-using-middleware-3ac78a0693f3
 

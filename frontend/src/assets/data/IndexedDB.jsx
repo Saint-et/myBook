@@ -156,6 +156,28 @@ export const supprimerElement = (db, elementId) => {
   });
 };
 
+// Dans votre fichier IndexedDB.js
+export const supprimerDesElements = (db, elementIdArray) => {
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(['workspace'], 'readwrite');
+    const store = transaction.objectStore('workspace');
+
+    const deleteRequests = elementIdArray.map((elementId) => {
+      // Utilisez la méthode `delete` pour supprimer l'élément par sa clé (ID)
+      return store.delete(elementId);
+    });
+
+    // Utilisez Promise.all pour attendre la résolution de toutes les opérations de suppression
+    Promise.all(deleteRequests)
+      .then(() => {
+        resolve();
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+};
+
 export const chercherElement = (db, elementId) => {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(['workspace'], 'readonly');
@@ -205,6 +227,8 @@ export const mettreAJourElement = (db, elementId, nouveauContenu) => {
         element.ai = nouveauContenu.ai;
         element.images = nouveauContenu.images;
         element.resize = nouveauContenu.resize;
+        element.autoLayout = nouveauContenu.autoLayout;
+        element.allowUserEditTag = nouveauContenu.allowUserEditTag;
 
         // Utilisez la méthode put pour mettre à jour l'élément
         const putRequest = store.put(element);
@@ -232,25 +256,25 @@ export const mettreAJourElement = (db, elementId, nouveauContenu) => {
 
 export const clearTableWorkSpace = (db) => {
   return new Promise((resolve, reject) => {
-  try {
-    const transaction = db.transaction('workspace', 'readwrite'); // Replace 'yourObjectStoreName' with your actual object store name
-    const objectStore = transaction.objectStore('workspace'); // Replace 'yourObjectStoreName' again
+    try {
+      const transaction = db.transaction('workspace', 'readwrite'); // Replace 'yourObjectStoreName' with your actual object store name
+      const objectStore = transaction.objectStore('workspace'); // Replace 'yourObjectStoreName' again
 
-    const clear = objectStore.clear();
+      const clear = objectStore.clear();
 
-    clear.onsuccess = () => {
-      // L'élément a été mis à jour avec succès, résolvez la promesse
-      resolve();
-    };
+      clear.onsuccess = () => {
+        // L'élément a été mis à jour avec succès, résolvez la promesse
+        resolve();
+      };
 
-    clear.onerror = (event) => {
-      // Une erreur s'est produite lors de la mise à jour, rejetez la promesse avec l'erreur
-      reject(event.target.error);
-    };
+      clear.onerror = (event) => {
+        // Une erreur s'est produite lors de la mise à jour, rejetez la promesse avec l'erreur
+        reject(event.target.error);
+      };
 
-    console.log('Object store cleared successfully');
-  } catch (error) {
-    console.error('Error clearing object store:', error);
-  }
-})
+      console.log('Object store cleared successfully');
+    } catch (error) {
+      console.error('Error clearing object store:', error);
+    }
+  })
 }

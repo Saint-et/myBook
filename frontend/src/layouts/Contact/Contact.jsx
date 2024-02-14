@@ -13,7 +13,7 @@ import { useAppContext } from '../../contexts/UseAppContext';
 const socket = io.connect(SOCKET_URL);
 
 const Contact = (props) => {
-  const { localTheme, promiseIdentifiedUser } = useAppContext();
+  const { localTheme, promiseIdentifiedUser, localThemeBackground } = useAppContext();
 
   const [hidden, setHidden] = useState(true)
 
@@ -57,32 +57,33 @@ const Contact = (props) => {
 
     return(
         <div className='animation'>
-        <div className='cter_sect'>
-        <div className='ctent_arti' style={{maxWidth: 500}} data-theme={localTheme}>
-        <div style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                    <h1>Follewers</h1>
-                    <div style={{display: 'flex', width: '100%',justifyContent: 'space-around', alignItems: 'center', padding: 10, borderRadius: 25}}>
-                    <img onMouseDown={(e)=>e.preventDefault()} onContextMenu={(e)=>e.preventDefault()} className='Profile_picture' style={{width: 100, height: 100}} src={promiseIdentifiedUser.user.imageUrl || imgProfile} alt="" />
-                    </div>
-                    <div translate='no'>{promiseIdentifiedUser.user.pseudo}</div>
-                    {promiseIdentifiedUser.user.premium == 0&&<div className='free' translate='no'>Free</div>}
-                    {promiseIdentifiedUser.user.premium == 1&&<div className='premium' translate='no'>Premium</div>}
 
-                    <div className='buttonCircle' onClick={() => {setHidden(!hidden)}} style={{width: 45, height: 45, display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 10}} data-theme={localTheme}>
-                    {hidden &&<FontAwesomeIcon icon={faBars} />}
-                    {!hidden &&<FontAwesomeIcon icon={faSquare} />}
-                    </div>
-        </div>
+        <div className='cter_sect'>
+        <div style={{ width: '97%' }}>
+          <div className="copy-box two text" data-background={localThemeBackground} data-theme={localTheme}>
+            <div className="inner">
+              <div className="line right"></div>
+
+              
+              {hidden && <h4>Follewers list.</h4>}
+                {!hidden && <h4>My subscriptions.</h4>}
+
+                <div>Retrouvez votre liste d’abonnés et d’abonnements.</div>
+
+              <div className='button_option_container shadowbox' style={{ width: '90%', maxWidth: 300, display: 'flex', marginTop: 20 }} data-theme={localTheme}>
+              {!hidden &&<div onClick={() => {setHidden(!hidden)}} className='button_optionPic_v' data-theme={localTheme}>Follewers list</div>}
+              {hidden &&<div onClick={() => {setHidden(!hidden)}} className='button_optionPic_v' data-theme={localTheme}>My subscriptions</div>}
+              </div>
+
+              
+            </div>
+          </div>
         </div>
         </div>
 
 
         <div className='cter_sect' style={{marginBottom: 30}}>
-        <div className='ctent_arti' style={{width: 'max-content', maxWidth: '95%'}} data-theme={localTheme}>
-        <div className='title' style={{ display: 'flex', justifyContent: 'center' }}>
-                {hidden && <h2>Follewers list</h2>}
-                {!hidden && <h2>My subscriptions</h2>}
-            </div>
+        <div className='ctent_arti' style={{minHeight: 500}} data-theme={localTheme}>
         {hidden &&<Card_list promise={promise.promise} handleRefuse={handleRefuse} button={false} hidden={hidden} />}
         {!hidden &&<Card_list promise={promise.iFollow} handleRefuse={handleRefuse} button={true} hidden={hidden} />}
         </div>

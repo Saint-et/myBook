@@ -59,9 +59,8 @@ const Premium = (props) => {
         <div className='ctent_arti' style={{ maxWidth: 600 }} data-theme={localTheme}>
 
           <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20 }}>
-            <div className="ctent_arti" style={{ height: 200, maxWidth: 600 }} data-theme={localTheme}>
 
-              <h2>Premium account</h2>
+              <h4>Premium account</h4>
 
               <div className="toggle-rect" style={{ marginTop: 10 }}>
                 <input type="checkbox" id="premiumAccount" name="premiumAccount" defaultChecked={parseInt(promiseIdentifiedUser.user.premium) === 1} onChange={updatePremium} disabled={checked} />
@@ -70,7 +69,6 @@ const Premium = (props) => {
 
               <div style={{ textAlign: 'center' }}>Activate or deactivate to fully enjoy the site (this option is temporary).</div>
             </div>
-          </div>
 
         </div>
       </div>

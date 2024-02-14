@@ -37,7 +37,16 @@ const sequelize = require('../db/mysql');
     resizeImageUrlCover: {
       type: DataTypes.INTEGER
     },
+    background: {
+      type: DataTypes.STRING
+    },
+    resizeThemeBackground: {
+      type: DataTypes.INTEGER
+    },
     isAdmin: {
+      type: DataTypes.BOOLEAN
+    },
+    isMaster: {
       type: DataTypes.BOOLEAN
     },
     myTags: {
@@ -55,9 +64,11 @@ const sequelize = require('../db/mysql');
     private: {
       type: DataTypes.INTEGER,
     },
-    interest: {
-      type: DataTypes.ARRAY(DataTypes.STRING)
-    }
+    filesBookmark: {
+      type: DataTypes.ARRAY(DataTypes.STRING), // Ou tout autre type JSON approprié
+      defaultValue: [], // Valeur par défaut
+      unique: true
+    },
   },
   {
   sequelize,

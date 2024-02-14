@@ -13,12 +13,17 @@ exports.SearchMyfiles = async (req, res, next) => {
   if (!myRegex.test(req.params.key)) {
     return res.status(400).json({ message: 'Special characters are not supported.' })
   }
-  await File.findAndCountAll({
+  await File.findAll({
     include: [{ model: models.users, attributes: ['id', 'pseudo', 'imageUrl'] }, { model: models.groupsfiles, attributes: ['id', 'name'] }],
-    where: { adminId: req.session.user.id, [Op.or]: [{ name: {
-      [Op.like]: `${searchValue}%` } }, Sequelize.literal(`LOWER(tags) LIKE '%${searchValue}%'`)] },
+    where: {
+      adminId: req.session.user.id, [Op.or]: [{
+        name: {
+          [Op.like]: `${searchValue}%`
+        }
+      }, Sequelize.literal(`LOWER(tags) LIKE '%${searchValue}%'`)]
+    },
     attributes: ['id', 'name', 'type', 'groupId', 'miniature', 'createdAt', 'visibility', 'ai'],
-    //order: [['name', 'ASC']],
+    order: [['name', 'ASC']],
     limit: 20
   })
     .then(promise => {
@@ -48,7 +53,7 @@ exports.GetOnefiles = async (req, res, next) => {
   await File.findOne({
     where: { id: req.params.id },
     attributes: ['id', 'name', 'type', 'data', 'visibility', 'miniature', 'resize', 'adminId', 'tags', 'comments', 'groupId', 'adult', 'ai'],
-    include: [{ model: models.images, attributes: ['id', 'imageUrl', 'caption', 'order'] }],
+    include: [{ model: models.images, attributes: ['id', 'imageUrl', 'caption', 'order', 'updatedAt', 'createdAt'] }],
     order: [
       [models.images, 'order', 'asc']
     ]
@@ -63,25 +68,7 @@ exports.GetOnefiles = async (req, res, next) => {
     .catch(() => { return res.status(400).json({ message: 'The search page no longer exists.' }) })
 }
 
-//exports.GetOnefilesImages = async (req, res, next) => {
-//  await Image.findAll({
-//    where: { fileId: req.params.id },
-//    attributes: ['id', 'imageUrl', 'order'],
-//    order: [['order', 'ASC']],
-//  })
-//    .then((promise) => {
-//      //if (req.params.key === req.session.user.id) {
-//      return res.status(200).json(promise)
-//      //} else {
-//      //  return res.status(400).json({ message: 'You cannot access this page.' })
-//      //}
-//    })
-//    .catch(() => { return res.status(400).json({ message: 'The search page no longer exists.' }) })
-//}
-
-
 exports.CreateFile = async (req, res, next) => {
-
   if (req.body.name == '' || req.body.type == null) {
     return res.status(400).json({ message: 'please fill in all fields.' })
   }
@@ -90,7 +77,8 @@ exports.CreateFile = async (req, res, next) => {
     adminId: req.session.user.id,
     name: req.body.name,
     type: req.body.type,
-    groupId: req.body.groupId
+    groupId: req.body.groupId,
+    dateRework: new Date()
   })
 
   build.save()
@@ -132,27 +120,26 @@ exports.downloadImgArticle = async (req, res, next) => {
 
     return res.status(200).json({ message: 'The images were successfully uploaded.' });
   } catch (error) {
-    File.findOne({where: { id: req.params.id}})
-    .then(async(promise) => {
-      if (!promise) {
-        await req.files?.map((img) => {
-          fs.unlink(`uploads/${img.filename}`, () => { })
-        })
-      }
-    })
+    File.findOne({ where: { id: req.params.id } })
+      .then(async (promise) => {
+        if (!promise) {
+          await req.files?.map((img) => {
+            fs.unlink(`uploads/${img.filename}`, () => { })
+          })
+        }
+      })
     return res.status(500).json({ message: 'Error updating article', error: error });
   }
 };
 
 
 exports.UpdateArticle = async (req, res, next) => {
-  //console.log(req.body);
   if (req.body.name == '') {
     return res.status(400).json({ message: 'Name cannot be empty' });
   }
-  if (req.body.adult == null || req.body.visibility == null || req.body.ai == null || req.body.comments == null) {
-    return res.status(400).json({ message: 'please fill in all fields require' });
-  }
+  //if (req.body.adult == null || req.body.visibility == null || req.body.ai == null || req.body.comments == null) {
+  //  return res.status(400).json({ message: 'please fill in all fields require' });
+  //}
   if (req.body.tags.length > 10) {
     return res.status(400).json({ message: 'you have exceeded the number of allowed tags' });
   }
@@ -177,8 +164,23 @@ exports.UpdateArticle = async (req, res, next) => {
 
       // Utilisez Promise.all pour effectuer toutes les mises à jour d'images en parallèle
       await Promise.all(newImageUrls.map((file, index) => {
-        return Image.update(imageUpdates[index], { where: { id: file.id } });
-      }));
+        Image.update(imageUpdates[index], { where: { id: file.id } });
+      }))
+      if (req.body.adult == null || req.body.visibility == null || req.body.ai == null || req.body.comments == null) {
+        const buildImg = {
+          name: req.body.name,
+          data: req.body.data,
+          tags: req.body.tags,
+          miniature: req.body.miniature,
+          imagesCount: req.body.imagesCount,
+          resize: req.body.resize,
+          allowUserEditTag: req.body.allowUserEditTag,
+          autoLayout: req.body.autoLayout,
+          dateRework: new Date()
+        }
+        await File.update(buildImg, { where: { id: req.params.id } });
+        return res.status(200).json({ message: 'Only the order of the images and the non-mandatory part of the form have been changed.' });
+      }
     }
 
     const build = {
@@ -191,7 +193,10 @@ exports.UpdateArticle = async (req, res, next) => {
       ai: req.body.ai,
       imagesCount: req.body.imagesCount,
       comments: req.body.comments,
-      resize: req.body.resize
+      resize: req.body.resize,
+      allowUserEditTag: req.body.allowUserEditTag,
+      autoLayout: req.body.autoLayout,
+      dateRework: new Date()
     }
 
     await File.update(build, { where: { id: req.params.id } });
@@ -222,7 +227,7 @@ exports.fileDelete = async (req, res, next) => {
 exports.GetOneGroup = async (req, res, next) => {
   await Groupsfiles.findOne({
     where: { id: req.params.id },
-    attributes: ['id', 'name', 'imageUrl', 'groupTags'],
+    attributes: ['id', 'name', 'imageUrl', 'groupTags', 'data'],
     include: [{ model: models.users, attributes: ['id'] }]
   })
     .then((promise) => {
@@ -239,6 +244,9 @@ exports.CreateGroups = async (req, res, next) => {
   if (req.body.name == '') {
     return res.status(400).json({ message: 'please fill in all fields.' })
   }
+  if (req.body.name.length < 3) {
+    return res.status(400).json({ message: 'The name is too short.' })
+  }
 
   const build = Groupsfiles.build({
     adminId: req.session.user.id,
@@ -252,7 +260,7 @@ exports.CreateGroups = async (req, res, next) => {
 
 exports.UpdateGroupsfiles = async (req, res, next) => {
   await Groupsfiles.findOne({ where: { id: req.params.id } })
-    .then((propmise) => {
+    .then((promise) => {
 
       const bodyBuild = req.file ?
         {
@@ -262,18 +270,18 @@ exports.UpdateGroupsfiles = async (req, res, next) => {
           ...req.body
         };
 
-      if (propmise._previousDataValues.imageUrl == null || bodyBuild.image == propmise._previousDataValues.imageUrl) {
+      if (promise._previousDataValues.imageUrl == null || bodyBuild.image == promise._previousDataValues.imageUrl) {
         Groupsfiles.update({ ...bodyBuild }, { where: { id: req.params.id } })
           .then(() => { return res.status(200).json({ message: 'user changed' }); })
       } else {
-        if (bodyBuild.image == propmise._previousDataValues.imageUrl || bodyBuild.image != null) {
-          const filename = propmise.imageUrl.split('/images/')[1];
+        if (bodyBuild.image == promise._previousDataValues.imageUrl || bodyBuild.image != null) {
+          const filename = promise.imageUrl.split('/images/')[1];
           fs.unlink(`images/${filename}`, () => {
             Groupsfiles.update({ ...bodyBuild, imageUrl: null }, { where: { id: req.params.id } })
               .then(() => { return res.status(200).json({ message: 'user changed' }); })
           });
         } else {
-          const filename = propmise.imageUrl.split('/images/')[1];
+          const filename = promise.imageUrl.split('/images/')[1];
           fs.unlink(`images/${filename}`, () => {
             Groupsfiles.update({ ...bodyBuild }, { where: { id: req.params.id } })
               .then(() => { return res.status(200).json({ message: 'user changed' }); })
@@ -326,7 +334,7 @@ exports.SearchMygroups = async (req, res, next) => {
 }
 
 exports.GetMyfilesGroup = async (req, res, next) => {
-  await File.findAndCountAll({
+  await File.findAll({
     where: { adminId: req.session.user.id, groupId: req.params.id },
     attributes: ['id', 'name', 'type', 'groupId', 'miniature', 'createdAt', 'visibility', 'adult', 'ai'],
     include: [{ model: models.users, attributes: ['id', 'pseudo', 'imageUrl'] }, { model: models.groupsfiles, attributes: ['id', 'name'] }],
@@ -348,21 +356,97 @@ exports.UpdateFilesGroup = async (req, res, next) => {
 }
 
 
+exports.DeleteGroup = async (req, res, next) => {
+  await Groupsfiles.findOne({ where: { id: req.params.id }, attributes: ['imageUrl'] })
+    .then((promise) => {
+      if (promise.imageUrl) {
+        const filename = promise.imageUrl.split('/images/')[1];
+        fs.unlink(`images/${filename}`, () => {
+          File.update({ groupId: null }, { where: { groupId: req.params.id } })
+            .then(() => {
+              Groupsfiles.destroy({ where: { id: req.params.id } })
+                .then(() => {
+                  return res.status(200).json({ message: 'Group deleted' });
+                })
+            });
+        })
+      } else {
+        File.update({ groupId: null }, { where: { groupId: req.params.id } })
+          .then(() => {
+            Groupsfiles.destroy({ where: { id: req.params.id } })
+              .then(() => {
+                return res.status(200).json({ message: 'Group deleted' });
+              })
+          })
+      }
+    })
+
+}
+
+exports.DeleteGroupAndFiles = async (req, res, next) => {
+
+  await File.findAll({ where: { groupId: req.params.id }, attributes: ['id'] })
+    .then((promise) => {
+
+      promise.map((file) => (
+        Image.findAll({ where: { fileId: file.id }, attributes: ['id', 'imageUrl'] })
+          .then((promiseImage) => {
+            promiseImage.map((image) => (
+              fs.unlink(`uploads/${image.imageUrl.split('/uploads/')[1]}`, () => {
+                Image.destroy({ where: { id: image.id } })
+              })
+            ));
+          })
+      ));
+
+
+      promise.map((file) => (
+        File.destroy({ where: { id: file.id } })
+      ));
+
+      Groupsfiles.findOne({ where: { id: req.params.id }, attributes: ['imageUrl'] })
+        .then((promise) => {
+          if (promise.imageUrl) {
+            const filename = promise.imageUrl.split('/images/')[1];
+            fs.unlink(`images/${filename}`, () => {
+              Groupsfiles.destroy({ where: { id: req.params.id } })
+                .then(() => {
+                  return res.status(200).json({ message: 'Group deleted' });
+                })
+            })
+          } else {
+            Groupsfiles.destroy({ where: { id: req.params.id } })
+              .then(() => {
+                return res.status(200).json({ message: 'Group deleted' });
+              })
+          }
+        })
+    })
+
+}
+
 // Image
 
 exports.DeleteMyImage = async (req, res, next) => {
   let json = JSON.parse(req.body.data)
   let filenameArr = [];
 
-  Image.destroy({
-    where: {
-      imageUrl: json
-    }
+  await Image.findAll({
+    where: { id: json }
   })
-  await json?.map((img) => {
-    const filename = img.split('/uploads/')[1]
-    fs.unlink(`uploads/${filename}`, () => { })
-  })
+    .then((prom) => {
+      Promise.all(prom.map((file, index) => {
+        Image.destroy({
+          where: {
+            id: file.id
+          }
+        })
+        //json?.map((img) => {
+        const filename = file.imageUrl.split('/uploads/')[1]
+        fs.unlink(`uploads/${filename}`, () => { })
+        //})
+      }))
+    })
 
 
   if (req.body.newData.length > 0) {
@@ -377,6 +461,7 @@ exports.DeleteMyImage = async (req, res, next) => {
 
     filenameArr = filenameArr.concat(newImageUrls);
 
+
     // Créez un tableau d'objets pour les mises à jour
     const imageUpdates = newImageUrls.map((file) => ({
       order: file.order
@@ -387,7 +472,6 @@ exports.DeleteMyImage = async (req, res, next) => {
       return Image.update(imageUpdates[index], { where: { id: file.id } });
     }));
   }
-
 
   if (filenameArr[0] != null) {
     await File.update({ miniature: filenameArr[0].imageUrl, imagesCount: parseInt(filenameArr.length) }, { where: { id: req.params.id } })
@@ -426,68 +510,3 @@ exports.UpdateTags = async (req, res, next) => {
       return res.status(200).json({ message: 'Tag deleted' })
     })
 }
-
-//Home Profil
-
-exports.GetNewsfiles = async (req, res, next) => {
-  await File.findAll({
-    where: { adminId: req.params.id, visibility: 1 },
-    attributes: ['id', 'name', 'type', 'miniature', 'data', 'adult', 'createdAt', 'ai', 'imagesCount'],
-    include: [{ model: models.users, attributes: ['id', 'pseudo', 'imageUrl', 'imageUrlCover', 'email', 'private', 'premium', 'resizeImageUrlCover'] }],
-    order: [['updatedAt', 'DESC']],
-    limit: 18
-  })
-    .then((promise) => {
-      return res.status(200).json(promise)
-    })
-    .catch(() => { return res.status(400).json({ message: 'no found' }) })
-}
-
-exports.GetCatalogfiles = async (req, res, next) => {
-  let num = parseInt(req.params.key)
-
-  await File.findAndCountAll({
-    where: { adminId: req.params.id, visibility: 1 },
-    attributes: ['id', 'name', 'type', 'miniature', 'data', 'adult', 'createdAt', 'ai', 'imagesCount'],
-    include: [{ model: models.users, attributes: ['id', 'pseudo', 'imageUrl', 'imageUrlCover', 'email', 'private', 'premium', 'resizeImageUrlCover'] }],
-    order: [['createdAt', 'DESC']],
-    limit: 6,
-    offset: num,
-    subQuery: false
-  })
-    .then((promise) => {
-      return res.status(200).json(promise)
-    })
-}
-
-exports.GetCatalogfilesTags = async (req, res, next) => {
-  let num = parseInt(req.params.key)
-  const searchValue = req.params.name.toLowerCase();
-  try {
-    await File.findAndCountAll({
-      where: {
-        adminId: req.params.id, visibility: 1,
-        [Op.or]: [
-          {
-            name: {
-              [Op.like]: `%${searchValue}%`, // Recherche de nom insensible à la casse
-            },
-          },
-          Sequelize.literal(`LOWER(tags) LIKE '%${searchValue}%'`),
-        ],
-      },
-      attributes: ['id', 'name', 'type', 'miniature', 'data', 'adult', 'createdAt', 'ai', 'imagesCount'],
-      include: [{ model: models.users, attributes: ['id', 'pseudo', 'imageUrl', 'imageUrlCover', 'email', 'private', 'premium', 'resizeImageUrlCover'] }],
-      order: [['createdAt', 'DESC']],
-      limit: 6,
-      offset: num,
-      subQuery: false
-    })
-      .then((promise) => {
-        return res.status(200).json({ promise })
-      })
-  } catch (error) {
-    return res.status(500).json({ message: 'Internal server error' });
-  }
-}
-

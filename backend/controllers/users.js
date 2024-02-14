@@ -1,12 +1,15 @@
 const User = require('../models/user');
 const fs = require('fs');
+const { models } = require('../db/mysql');
 //utilisation de bcrypt pour crypter le mot de passe
 const bcrypt = require('bcrypt');
+const File = require('../models/files');
+
 
 exports.getProfil = async (req, res, next) => {
   await User.findOne({
     where: { id: req.session.user.id },
-    attributes: ['id', 'pseudo', 'imageUrl', 'imageUrlCover', 'email', 'private', 'isAdmin', 'isMaster', 'premium', 'resizeImageUrlCover', 'adultAccess']
+    attributes: ['id', 'pseudo', 'imageUrl', 'imageUrlCover', 'email', 'private', 'isAdmin', 'isMaster', 'premium', 'resizeImageUrlCover', 'resizeThemeBackground', 'adultAccess', 'background']
   })
     .then(user => {
       return res.status(200).json({ user })
@@ -40,7 +43,7 @@ exports.getUserProfil = async (req, res, next) => {
   if (req.session.user != undefined) {
     await User.findOne({
       where: { id: req.params.id },
-      attributes: ['id', 'pseudo', 'imageUrl', 'imageUrlCover', 'email', 'private', 'isAdmin', 'isMaster', 'premium', 'resizeImageUrlCover', 'adultAccess', 'followers']
+      attributes: ['id', 'pseudo', 'imageUrl', 'imageUrlCover', 'email', 'private', 'isAdmin', 'isMaster', 'premium', 'resizeImageUrlCover', 'adultAccess', 'followers', 'resizeThemeBackground', 'background']
     })
       .then(user => {
         if (user === null) {
@@ -77,7 +80,12 @@ exports.getUserProfil = async (req, res, next) => {
   }
 
 }
-
+exports.updateUserAll = async (req, res, next) => {
+  User.update(req.body, { where: { id: req.session.user.id } })
+    .then(() => {
+      return res.status(200).json({ message: 'User changed' })
+    })
+}
 exports.updateUserAdultAccess = async (req, res, next) => {
   User.update({ adultAccess: req.body.adultAccess }, { where: { id: req.session.user.id } })
     .then(() => {
@@ -240,13 +248,6 @@ exports.updateUserPremium = async (req, res, next) => {
     })
 }
 
-exports.updateUserAll = async (req, res, next) => {
-  User.update({ ...req.body }, { where: { id: req.session.user.id } })
-    .then(() => {
-      return res.status(200).json({ message: 'user changed' })
-    })
-}
-
 exports.getUserPopulars = async (req, res, next) => {
   await User.findAll({
     where: {},
@@ -275,7 +276,7 @@ exports.updatePinnedUser = async (req, res, next) => {
 };
 
 exports.getUserPinned = async (req, res, next) => {
-  await User.findOne({ where: { id: req.session.user.id } })
+  await User.findOne({ where: { id: req.params.id } })
     .then((user) => {
       User.findAll({
         where: { id: user.dataValues.pinnedUsers },
@@ -285,6 +286,25 @@ exports.getUserPinned = async (req, res, next) => {
           return res.status(200).json({ promise });
         })
         .catch(() => { return res.status(400).json({ message: 'no found pinned users' }) })
+    })
+    .catch(() => { return res.status(400).json({ message: 'no found pinned users' }) })
+};
+
+exports.getIllustrationPinned = async (req, res, next) => {
+  await User.findOne({ where: { id: req.params.id } })
+    .then(async (user) => {
+      await File.findAll({
+        where: {
+          visibility: 1,
+          type: 'Illustrations',
+          id: user.filesBookmark
+        },
+        attributes: ['id', 'name', 'type', 'miniature', 'groupId', 'adult', 'createdAt', 'ai', 'imagesCount', 'adminId'],
+        include: [{ model: models.users, attributes: ['id', 'pseudo', 'imageUrl'] }]
+      })
+        .then((promise) => {
+          return res.status(200).json(promise)
+        })
     })
     .catch(() => { return res.status(400).json({ message: 'no found pinned users' }) })
 };

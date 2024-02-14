@@ -1,9 +1,9 @@
 @import "../utils/variable";
 
-.tagsManage{
+.tagsManage {
   margin-left: 10px;
   margin-right: 10px;
-  &:hover{
+  &:hover {
     text-decoration: line-through;
     color: red;
     cursor: pointer;
@@ -65,18 +65,18 @@
     background-color: $button_black_circle_hover;
   }
 }
-.faXmark{
+.faXmark {
   height: 15px;
   width: 15px;
   border-radius: 100%;
   padding: 2px;
   color: grey;
-  &:hover{
+  &:hover {
     background: rgb(216, 216, 216);
   }
 }
-.faXmark[data-theme="dark"]{
-  &:hover{
+.faXmark[data-theme="dark"] {
+  &:hover {
     background: rgb(75, 75, 75);
   }
 }
@@ -89,7 +89,8 @@
 }
 .button_option_container[data-theme="dark"] {
   color: $text_white;
-  background-color: #303030;
+  background: #202020;
+  border-radius: 10px;
   overflow: hidden;
 }
 .button_option_container_free {
@@ -123,19 +124,22 @@
   cursor: pointer;
   transition: 500ms;
   width: 100%;
+  &[data-background="on"] {
+    color: $text_white;
+  }
   &:hover {
     background-color: $button_light_circle_hover;
   }
 }
 .button_option[data-theme="dark"] {
-  color: white;
+  color: $text_white;
   &:hover {
     background-color: $button_black_circle_hover;
   }
 }
 .button_option.active {
   transition: 100ms;
-  color: white;
+  color: $text_white;
   cursor: pointer;
   background-color: rgb(117, 117, 117);
 }
@@ -147,7 +151,7 @@
 }
 .button_option_work[data-theme="dark"].active {
   transition: 100ms;
-  color: white;
+  color: $text_white;
   cursor: pointer;
   background-color: $background_semi_black;
 }
@@ -157,11 +161,12 @@
   align-items: center;
   transition: 200ms;
   height: 30px;
+  width: 100%;
   text-decoration: none;
-  color: rgb(255, 255, 255);
+  color: $text_white;
   cursor: pointer;
   transition: 500ms;
-  background: #0069cc;
+  background: linear-gradient(to right, #0575e6, #021b79);
   &:hover {
     background-color: #0062bdaf;
   }
@@ -174,12 +179,11 @@
   height: 30px;
   width: 100%;
   text-decoration: none;
-  color: rgb(255, 255, 255);
+  color: $text_white;
   cursor: pointer;
-  transition: 500ms;
-  background: #ec1c24;
+  background: #ec1c24; //#ec1c24
   &:hover {
-    background-color: #e26468;
+    opacity: 0.6;
   }
 }
 .button_optionDisable {
@@ -187,10 +191,11 @@
   justify-content: center;
   align-items: center;
   transition: 200ms;
+  width: 100%;
   height: 30px;
   text-decoration: none;
   background: #8b8b8b;
-  color: rgb(255, 255, 255);
+  color: $text_white;
   cursor: default;
   transition: 500ms;
 }
@@ -199,48 +204,99 @@
   justify-content: center;
   align-items: center;
   transition: 200ms;
+  width: 100%;
   height: 30px;
   text-decoration: none;
-  color: rgb(255, 255, 255);
+  color: $text_white;
   cursor: pointer;
   transition: 500ms;
-  background: #aa0000;
+  background: #93291e;
   &:hover {
-    background-color: #aa00008a;
+    opacity: 0.6;
   }
 }
-.button_optionAdmin {
+.button_optionGreen {
   display: flex;
   justify-content: center;
   align-items: center;
   transition: 200ms;
+  width: 100%;
   height: 30px;
   text-decoration: none;
-  color: rgb(255, 255, 255);
+  color: $text_white;
   cursor: pointer;
   transition: 500ms;
-  background: #00805a;
+  background: linear-gradient(to right, #00b09b, #96c93d);
   &:hover {
-    background-color: #00805a80;
+    opacity: 0.6;
   }
 }
-.button_optionDarkBlue {
+.buttonCirclePurple {
   display: flex;
   justify-content: center;
   align-items: center;
   transition: 200ms;
+  width: 100%;
   height: 30px;
   text-decoration: none;
-  color: rgb(255, 255, 255);
+  color: $text_white;
   cursor: pointer;
   transition: 500ms;
-  background: #403eb6;
+  background: linear-gradient(to right, #8e2de2, #4a00e0);
   &:hover {
-    background-color: rgba(48, 49, 122, 0.6);
+    opacity: 0.6;
+  }
+}
+.button_optionColoring {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 200ms;
+  width: 100%;
+  height: 30px;
+  text-decoration: none;
+  color: $text_white;
+  cursor: pointer;
+  transition: 500ms;
+  background: linear-gradient(to right, #ee0979, #ff6a00);
+  &:hover {
+    opacity: 0.6;
+  }
+}
+.button_optionColoringPurple {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 200ms;
+  width: 100%;
+  height: 30px;
+  text-decoration: none;
+  color: $text_white;
+  cursor: pointer;
+  transition: 500ms;
+  background: linear-gradient(to right, #ff00cc, #333399);
+  &:hover {
+    opacity: 0.6;
+  }
+}
+.button_optionColoringBlue {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 200ms;
+  width: 100%;
+  height: 30px;
+  text-decoration: none;
+  color: $text_white;
+  cursor: pointer;
+  transition: 500ms;
+  background: linear-gradient(to right, #fc00ff, #00dbde);
+  &:hover {
+    opacity: 0.6;
   }
 }
 .buttonCircle_workPlace {
-  color: white;
+  color: $text_white;
   font-size: 35px;
   cursor: pointer;
   &:hover {
@@ -275,121 +331,134 @@
 }
 .buttonCircle[data-theme="dark"] {
   background: $button_black_circle;
-  color: white;
+  color: $text_white;
   &:hover {
     background-color: $button_black_circle_hover;
+  }
+}
+.buttonCircleColoring {
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 18px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 100%;
+  background: linear-gradient(to right, #ee0979, #ff6a00);
+  color: rgb(255, 255, 255);
+  transition: 500ms;
+  &:hover {
+    opacity: 0.6;
+  }
+}
+.buttonCircleGreen {
+  margin-left: 5px;
+  margin-right: 5px;
+  font-size: 18px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 100%;
+  background: linear-gradient(to right, #00b09b, #96c93d);
+  color: rgb(255, 255, 255);
+  transition: 500ms;
+  &:hover {
+    opacity: 0.6;
   }
 }
 .buttonCircleBlue {
   margin-left: 5px;
   margin-right: 5px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 18px;
   cursor: pointer;
   border-radius: 100%;
-  background: #0058aa;
-  color: rgb(255, 255, 255);
+  background: linear-gradient(to right, #0575e6, #021b79);
+  color: $text_white;
   transition: 500ms;
   &:hover {
-    background-color: #0058aa8a;
+    opacity: 0.6;
   }
 }
-
+.buttonCircleColoringBlue {
+  margin-left: 5px;
+  margin-right: 5px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  border-radius: 100%;
+  background: linear-gradient(to right, #fc00ff, #00dbde);
+  color: $text_white;
+  transition: 500ms;
+  &:hover {
+    opacity: 0.6;
+  }
+}
 .buttonCircleDisable {
   margin-left: 5px;
   margin-right: 5px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 18px;
   cursor: default;
   border-radius: 100%;
   background: #8b8b8b;
-  color: rgb(255, 255, 255);
+  color: $text_white;
 }
 
 .buttonCircleRed {
   margin-left: 5px;
   margin-right: 5px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 18px;
   cursor: pointer;
   border-radius: 100%;
-  background: #aa0000;
-  color: rgb(255, 255, 255);
+  background: #93291e;
+  color: $text_white;
   transition: 500ms;
   &:hover {
-    background-color: #aa00008a;
+    opacity: 0.6;
   }
 }
 .buttonCircleDarkBlue {
   margin-left: 5px;
   margin-right: 5px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 18px;
   cursor: pointer;
   border-radius: 100%;
   background: #403eb6;
-  color: rgb(255, 255, 255);
+  color: $text_white;
   transition: 500ms;
   &:hover {
     background-color: rgba(48, 49, 122, 0.6);
   }
 }
-//<div className='buttonCircle' style={{ width: 30, height: 30, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 15 }} data-theme={props.localTheme}>
-//<FontAwesomeIcon icon={faBookmark} />
-//</div>
-//<div className={false? 'buttonCircleHeart active' : 'buttonCircleHeart'} style={{ width: 30, height: 30, display: 'flex', justifyContent: 'center', alignItems: 'center' }} data-theme={props.localTheme}>
-//<FontAwesomeIcon icon={faHeart} />
-//</div>
-//#ff0055 Heart color
-.buttonCircleHeart {
-  font-size: 23px;
-  cursor: pointer;
-  border-radius: 100%;
-  color: #646464;
-  transition: 500ms;
-  &:hover {
-    color: #ff0055;
-  }
-}
-.buttonCircleHeart[data-theme="default"] {
-  color: #646464;
-  &:hover {
-    color: #ff0055;
-  }
-}
-.buttonCircleHeart[data-theme="dark"] {
-  color: #ffffff5b;
-  &:hover {
-    color: #ff0055;
-  }
-}
-.buttonCircleHeart.active {
-  color: #ff0055;
-  animation: animateHeart 3s linear infinite;
-}
-@keyframes animateHeart {
-  0% {
-    transform: scale(1);
-    color: #ff0055;
-  }
-  10% {
-    transform: scale(1.4);
-    color: #00ff95;
-  }
-  40% {
-    transform: scale(1);
-    color: #9900ff;
-  }
-  50% {
-    transform: scale(1.2);
-    color: #001aff;
-  }
-  80% {
-    transform: scale(1);
-    color: #ff00bf;
-  }
-  100% {
-    transform: scale(1);
-    color: #ff0055;
-  }
-}
-
 .container_interest {
   position: relative;
   width: 100%;
@@ -439,15 +508,6 @@
     margin-bottom: 5px;
     align-items: center;
   }
-  .button_option,
-  .button_optionRed,
-  .button_optionBlue,
-  .button_optionDarkBlue,
-  .button_optionDisable,
-  .button_optionPic_v {
-    font-size: 14px;
-    height: 35px;
-  }
   .button_optionMobile {
     width: 100%;
     max-width: 100%;
@@ -466,4 +526,87 @@
     height: 25px;
     width: 25px;
   }
+  .buttonCircleRed {
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 14px;
+    height: 25px;
+    width: 25px;
+  }
+  .buttonCircleDarkBlue {
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 14px;
+    height: 25px;
+    width: 25px;
+  }
+  .buttonCircleBlue {
+    margin-left: 5px;
+    margin-right: 5px;
+    font-size: 14px;
+    height: 25px;
+    width: 25px;
+  }
+}
+.btnPremium {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  width: 100%;
+  height: 30px;
+  border-radius: 10px;
+  background: #7e6504;
+  transition: 300ms;
+  color: #cfc09f;
+  font-family: "Playfair Display", serif;
+  font-weight: 600;
+  &:hover {
+    background: #332901;
+  }
+}
+.btnPremium.active {
+  background: #332901;
+}
+.btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  text-decoration: none;
+  width: 100%;
+  height: 30px;
+  color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  background: linear-gradient(-45deg, #ffa63d, #ff3d77, #338aff, #3cf0c5);
+  background-size: 600%;
+  animation: anime 8s linear infinite;
+  transition: 300ms;
+  //color: #2825b6;
+  &:hover {
+    opacity: 0.6;
+  }
+}
+.btn.active {
+  filter:  contrast(200%);
+  &:hover {
+    opacity: 1;
+  }
+}
+
+@keyframes anime {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.keyborad {
+  font-size: 18px;
 }

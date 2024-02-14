@@ -17,6 +17,9 @@ Groupsfiles.init({
   name: {
     type: DataTypes.STRING
   },
+  data: {
+    type: DataTypes.TEXT
+  },
   imageUrl : {
     type: DataTypes.STRING
   },

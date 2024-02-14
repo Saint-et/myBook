@@ -21,10 +21,13 @@ module.exports = {
       type: {
         type: Sequelize.STRING,
       },
-      fileLvl: {
-        type: Sequelize.STRING,
-      },
       ai: {
+        type: Sequelize.INTEGER,
+      },
+      autoLayout: {
+        type: Sequelize.INTEGER,
+      },
+      allowUserEditTag: {
         type: Sequelize.INTEGER,
       },
       miniature: {
@@ -36,8 +39,14 @@ module.exports = {
       imagesCount: {
         type: Sequelize.INTEGER
       },
-      price: {
+      bookMarks: {
         type: Sequelize.INTEGER,
+      },
+      view: {
+        type: Sequelize.INTEGER,
+      },
+      viewUsers: {
+        type: Sequelize.JSON,
       },
       data: {
         type: Sequelize.TEXT,
@@ -56,6 +65,10 @@ module.exports = {
       },
       adult: {
         type: Sequelize.INTEGER,
+      },
+      dateRework: {
+        allowNull: false,
+        type: Sequelize.DATE
       },
       createdAt: {
         allowNull: false,

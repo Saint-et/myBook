@@ -1,4 +1,34 @@
+const [colorWorkManga, setColorWorkManga] = useState('');
 
+const customColors = [
+    // red
+    '#ff353d',
+    '#ff000a',
+    // oorange
+    '#ff9b70',
+    '#ff4d00',
+    // yellow
+    '#ffef77',
+    '#ffe100',
+    // pink
+    '#ffa9c5',
+    '#ff6294',
+    // purple
+    '#feadff',
+    '#fd66ff',
+    // blue
+    '#afa6ff',
+    '#6655ff',
+    // cyan
+    '#bee9ff',
+    '#6ecfff',
+    // green emeraude
+    '#6affc8',
+    '#00ffa2',
+    // green
+    '#86ff80',
+    '#0dff00',
+  ];
 
 {
     promise.type === 'Announcement' && <>
@@ -285,5 +315,13 @@
                 </div>}</>}
 
         </div>
+
+
+        <div className='cter_sect' style={{ paddingBottom: 20, marginTop: 25 }}>
+                <div className='ctent_arti' style={{ maxWidth: 900 }} data-theme={localTheme}>
+                    <div style={{ width: '90%' }}>Atmosphere :</div>
+                    <CirclePicker colors={customColors} onChange={(color) => { setColorWorkManga(color.hex) }} />
+                </div>
+            </div>
     </>
 }

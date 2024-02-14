@@ -6,6 +6,7 @@ const Tag = require('../models/Tags');
 const { login } = require("./login.signup");
 const Groupfile = require('../models/groups_files');
 let myRegex = new RegExp(/^[0-9a-zA-Z-éçàùè]+$/i);
+const natural = require('natural');
 
 exports.SaveTagsName = async (req, res, next) => {
     if (req.body.tag.length > 3) {
@@ -44,6 +45,14 @@ exports.UsersName = async (req, res, next) => {
 
 exports.ArticleName = async (req, res, next) => {
     const searchValue = req.params.key.toLowerCase();
+
+    
+    // Fonction pour normaliser un mot
+    const normalizeWord = word => natural.PorterStemmerFr.stem(word.toLowerCase());
+
+    
+    const normalizedTag = normalizeWord(req.params.key);
+
     await File.findAll({
         where: {
             visibility: 1,
@@ -53,7 +62,7 @@ exports.ArticleName = async (req, res, next) => {
                         [Op.like]: `%${searchValue}%`, // Recherche de nom insensible à la casse
                     },
                 },
-                Sequelize.literal(`LOWER(tags) LIKE '%${searchValue}%'`),
+                Sequelize.literal(`LOWER(tags) LIKE '%${normalizedTag}%'`),
             ]
         },
         attributes: ['id', 'name', 'type', 'miniature', 'data', 'adult', 'createdAt', 'ai', 'imagesCount'],

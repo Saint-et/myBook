@@ -7,11 +7,15 @@
     min-width: 300px;
     max-width: 400px;
     background:  white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: hidden;
+    overflow: auto;
 }
 .sideNav[data-theme="dark"]{
     background-color: $background_semi_black;
+}
+.sideNavContent{
+    width: 100%;
+    padding-bottom: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

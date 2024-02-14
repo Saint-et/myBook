@@ -1,9 +1,14 @@
 import Picture from '../../assets/images/logo.png';
 import { spinner } from '../../utils';
 import { useAppContext } from '../../contexts/UseAppContext';
+import { useNavigate } from 'react-router-dom';
+
 
 const Card_Square_user_list = (props) => {
-    const { localTheme, promiseIdentifiedUser, setHiddenMenu, setHiddenMenuMiniProfil } = useAppContext();
+    
+    const navigate = useNavigate()
+
+    const { localTheme, promiseIdentifiedUser } = useAppContext();
 
 
     if (!props.promise) return (
@@ -20,10 +25,7 @@ const Card_Square_user_list = (props) => {
 
                 {props.promise?.map((user) => (
                     <div style={{ margin: 10, display: 'flex', alignItems: 'center', flexDirection: 'column' }} key={user.id}>
-                        <div onClick={() => {
-                            setHiddenMenu(true)
-                            setHiddenMenuMiniProfil(user)
-                        }} className='card_user' data-theme={localTheme}>
+                        <div onClick={() => {navigate(`/profile/${user.id}/page?type=Illustrations`)}} className='card_user' data-theme={localTheme}>
                             <div style={{ display: 'flex', justifyContent: 'center' }}>
                                 <img onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} style={{ objectPosition: `${50}% ${10}%` }} src={user.imageUrl || Picture} alt='' />
                                 {user.premium == 1 && <div style={{ display: 'flex', flexDirection: 'row-reverse', marginTop: 100 }}>

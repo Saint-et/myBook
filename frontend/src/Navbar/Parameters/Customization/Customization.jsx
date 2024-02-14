@@ -4,6 +4,7 @@ import axios from "axios";
 import { spinner } from '../../../utils';
 import { useAppContext } from '../../../contexts/UseAppContext';
 import Warning from "../../../components/Warning";
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -16,7 +17,12 @@ const Customization = (props) => {
     language,
     setLanguage,
     editePseudo,
-    setEditePseudo } = useAppContext()
+    setEditePseudo,
+    localThemeBackground,
+    themeBackground,
+    setThemeBackground } = useAppContext()
+
+  const { t } = useTranslation();
 
   const [spin, setSpin] = useState(false)
 
@@ -157,25 +163,6 @@ const Customization = (props) => {
 
 
 
-  const updateUser = async () => {
-    setSpin(true)
-    try {
-      await axios.put(`${API_URL}api/eventv/update/user`,
-        {
-          interest: null
-        },
-        { withCredentials: true })
-        .then(() => {
-          setSpin(false)
-          GetMyProfilFromAPI()
-        })
-    } catch (error) {
-
-    }
-
-  };
-
-
   if (promiseIdentifiedUser === false) return null
 
   if (!promiseIdentifiedUser) return (
@@ -187,171 +174,137 @@ const Customization = (props) => {
   return (
     <>
       <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20 }}>
-        <h1 className="title_color">Profile</h1>
+        <h3 className="text" data-background={localThemeBackground} data-theme={localTheme}>{t("all_parameter.title1")}</h3>
       </div>
 
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20 }}>
-        <div className="ctent_arti" style={{ height: 200, maxWidth: 600 }} data-theme={localTheme}>
+      <div style={{ width: '100%', display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
 
-          <h2 id="Access18+">Access 18+</h2>
+        <div className="ctent_arti" style={{ height: 200, margin: 4, maxWidth: 600 }} data-theme={localTheme}>
 
-          <div className='badge_adult' translate='no'>Access 18+</div>
+          <h4 id="Access18+">Access 18+</h4>
 
           <div className="toggle-rect" style={{ marginTop: 10 }}>
             <input type="checkbox" id="AccessAdult" name="AccessAdult" defaultChecked={promiseIdentifiedUser.user.adultAccess} onChange={adultAccess} disabled={checked} />
             <label htmlFor="AccessAdult"></label>
           </div>
 
-          <div><span translate='no' style={{ color: '#ff00dd', fontWeight: 800 }}>Access 18+</span>&nbsp;allows you to view all adult content without going through the verification step. This option will only be visible to you.</div>
+          <div style={{ textAlign: 'center' }}><span translate='no' style={{ color: '#ff00dd', fontWeight: 800 }}>Access 18+</span>&nbsp;{t("all_parameter.adult")}</div>
+
         </div>
+
       </div>
 
       <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20 }}>
-        <Warning />
-        <div className="ctent_arti" style={{ height: 200, maxWidth: 600 }} data-theme={localTheme}>
-
-          <h2>Reviews</h2>
-
-          <div className="toggle-rect" style={{ marginTop: 10 }}>
-            <input type="checkbox" id="Reviews" name="Reviews" />
-            <label htmlFor="Reviews"></label>
-          </div>
-
-          <div style={{ textAlign: 'center' }}>Disable or enable comments on your page.</div>
-        </div>
+        <h3 className="text" data-background={localThemeBackground} data-theme={localTheme}>{t("all_parameter.title2")}</h3>
       </div>
 
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20 }}>
-        <h1 className="title_color">Confidentiality</h1>
-      </div>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
 
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20 }}>
-        <Warning />
-        <div className="ctent_arti" style={{ height: 200, maxWidth: 600 }} data-theme={localTheme}>
-
-          <h2>Accepts instant messages</h2>
+        <div className="ctent_arti" style={{ height: 200, margin: 4, maxWidth: 600 }} data-theme={localTheme}>
+          <Warning />
+          <h4>{t("all_parameter.message_title")}</h4>
 
           <div className="toggle-rect" style={{ marginTop: 10 }}>
             <input type="checkbox" id="instantMessages" name="instantMessages" />
             <label htmlFor="instantMessages"></label>
           </div>
 
-          <div style={{ textAlign: 'center' }}>Swipe your private account so that it does not display the content, but the profile picture, cover, and basic profile elements will still be displayed.</div>
+          <div style={{ textAlign: 'center' }}>{t("all_parameter.message_text")}</div>
         </div>
-      </div>
 
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20 }}>
-        <Warning />
-        <div className="ctent_arti" style={{ height: 200, maxWidth: 600 }} data-theme={localTheme}>
 
-          <h2>Private account</h2>
+        <div className="ctent_arti" style={{ height: 200, margin: 4, maxWidth: 600 }} data-theme={localTheme}>
+          <Warning />
+          <h4>{t("all_parameter.private_title")}</h4>
 
           <div className="toggle-rect" style={{ marginTop: 10 }}>
             <input type="checkbox" id="privateAccount" name="privateAccount" defaultChecked={promiseIdentifiedUser.user.private} onChange={updatePrivate} disabled={checked} />
             <label htmlFor="privateAccount"></label>
           </div>
 
-          <div style={{ textAlign: 'center' }}>Swipe your private account so that it does not display the content, but the profile picture, cover, and basic profile elements will still be displayed.</div>
+          <div style={{ textAlign: 'center' }}>{t("all_parameter.private_text")}</div>
         </div>
-      </div>
 
-
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20 }}>
-        <h1 className="title_color">Account</h1>
       </div>
 
       <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20 }}>
-        <div className="ctent_arti" style={{ height: 200, maxWidth: 600 }} data-theme={localTheme}>
-
-          <h2 id="Access18+">Reset interest</h2>
-
-          <div className='menu_historical' style={{ width: '100%', maxWidth: 300, marginTop: 20 }} data-theme={localTheme}>
-            {!spin ? <div className='button_option' onClick={updateUser} style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme}>Reset</div> :
-              <div style={{ display: 'flex', justifyContent: 'center' }}>
-                {spinner()}
-              </div>}
-          </div>
-        </div>
+        <h3 className="text" data-background={localThemeBackground} data-theme={localTheme}>{t("all_parameter.title3")}</h3>
       </div>
 
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20 }}>
-        <div className="ctent_arti" style={{ height: 300, maxWidth: 600 }} data-theme={localTheme}>
 
-          <h2>Settings account</h2>
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
 
-          <h3>User name</h3>
+
+        <div className="ctent_arti" style={{ height: 300, margin: 4, maxWidth: 600 }} data-theme={localTheme}>
+
+          <h4>{t("all_parameter.user_title")}</h4>
           <input className='input_text' onChange={handleChangePseudo('pseudo')} style={{ width: '100%', maxWidth: 300 }} defaultValue={promiseIdentifiedUser.user.pseudo} data-theme={localTheme} />
 
           <div>{error}</div>
 
-          <div className='menu_historical' style={{ width: '100%', maxWidth: 300, marginTop: 20 }} data-theme={localTheme}>
-            {!spin ? <div className='button_option' onClick={updateUsername} style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme}>Save</div> :
+          <div className='button_option_container' style={{ width: '100%', maxWidth: 300, marginTop: 10 }} data-theme={localTheme}>
+            {!spin ? <div className='button_optionPic_v' onClick={updateUsername} data-theme={localTheme}>{t("save")}</div> :
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {spinner()}
               </div>}
           </div>
 
-          <p>You can change the username, it must contain a minimum of 5 characters to be accepted.</p>
+          <p style={{ textAlign: 'center' }}>{t("all_parameter.user_text")}</p>
 
         </div>
+
       </div>
 
 
+      <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
 
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20 }}>
+        <div className="ctent_arti" style={{ height: 440, margin: 4, maxWidth: 600 }} data-theme={localTheme}>
+          <h4>{t("all_parameter.email_title")}</h4>
 
-        <div className="ctent_arti" style={{ height: 380, maxWidth: 600 }} data-theme={localTheme}>
-          <h2>Change email</h2>
-
-          <h3>Email</h3>
+          <h4>{t("all_parameter.email_sub_title1")}</h4>
           <input className='input_text' type={'email'} onChange={handleChangeEmail('email')} style={{ width: '100%', maxWidth: 300 }} defaultValue={promiseIdentifiedUser.user.email} data-theme={localTheme} />
 
-          <h3>Password</h3>
-          <input className='input_text' type={'password'} autoComplete={"new-password"} onChange={handleChangeEmail('password')} style={{ width: '100%', maxWidth: 300 }} value={editeEmail.password} data-theme={localTheme} />
+          <h4>{t("all_parameter.email_sub_title2")}</h4>
+          <input className='input_text' type={'password'} autoComplete={"new-password"} placeholder="●●●●●●●" onChange={handleChangeEmail('password')} style={{ width: '100%', maxWidth: 300 }} value={editeEmail.password} data-theme={localTheme} />
 
-          <div>This option allows you to change the login email for your account.</div>
-          <div>This email is used as a contact email for other users.</div>
+          <div style={{ textAlign: 'center' }}>{t("all_parameter.email_text")}</div>
 
           <div style={{ color: 'red' }}>{errorEmail}</div>
 
-          <div className='menu_historical' style={{ width: '100%', maxWidth: 300, marginTop: 20 }} data-theme={localTheme}>
-            {!spin ? <div className='button_option' onClick={updateAccountEmail} style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme}>Save</div> :
+          <div className='button_option_container' style={{ width: '100%', maxWidth: 300, marginTop: 10 }} data-theme={localTheme}>
+            {!spin ? <div className='button_optionPic_v' onClick={updateAccountEmail} data-theme={localTheme}>{t("save")}</div> :
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {spinner()}
               </div>}
           </div>
 
         </div>
-      </div>
 
 
+        <div className="ctent_arti" style={{ height: 440, margin: 4, maxWidth: 600 }} data-theme={localTheme}>
+          <h4>{t("all_parameter.security_sub_title")}</h4>
 
+          <h4>{t("all_parameter.security_sub_title1")}</h4>
+          <input className='input_text' autoComplete={"new-password"} placeholder="●●●●●●●" onChange={handleChange('oldPassword')} type={'password'} style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme} />
 
-      <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: 20, marginBottom: 100 }}>
+          <h4>{t("all_parameter.security_sub_title2")}</h4>
+          <input className='input_text' autoComplete={"new-password"} placeholder="●●●●●●●" onChange={handleChange('newPassword')} type={'password'} style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme} />
 
-        <div className="ctent_arti" style={{ height: 440, maxWidth: 600 }} data-theme={localTheme}>
-          <h2>Security</h2>
-
-          <h3>Old password</h3>
-          <input className='input_text' autoComplete={"new-password"} onChange={handleChange('oldPassword')} type={'password'} style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme} />
-
-          <h3>New password</h3>
-          <input className='input_text' autoComplete={"new-password"} onChange={handleChange('newPassword')} type={'password'} style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme} />
-
-          <h3>New password verification</h3>
-          <input className='input_text' autoComplete={"new-password"} onChange={handleChange('newPasswordVerification')} type={'password'} style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme} />
+          <h4>{t("all_parameter.security_sub_title3")}</h4>
+          <input className='input_text' autoComplete={"new-password"} placeholder="●●●●●●●" onChange={handleChange('newPasswordVerification')} type={'password'} style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme} />
 
           <div style={{ color: 'red' }}>{errorSecurity}</div>
           <div>{securityUpdate}</div>
 
-          <div className='menu_historical' style={{ width: '100%', maxWidth: 300, marginTop: 20 }} data-theme={localTheme}>
-            {!spin ? <div className='button_option' onClick={updateAccountSecurity} style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme}>Save</div> :
+          <div className='button_option_container' style={{ width: '100%', maxWidth: 300, marginTop: 10 }} data-theme={localTheme}>
+            {!spin ? <div className='button_optionPic_v' onClick={updateAccountSecurity} data-theme={localTheme}>{t("save")}</div> :
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 {spinner()}
               </div>}
           </div>
 
         </div>
+
       </div>
 
     </>

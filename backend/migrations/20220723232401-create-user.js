@@ -30,6 +30,12 @@ module.exports = {
       resizeImageUrlCover: {
         type: Sequelize.INTEGER,
       },
+      background: {
+        type: Sequelize.STRING,
+      },
+      resizeThemeBackground: {
+        type: Sequelize.INTEGER,
+      },
       pseudo: {
         type: Sequelize.STRING,
       },
@@ -54,13 +60,16 @@ module.exports = {
       private: {
         type: Sequelize.INTEGER,
       },
-      interest: {
-        type: Sequelize.JSON
+      background: {
+        type: Sequelize.STRING
       },
       myTags: {
         type: Sequelize.JSON
       },
       pinnedUsers: {
+        type: Sequelize.JSON
+      },
+      filesBookmark: {
         type: Sequelize.JSON
       },
       createdAt: {

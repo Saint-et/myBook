@@ -20,4 +20,7 @@ router.get('/post/get-post/:id', verification.Url, Ctrl.GetNewsPost);
 // get news files
 router.get('/announcement/best-announcement', Ctrl.GetSomeBestAnnouncement);
 
+// get news files
+router.get('/new-posts/all-posts', Ctrl.GetAllAnnouncement);
+
 module.exports = router;

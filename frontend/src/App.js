@@ -2,12 +2,13 @@ import './sass/style.scss';
 import { Route, Routes } from "react-router-dom";
 import { AppProvider, useAppContext } from './contexts/UseAppContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGlobeEurope } from '@fortawesome/free-solid-svg-icons';
+import { faAngleDoubleUp } from '@fortawesome/free-solid-svg-icons';
 import Home from './layouts/UserProfil/UserProfil';
 import Navbar from './Navbar/Navbar';
 import Login from './Login/Login';
 import Signup from './Login/Signup';
-import { IsLog, URLparameters, URLWorkSpace, URLProfile } from './utils';
+import { IsLog, URLparameters, URLWorkSpace, URLProfile, URLGame, URLShopNavbar } from './utils';
+import { DATA_picv } from './assets/data/data';
 import Customization from './Navbar/Parameters/Customization/Customization';
 import Option from './Navbar/Parameters/Option';
 import Assistance from './Navbar/Parameters/Assistance/Assistance';
@@ -20,12 +21,9 @@ import Contact from './layouts/Contact/Contact';
 import Catalog from './layouts/Catalog/Catalog';
 import Premium from './Navbar/Parameters/Premium/Premium';
 import Send_message from './Navbar/Message/Send_message';
-import Home_profile from './layouts/UserProfil/Home/Home_profile';
 import Statistical from './layouts/UserProfil/Statistical/Statistical';
 import Catalogues from './layouts/UserProfil/Catalogues/Catalogues';
-import Tags from './layouts/WorkSpace/Tags/Tags';
 import Fullscreenimg from './components/Fullscreenimg';
-import MiniProfil from './components/MiniProfil';
 import { useLocation } from 'react-router-dom';
 import News from './layouts/UserProfil/News/News';
 import PageSearch from './layouts/PageSearch/PageSearch';
@@ -39,18 +37,33 @@ import PasswordForgot from './Login/PasswordForgot';
 import PasswordReset from './Login/PasswordReset';
 import PasswordResetSuccess from './Login/PasswordResetSuccess';
 import Condition from './components/condition';
-import Gift from './layouts/WorkSpace/Gift/Gift';
+import Gift from './layouts/WorkSpace/Subscription/Subscription';
 import HelpWorkSpace from './layouts/WorkSpace/HelpWorkSpace';
 import NavbarMenu from './Navbar/NavbarMenu';
 import Systems from './components/systems';
 import Animation from './components/Animation';
-
+import FullscreenimgAnalyse from './components/FullscreenimgAnalyse';
+import Problem_works from './layouts/WorkSpace/Problem/problem_works';
+import Illustrations_open from './layouts/article/illustrations';
+import PageBackground from './components/pageBackground';
+import PubImg from "./assets/images/background.jpg";
+import GameUser from './layouts/GameUser/gameUser';
+import GameEvent from './layouts/GameUser/gameEvent';
+import GameList from './layouts/GameUser/gameList';
+import GameTicket from './layouts/GameUser/gameTicket';
+import GameRanking from './layouts/GameUser/gameRanking';
+import GameWerewolf from './layouts/GameUser/MyGameComponent/gameWerewolf';
+import Shop from './layouts/shop/shop';
+import ShopNavbar from './layouts/shop/shopNavbar';
+import NewPosts from './layouts/newPost/newPosts';
 
 function App() {
+
 
   const location = useLocation().pathname.split("/")
   const Id = location[2];
 
+  
 
   return (
     <>
@@ -60,12 +73,15 @@ function App() {
           <Systems />
           {false && <Interest />}
           <Fullscreenimg />
-          <MiniProfil />
+          <FullscreenimgAnalyse />
+          <PageBackground />
           <NavbarMenu />
           <Navbar IsLog={IsLog} />
           <div className='main'>
+            {URLShopNavbar() ?<ShopNavbar /> : null}
             {URLWorkSpace() ? <OptionWorkSpace /> : null}
             {URLProfile() ? <Home key={Id} /> : null}
+            {URLGame() ? <GameUser /> : null}
             {URLparameters() ? <Option /> : null}
 
             <Routes>
@@ -80,11 +96,11 @@ function App() {
               <Route path="/search-articles/:key" element={<PageSearch key={Id} />} />
 
               <Route path="/" element={<Catalog />} />
+              <Route path="/new-posts" element={<NewPosts />} />
 
-              <Route path="/profile/:id" element={<News key={Id} />} />
-              <Route path="/profile/:id/activities" element={<Home_profile key={Id} />} />
+              <Route path="/profile/:id/:key" element={<News key={Id} />} />
               <Route path="/profile/:id/catalogues/:key" element={<Catalogues key={Id} />} />
-              <Route path="/profile/:id/statistical" element={<Statistical />} />
+              <Route path="/statistical" element={<Statistical />} />
 
               <Route path="/discussions" element={<Message />} />
               <Route path="/discussions/message/:id" element={<Send_message />} />
@@ -92,17 +108,25 @@ function App() {
               <Route path="/contact" element={<Contact />} />
 
               <Route path="/works/file/:id" element={<FilesUpdate key={location[3]} />} />
-              <Route path="/works/files" element={<Files key={location[3]} />} />
+              <Route path="/works/file" element={<Files key={location[3]} />} />
 
               <Route path="/works/library" element={<Groups_files />} />
               <Route path="/works/library/:id" element={<Groups_display />} />
 
-              <Route path="/works/gifts" element={<Gift />} />
-
-              <Route path="/works/tags" element={<Tags key={Id} />} />
+              <Route path="/works/subscriptions" element={<Gift />} />
+              
+              <Route path="/works/problem" element={<Problem_works />} />
 
               <Route path="/works/help" element={<HelpWorkSpace />} />
 
+              <Route path="/file/illustrations/:key" element={<Illustrations_open />} />
+              <Route path={`/${DATA_picv}-game`} element={<GameEvent />} />
+              <Route path={`/${DATA_picv}-game/game-list`} element={<GameList />} />
+              <Route path={`/${DATA_picv}-game/game-ticket`} element={<GameTicket />} />
+              <Route path={`/${DATA_picv}-game/game-ranking`} element={<GameRanking />} />
+              <Route path={`/${DATA_picv}-game/werewolf-attack`} element={<GameWerewolf />} />
+
+              <Route path={`/${DATA_picv}-shop`} element={<Shop />} />
 
               <Route path="/parameters/customization" element={<Customization />} />
               <Route path="/parameters/premium" element={<Premium />} />
@@ -112,14 +136,12 @@ function App() {
               <Route path="*" element={<PageNoFound />} />
 
             </Routes>
+            <div className='cter_sect'>
+                {/*<img className="hovercursor" src={PubImg} style={{ borderRadius: 5, width: '100%', maxWidth: 1000, cursor: 'pointer' }} onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} alt="" />*/}
+            </div>
+          
           </div>
           <Animation/>
-          <div style={{ width: '100%', display: 'flex', justifyContent: 'center', paddingBottom: 50 }}>
-            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-              <FontAwesomeIcon className='title_color' style={{ marginTop: 20, fontSize: 25 }} icon={faGlobeEurope} />
-            </div>
-          </div>
-
         </DndProvider>
       </AppProvider>
     </>

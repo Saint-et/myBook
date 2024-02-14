@@ -1,0 +1,13 @@
+.contextMenu {
+  z-index: 30000;
+  width: 250px;
+  position: fixed;
+  background-color: rgb(255, 255, 255);
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.contextMenu[data-theme="dark"] {
+  background-color: rgb(0, 0, 0);
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+}

@@ -17,21 +17,23 @@
 .badgeBlue {
   color: #ffffff;
   width: max-content;
-  border-radius: 50px;
+  border-radius: 5px;
   display: flex;
   justify-content: center;
   background-color: #0077ff;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 .master {
   color: #ffffff;
   width: 100%;
   max-width: 100px;
   border-radius: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
   display: flex;
   justify-content: center;
-  background-color: #460080;
+  background: linear-gradient(to right, #8e2de2, #4a00e0);
   font-weight: 600;
 }
 .admin {
@@ -39,9 +41,11 @@
   width: 100%;
   max-width: 100px;
   border-radius: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
   display: flex;
   justify-content: center;
-  background-color: #00805a;
+  background: linear-gradient(to right, #00b09b, #96c93d);
   font-weight: 600;
 }
 .badge_adult {
@@ -59,12 +63,11 @@
   color: #ffffff;
   width: 30px;
   font-size: 12px;
-  border-radius: 50px;
+  border-radius: 5px;
   font-size: 14px;
   display: flex;
   justify-content: center;
   background-color: #a0008b;
-  font-weight: 600;
   text-decoration: none;
   padding-left: 5px;
   padding-right: 5px;
@@ -72,13 +75,10 @@
 .AI {
   color: #ffffff;
   width: 30px;
-  font-size: 12px;
-  border-radius: 50px;
-  font-size: 14px;
+  border-radius: 5px;
   display: flex;
   justify-content: center;
   background-color: #800000;
-  font-weight: 600;
   text-decoration: none;
   padding-left: 5px;
   padding-right: 5px;
@@ -111,7 +111,7 @@
   background-color: #800000;
   font-weight: 600;
 }
-.free {
+.standard {
   color: #ffffff;
   width: 100%;
   max-width: 100px;
@@ -138,21 +138,21 @@
   font-weight: 600;
   text-decoration: none;
 }
-@media all and (max-width: 980px) {
-  .adult {
-    font-size: 10px;
-    padding-left: 0px;
-    padding-right: 0px;
-  }
-  .AI {
-    font-size: 10px;
-    padding-left: 0px;
-    padding-right: 0px;
-  }
-  .badge,
-  .badgeBlue {
-    font-size: 12px;
-    padding-left: 2px;
-    padding-right: 2px;
-  }
-}
+//@media all and (max-width: 980px) {
+//  .adult {
+//    font-size: 10px;
+//    padding-left: 0px;
+//    padding-right: 0px;
+//  }
+//  .AI {
+//    font-size: 10px;
+//    padding-left: 0px;
+//    padding-right: 0px;
+//  }
+//  .badge,
+//  .badgeBlue {
+//    font-size: 12px;
+//    padding-left: 2px;
+//    padding-right: 2px;
+//  }
+//}

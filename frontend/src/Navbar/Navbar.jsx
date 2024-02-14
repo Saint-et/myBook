@@ -1,10 +1,10 @@
 import '../sass/components/Navbar.scss';
 import imgProfile from '../assets/images/logo.png';
-import imgRemplace from '../assets/images/papier-peint-paysage-violets.jpg';
+import imgRemplace from '../assets/images/vaisseau-spatial-futuriste-orbite-autour-mysterieuse-planete-dans-galaxie-profonde-generee-par-intelligence-artificielle.jpg';
 import logo from '../assets/images/logo_transparent_banner.png';
 import logoBlack from '../assets/images/logo_transparent_banner_black.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faMagnifyingGlass, faXmark, faCommentDots, faPaperPlane, faMoon, faSun, faBars, faLanguage, faCubes, faGift } from '@fortawesome/free-solid-svg-icons';
+import { faBell, faMagnifyingGlass, faXmark, faCommentDots, faPaperPlane, faMoon, faSun, faBars, faLanguage, faCubes, faGift, faCoins, faImage, faPanorama, faDownload, faBriefcase, faGears, faPowerOff, faBasketShopping, faTicket } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import React, { useState, useRef, useEffect } from "react";
 import { API_URL, SOCKET_URL } from '../config';
@@ -18,12 +18,10 @@ import { Editor, EditorState } from "draft-js";
 import "draft-js/dist/Draft.css";
 import { stateToHTML } from 'draft-js-export-html';
 import { useAppContext } from '../contexts/UseAppContext';
-import Card_list from '../components/Cards/Card_Square_user_list_presentation';
 import Card_announcement from '../components/Cards/Card_announcement';
-import gift from '../assets/icons/boite-cadeau.png';
-import logoWork from '../assets/images/workspace_white.png';
-import logoBlackWork from '../assets/images/workspace_black.png';
 import { useTranslation } from 'react-i18next';
+import img1 from '../assets/background/84391.jpg';
+import Card_Square_user_list_presentation from '../components/Cards/Card_Square_user_list_presentation';
 
 
 const socket = io.connect(SOCKET_URL);
@@ -32,7 +30,9 @@ const Navbar = (props) => {
 
   const { t } = useTranslation();
 
-  const { localTheme: localThemeContext, handleModeEco,activeAnimation, setActiveAnimation,
+  const { localTheme: localThemeContext,
+    isNavbarVisible, setNavbarVisible,
+    handleModeEco, setActiveAnimation,
     animationSelect,
     setLanguageSelect,
     setHiddenMenuSidebare,
@@ -47,7 +47,10 @@ const Navbar = (props) => {
     GetNotifMessageFromAPI,
     promiseUsers,
     GetUsersPopularFromAPI,
-    promiseAnnouncement } = useAppContext()
+    handleThemeBackground,
+    localThemeBackground,
+    promiseAnnouncement,
+    setThemeBackground } = useAppContext()
 
   let localHistoricalJSON = JSON.parse(localStorage.getItem('Historical'))
   let Log = props.IsLog();
@@ -148,6 +151,7 @@ const Navbar = (props) => {
       .then(() => {
         localStorage.removeItem("last-URL-home");
         navigate('/login')
+        setThemeBackground(img1)
         return setPromiseIdentifiedUser(false)
       })
   }
@@ -310,7 +314,6 @@ const Navbar = (props) => {
     }
   }
 
-  const [isNavbarVisible, setNavbarVisible] = useState(true);
   const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
   const scrollThreshold = 50; // Niveau de défilement à partir duquel masquer la barre de navigation
 
@@ -400,18 +403,17 @@ const Navbar = (props) => {
 
   return (
     <>
-      <div className='container_banner_navbar'>
+      <div className={isNavbarVisible ? 'container_banner_navbar' : 'container_banner_navbar active'}>
         <div className='banner_navbar' data-theme={localThemeContext}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', color: '#ec1c24' }}>
-            <div onClick={() => { 
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div onClick={() => {
               setHiddenMenuSidebare(!hiddenMenuSidebare)
-              setActiveAnimation(true) }} style={{ width: 45, height: 30, display: 'flex', fontSize: 20, justifyContent: 'center', alignItems: 'center', borderRadius: 200, marginRight: 90, cursor: 'pointer' }} data-theme={localThemeContext}>
+              setActiveAnimation(true)
+            }} style={{ width: 45, height: 30, display: 'flex', fontSize: 20, justifyContent: 'center', alignItems: 'center', borderRadius: 200, marginRight: 90, cursor: 'pointer' }} data-theme={localThemeContext}>
               <FontAwesomeIcon icon={faBars} />
             </div>
             <Link to={'/'} style={{ display: 'flex', width: '100%', alignItems: 'center', maxWidth: 200, justifyContent: 'center' }}>
-              {localThemeContext === null && <img className='logo_event' src={logoBlack} alt="" onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} />}
-              {localThemeContext === 'default' && <img className='logo_event' src={logoBlack} alt="" onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} />}
-              {localThemeContext === 'dark' && <img className='logo_event' src={logo} alt="" onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} />}
+              <img className='logo_event' src={logo} alt="" onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} />
             </Link >
           </div>
 
@@ -452,96 +454,58 @@ const Navbar = (props) => {
                 }}></div>}
             </div>
             <div onClick={() => { setHistorical(true) }} className='button_optionNav button_optionNavPc' style={{ width: '100%' }} data-theme={localTheme}><FontAwesomeIcon icon={faMagnifyingGlass} /></div>
-            <div className='button_optionNav' style={{ width: '100%' }} data-theme={localTheme}><FontAwesomeIcon icon={faGift} />
-              <div className='center_element'
-                style={{
-                  position: 'absolute',
-                  display: 'flex',
-                  alignItems: 'center',
-                  marginLeft: 25,
-                  borderRadius: 100,
-                  height: 10, width: 10,
-                  marginBottom: 25,
-                  fontSize: 14,
-                  background: '#ec1c24'
-                }}></div>
-            </div>
             <div className='button_optionNav' onClick={handlehidden}><img onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} className='Profile_picture_nav' src={promiseIdentifiedUser.user.imageUrl || imgProfile} alt="" /></div>
           </div>
         </div>
 
         {hiddenMenu && <div className='blanket_nav animation' style={{ display: 'flex', justifyContent: 'flex-start', flexDirection: 'column' }} >
-          <RemoveScroll removeScrollBar={false} ref={wrapperRef} className='menu_navbar menu_navbar_navMobile menu_navbar_navPc scrollbar open-elementHeightPage' style={{ overflow: 'auto' }} data-theme={localThemeContext}>
-            <div style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 5 }}>
-              <div style={{ display: 'flex', justifyContent: 'start' }}>
+          <RemoveScroll removeScrollBar={false} ref={wrapperRef} className='menu_navbar menu_navbar_navMobile menu_navbar_navPc open-elementHeightPage scrollbar' data-theme={localTheme}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <Link onClick={() => {
+                setHiddenMenu(false)
+              }} to={localStorage.getItem("last-URL-home") || `/profile/${promiseIdentifiedUser.user.id}/page?type=Illustrations`} style={{ backgroundImage: `url(${promiseIdentifiedUser.user.imageUrlCover || imgRemplace})`, backgroundPosition: `50% ${promiseIdentifiedUser.user.resizeImageUrlCover}%`, borderRadius: 15 }} onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} className='CoverImage FlexEmbed FlexEmbed--2by1'>
+              </Link>
+              <Link className='text' onClick={() => {
+                setHiddenMenu(false)
+              }} style={{ zIndex: 10, textDecoration: 'none' }} to={localStorage.getItem("last-URL-home") || `/profile/${promiseIdentifiedUser.user.id}/page?type=Illustrations`} data-theme={localThemeContext}>
+                <img style={{ cursor: 'pointer', width: 100, height: 100, borderRadius: '100%', marginTop: -100 }} onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} className='Profile_picture_nav hovercursor' src={promiseIdentifiedUser.user.imageUrl || imgProfile} alt="" />
+                <div className='title_color' style={{ textAlign: 'center', fontSize: 18, fontWeight: 800 }} translate='no'>{promiseIdentifiedUser.user.pseudo}</div>
+              </Link>
+              <div style={{ display: 'flex', justifyContent: 'center', marginTop: 10 }}>
                 <div onClick={handleTheme} className='buttonCircle' style={{ width: 23, height: 23, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 15, marginRight: 10 }} data-theme={localTheme}>
                   {localTheme === null && <FontAwesomeIcon icon={faMoon} />}
                   {localTheme === 'default' && <FontAwesomeIcon icon={faMoon} />}
                   {localTheme === 'dark' && <FontAwesomeIcon icon={faSun} />}
                 </div>
-                <div className='buttonCircle' onClick={handleModeEco} style={{ color: animationSelect === 'eco'? '#00aa00' : '#ec1c24' , width: 23, height: 23, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 15, marginRight: 10 }} data-theme={localTheme}>
+                <div className='buttonCircle' onClick={handleThemeBackground} style={{ color: localThemeBackground === 'off' ? '#00aa00' : '#ec1c24', width: 23, height: 23, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 15, marginRight: 10 }} data-theme={localTheme}>
+                  <FontAwesomeIcon icon={faPanorama} />
+                </div>
+                <div className='buttonCircle' onClick={handleModeEco} style={{ color: animationSelect === 'eco' ? '#00aa00' : '#ec1c24', width: 23, height: 23, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 15, marginRight: 10 }} data-theme={localTheme}>
                   <FontAwesomeIcon icon={faCubes} />
                 </div>
-                <div onClick={() => { 
+                <div onClick={() => {
                   setHiddenMenu(false)
-                  setLanguageSelect(null) }} className='buttonCircle' style={{ width: 23, height: 23, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 15, marginRight: 10 }} data-theme={localTheme}>
+                  setLanguageSelect(null)
+                }} className='buttonCircle' style={{ width: 23, height: 23, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 15, marginRight: 10 }} data-theme={localTheme}>
                   <FontAwesomeIcon icon={faLanguage} />
                 </div>
               </div>
-              {promiseIdentifiedUser.user.premium == 1 && <Link onClick={() => {
-                setNotification(false)
-                setHiddenMenu(!hiddenMenu)
-              }} to={'/parameters/premium'} className='premium' style={{ marginBottom: 0 }} translate='no'>Premium</Link>}
-              {promiseIdentifiedUser.user.premium == 0 && <Link onClick={() => {
-                setNotification(false)
-                setHiddenMenu(!hiddenMenu)
-              }} to={'/parameters/premium'} className='free' style={{ marginBottom: 0 }} translate='no'>Free</Link>}
-              <div style={{ display: 'flex', alignItems: 'center' }}>
-                <div className='title_color' style={{ margin: 0 }}>
-                  <img style={{ width: '100%', height: 40, objectFit: 'contain' }} src={
-                    localTheme === null && logoBlack ||
-                    localTheme === 'dark' && logo ||
-                    localTheme === 'default' && logoBlack
-                  } alt="" onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} />
-                </div>
-              </div>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <Link onClick={() => {
-                  setHiddenMenu(false)
-                }} to={localStorage.getItem("last-URL-home") || `/profile/${promiseIdentifiedUser.user.id}`} style={{ backgroundImage: `url(${promiseIdentifiedUser.user.imageUrlCover || imgRemplace})`, backgroundPosition: `50% ${promiseIdentifiedUser.user.resizeImageUrlCover}%`, borderRadius: 15 }} onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} className='CoverImage FlexEmbed FlexEmbed--2by1'>
-                </Link>
-              <Link className='text' onClick={() => {
-                setHiddenMenu(false)
-              }} style={{ zIndex: 10, textDecoration: 'none' }} to={localStorage.getItem("last-URL-home") || `/profile/${promiseIdentifiedUser.user.id}`} data-theme={localThemeContext}>
-                <img style={{ cursor: 'pointer', width: 100, height: 100, borderRadius: '100%', marginTop: -50}} onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} className='Profile_picture_nav' src={promiseIdentifiedUser.user.imageUrl || imgProfile} alt="" />
-                <div className='title_color' style={{ textAlign: 'center', fontSize: 18, fontWeight: 800 }} translate='no'>{promiseIdentifiedUser.user.pseudo}</div>
-              </Link>
-              <div className='button_option_container' style={{ width: '90%', marginTop: 20 }} data-theme={localTheme}>
-                <Link className='button_optionNav' onClick={() => {
+              <div className='button_option_container hovercursor' style={{ width: '90%', marginTop: 10 }} data-theme={localTheme}>
+                <Link className='button_option' onClick={() => {
                   setHiddenMenu(false)
                 }} to={localStorage.getItem("last-URL-workplace") || '/works/files'} data-theme={localTheme} >
-                  {localTheme === null && <img src={logoBlackWork} style={{ height: 25 }} alt="" onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} />}
-                  {localTheme === 'default' && <img src={logoBlackWork} style={{ height: 25 }} alt="" onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} />}
-                  {localTheme === 'dark' && <img src={logoWork} style={{ height: 25 }} alt="" onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} />}
+                  <FontAwesomeIcon style={{ marginRight: 5 }} icon={faBriefcase} />{t('workspace')}
                 </Link>
-                <Link className='button_optionNav' onClick={() => {
-                  setHiddenMenu(false)
-                }} to={'/contact'} data-theme={localTheme}>{t('follewers')}</Link>
-                <Link className='button_optionNav' onClick={() => {
+              </div>
+
+              <div className='button_option_container hovercursor' style={{ width: '90%', marginTop: 10 }} data-theme={localTheme}>
+                <Link className='button_option' onClick={() => {
                   setNotification(false)
                   setHiddenMenu(!hiddenMenu)
-                }} to={'/parameters/customization'} data-theme={localTheme}>{t('parameter')}</Link>
-                <Link className='button_optionNav' onClick={() => {
-                  setNotification(false)
-                  setHiddenMenu(!hiddenMenu)
-                }} to={'/parameters/assistance'} style={{ color: '#0058aa' }} data-theme={localTheme}>{t('assistance')}</Link>
-                <Link className='button_optionNav' onClick={() => {
-                  setNotification(false)
-                  setHiddenMenu(!hiddenMenu)
-                }} to={'/condition'} data-theme={localTheme}>{t('terms_of_use')}</Link>
-                {promiseIdentifiedUser.user.isAdmin == 1 && <div className='button_optionAdmin' data-theme={localTheme}>{t('admin')}</div>}
-                <div className='button_optionNav' onClick={handleLogout} style={{ color: 'red' }} data-theme={localTheme}>{t('logout')}</div>
+                }} to={'/parameters/customization'} data-theme={localTheme}><FontAwesomeIcon style={{ marginRight: 5 }} icon={faGears} />{t('parameter')}</Link>
+              </div>
+              <div className='button_option_container hovercursor' style={{ width: '90%', marginTop: 20 }} data-theme={localTheme}>
+                <div className='button_optionRed' onClick={handleLogout} data-theme={localTheme}><FontAwesomeIcon style={{ marginRight: 5 }} icon={faPowerOff} />{t('logout')}</div>
               </div>
             </div>
           </RemoveScroll></div>}
@@ -637,62 +601,62 @@ const Navbar = (props) => {
         </div>}
       </div>
 
-      {historical && <div className='blanket_nav animation' style={{ display: 'flex', justifyContent: 'flex-start', flexDirection: 'column' }} >
-        <RemoveScroll ref={wrapperRef} removeScrollBar={true} className='menu_navbar menu_navbar_navMobile menu_navbar_navPc scrollbar open-elementHeightPage' style={{ width: '100%', maxWidth: 700, overflow: 'auto', alignSelf: 'center' }} data-theme={localTheme}>
-                <div style={{ display: 'flex', width: '100%', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
-                  <input ref={inputRef} value={editSearch} onClick={() => { setHistorical(true) }} onKeyDown={handleChangeSearch} onChange={handleChangeSearch} className='input_text' placeholder={t('search')} type="text" name="" id="" data-theme={localThemeContext} />
-                  {editSearch !== "" && <div className='button_option_container' style={{ width: '100%', maxWidth: 100, marginLeft: 10, display: 'flex', background: 'none' }} data-theme={localTheme}>
-                    <div className='button_option' onClick={SearchUserName} style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme}><FontAwesomeIcon icon={faMagnifyingGlass} /></div>
-                    <div className='button_option' onClick={() => { setEditSearch('') }} style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme}><FontAwesomeIcon icon={faXmark} /></div>
-                  </div>}
+      {historical && <div className={isNavbarVisible ? 'blanket_nav animation' : 'blanket_nav active animation'} style={{ display: 'flex', justifyContent: 'flex-start', flexDirection: 'column', zIndex: 20000 }} >
+        <RemoveScroll ref={wrapperRef} removeScrollBar={false} className='menu_navbar menu_navbar_navMobile menu_navbar_navPc scrollbar open-elementHeightPage' style={{ width: '100%', maxWidth: 700, overflow: 'auto', alignSelf: 'center' }} data-theme={localTheme}>
+          <div style={{ display: 'flex', width: '100%', justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
+            <input ref={inputRef} value={editSearch} onClick={() => { setHistorical(true) }} onKeyDown={handleChangeSearch} onChange={handleChangeSearch} className='input_text' placeholder={t('search')} type="text" name="" id="" data-theme={localThemeContext} />
+            {editSearch !== "" && <div className='button_option_container' style={{ width: '100%', maxWidth: 100, marginLeft: 10, display: 'flex', background: 'none' }} data-theme={localTheme}>
+              <div className='button_option' onClick={SearchUserName} style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme}><FontAwesomeIcon icon={faMagnifyingGlass} /></div>
+              <div className='button_option' onClick={() => { setEditSearch('') }} style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme}><FontAwesomeIcon icon={faXmark} /></div>
+            </div>}
+          </div>
+          {editSearch === "" ?
+            <>
+              <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+                <div className='title_color' style={{ margin: 5 }}>- Historical</div>
+                <div className='button_optionRed' style={{ borderRadius: 5, fontSize: 14, height: 20, paddingLeft: 5, paddingRight: 5 }} onClick={() => {
+                  localStorage.removeItem("Historical")
+                  setHistorical(false)
+                }} data-theme={localThemeContext}>
+                  {t('delete')}
                 </div>
-                {editSearch === "" ?
-                  <>
-                    <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-                      <div className='title_color' style={{ margin: 5 }}>- Historical</div>
-                      <div className='button_optionRed' style={{ borderRadius: 5, fontSize: 14, height: 20, paddingLeft: 5, paddingRight: 5 }} onClick={() => {
-                        localStorage.removeItem("Historical")
-                        setHistorical(false)
-                      }} data-theme={localThemeContext}>
-                        {t('delete')}
-                      </div>
-                    </div>
-                    <div className='button_option_container' style={{height: '100%', minHeight: 150}} data-theme={localThemeContext}>
-                      {localHistoricalJSON ? <div className='scrollbar' style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
-                        {localHistoricalJSON?.map((promise) => (
-                          <Link to={`/${location == 'search-articles' ? 'search-articles' : null || location == 'search-users' ? 'search-users' : null || 'search-articles'}/${promise}`} style={{ paddingTop: 5, paddingBottom: 5 }} className='button_option' translate='no' onClick={() => {
-                            handleClick(promise)
-                            SearchTags(promise)
-                          }} data-theme={localThemeContext} key={promise}>{promise.charAt(0).toUpperCase() + promise.slice(1)}</Link>
-                        ))}
-                      </div> : <div className='title_color' style={{ textAlign: 'center', height: 50 }}>No historical</div>}
-                    </div>
-                    <div className='title_color' style={{ margin: 5 }}>- Some announcements</div>
-                    <div style={{height: '100%'}}>
-                    <Card_announcement promise={promiseAnnouncement} button={true} />
-                    </div>
-                    <div className='title_color' style={{ margin: 5 }}>- Most populars users</div>
-                    <div style={{height: '100%'}}>
-                    <Card_list promise={promiseUsers.promise} />
-                    </div>
-                  </>
-                  :
-                  <>
-                    <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
-                      <h3 className='title_color' style={{ margin: 0 }}>- Historical</h3>
-                    </div>
-                    <div className='button_option_container' data-theme={localThemeContext}>
-                      {promiseSearchTags.length !== 0 ? <div className='scrollbar' style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', overflowY: 'overlay' }}>
-                        {promiseSearchTags?.map((promise) => (
-                          <Link to={`/${location == 'search-articles' ? 'search-articles' : null || location == 'search-users' ? 'search-users' : null || 'search-articles'}/${promise.tag}`} style={{ paddingTop: 5, paddingBottom: 5 }} className='button_option animation' translate='no' onClick={() => {
-                            handleClick(promise.tag)
-                            SearchUserNameAPI(promise.tag)
-                          }} data-theme={localThemeContext} key={promise.tag}>{promise.tag.charAt(0).toUpperCase() + promise.tag.slice(1)}</Link>
-                        ))}
-                      </div> :
-                        <div className='title_color' style={{ textAlign: 'center', height: 50 }}>No results</div>}
-                    </div>
-                  </>}
+              </div>
+              <div className='button_option_container' style={{ height: '100%', minHeight: 150 }} data-theme={localThemeContext}>
+                {localHistoricalJSON ? <div className='scrollbar' style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', overflow: 'auto' }}>
+                  {localHistoricalJSON?.map((promise) => (
+                    <Link to={`/${location == 'search-articles' ? 'search-articles' : null || location == 'search-users' ? 'search-users' : null || 'search-articles'}/${promise}`} style={{ paddingTop: 5, paddingBottom: 5 }} className='button_option' translate='no' onClick={() => {
+                      handleClick(promise)
+                      SearchTags(promise)
+                    }} data-theme={localThemeContext} key={promise}>{promise.charAt(0).toUpperCase() + promise.slice(1)}</Link>
+                  ))}
+                </div> : <div className='title_color' style={{ textAlign: 'center', height: 50 }}>No historical</div>}
+              </div>
+              <div className='title_color' style={{ margin: 5 }}>- Some announcements</div>
+              <div style={{ height: '100%' }}>
+                <Card_announcement promise={promiseAnnouncement} button={true} />
+              </div>
+              <div className='title_color' style={{ margin: 5 }}>- Most populars users</div>
+              <div style={{ height: '100%' }}>
+                <Card_Square_user_list_presentation promise={promiseUsers.promise} />
+              </div>
+            </>
+            :
+            <>
+              <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', marginBottom: 10 }}>
+                <h3 className='title_color' style={{ margin: 0 }}>- Historical</h3>
+              </div>
+              <div className='button_option_container' data-theme={localThemeContext}>
+                {promiseSearchTags.length !== 0 ? <div className='scrollbar' style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', overflowY: 'overlay' }}>
+                  {promiseSearchTags?.map((promise) => (
+                    <Link to={`/${location == 'search-articles' ? 'search-articles' : null || location == 'search-users' ? 'search-users' : null || 'search-articles'}/${promise.tag}`} style={{ paddingTop: 5, paddingBottom: 5 }} className='button_option animation' translate='no' onClick={() => {
+                      handleClick(promise.tag)
+                      SearchUserNameAPI(promise.tag)
+                    }} data-theme={localThemeContext} key={promise.tag}>{promise.tag.charAt(0).toUpperCase() + promise.tag.slice(1)}</Link>
+                  ))}
+                </div> :
+                  <div className='title_color' style={{ textAlign: 'center', height: 50 }}>No results</div>}
+              </div>
+            </>}
         </RemoveScroll>
       </div>}
 

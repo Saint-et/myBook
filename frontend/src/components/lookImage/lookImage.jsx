@@ -1,29 +1,30 @@
 
 import './lookImage.scss';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useLayoutEffect, unityInstance } from 'react';
 import { useRef } from 'react';
-import { Zoom } from 'react-slideshow-image';
-
-
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const LookImage = (props) => {
 
+    //const navigate = useNavigate()
+    const cancel = useRef();
     const containerRef = useRef(null);
-    const imageRef = useRef(null);
+    const imageRef = useRef() || undefined;
+
     const [zoomLevel, setZoomLevel] = useState(1);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [isDragging, setIsDragging] = useState(false);
     const [isAnimated, setIsAnimated] = useState(true);
     const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
 
+    const navigate = useNavigate()
 
-    const minZoomT = 0.600;
+
+    const minZoomT = 0.6;
     const minZoom = 1;
     const maxZoom = 3;
 
     const handleMouseWheel = (e) => {
-
-
 
         const newZoomLevel = e.deltaY < 0 ? zoomLevel + 0.1 : zoomLevel - 0.1;
 
@@ -35,18 +36,15 @@ const LookImage = (props) => {
 
             setZoomLevel(newZoomLevel);
 
-
-            if (newZoomLevel < minZoom) {
+            if (newZoomLevel <= minZoom) {
                 setPosition({ x: 0, y: 0 });
             } else {
-
-                if (e.deltaY > 0) {
-                    setPosition({ x: position.x / 1.5, y: position.y / 1.5 });
+                if (newZoomLevel < zoomLevel) {
+                    setPosition({ x: position.x / 1.3, y: position.y / 1.3 });
                 }
             }
 
         }
-
 
 
         if (minZoom < newZoomLevel) return;
@@ -59,12 +57,36 @@ const LookImage = (props) => {
 
     };
 
-
     const handleMouseDown = (e) => {
         e.preventDefault();
         setIsDragging(true);
         setIsAnimated(false)
         setStartPosition({ x: e.clientX, y: e.clientY });
+    };
+
+    const handleTouchStart = (e) => {
+        //e.preventDefault();
+        const touch = e.touches[0];
+        setTimeout(() => {
+            setIsDragging(true);
+        }, 200);
+        setIsAnimated(true)
+        if (e.touches.length === 2) {
+            if (zoomLevel === 3) {
+                setZoomLevel(1)
+                setPosition({ x: 0, y: 0 })
+            }
+            else if (zoomLevel === 1) {
+                setZoomLevel(1.5)
+            }
+            else if (zoomLevel === 1.5) {
+                setZoomLevel(2)
+            }
+            else if (zoomLevel === 2) {
+                setZoomLevel(3)
+            }
+        }
+        setStartPosition({ x: touch.clientX, y: touch.clientY });
     };
 
 
@@ -87,6 +109,18 @@ const LookImage = (props) => {
         const newPosY = Math.min(Math.max(position.y + dy, -deltaY / 2), deltaY / 2);
 
         setStartPosition({ x: e.clientX, y: e.clientY });
+
+        if (imageRect.height < containerRect.height && imageRect.width < containerRect.width) {
+            if (imageRect.width < containerRect.width && imageRect.height < containerRect.height) {
+                return setPosition({ x: 0, y: 0 });
+            }
+            if (imageRect.width < containerRect.width) {
+                return setPosition({ x: 0, y: newPosY });
+            }
+            if (imageRect.height < containerRect.height) {
+                return setPosition({ x: newPosX, y: 0 });
+            }
+        }
 
         if (imageRect.height > containerRect.height) {
             if (imageRect.width < containerRect.width) {
@@ -118,14 +152,64 @@ const LookImage = (props) => {
         };
     };
 
+    const handleTouchMove = (e) => {
+        //if (zoomLevel === 1 || !isDragging || minZoom > zoomLevel) return
+
+        //e.preventDefault();
+
+        if (e.touches.length !== 2 && minZoom < zoomLevel) {
+            setIsAnimated(false)
+            //setIsDragging(true)
+            const touch = e.touches[0];
+
+            const imageRect = imageRef.current.getBoundingClientRect();
+            const containerRect = containerRef.current.getBoundingClientRect();
+
+            const deltaX = imageRect.width - containerRect.width;
+            const deltaY = imageRect.height - containerRect.height;
+
+
+            const dx = touch.clientX - startPosition.x;
+            const dy = touch.clientY - startPosition.y;
+            // Calculer les nouvelles valeurs x et y en prenant en compte les limites du cadre
+            const newPosX = Math.min(Math.max(position.x + dx, -deltaX / 2), deltaX / 2);
+            const newPosY = Math.min(Math.max(position.y + dy, -deltaY / 2), deltaY / 2);
+
+            setStartPosition({ x: touch.clientX, y: touch.clientY });
+
+            if (imageRect.height < containerRect.height && imageRect.width < containerRect.width) {
+                if (imageRect.width < containerRect.width && imageRect.height < containerRect.height) {
+                    return setPosition({ x: 0, y: 0 });
+                }
+                if (imageRect.width < containerRect.width) {
+                    return setPosition({ x: 0, y: newPosY });
+                }
+                if (imageRect.height < containerRect.height) {
+                    return setPosition({ x: newPosX, y: 0 });
+                }
+            }
+
+            if (imageRect.height < containerRect.height) {
+                setPosition({ x: newPosX, y: 0 });
+            } else {
+                setPosition({ x: newPosX, y: newPosY });
+
+            }
+
+
+        }
+
+    }
+    const handletouchEnd = () => {
+        //setZoomLevel(1)
+        setIsDragging(false);
+        setIsAnimated(true)
+    };
 
     const handleMouseUp = () => {
         setIsAnimated(true)
         setIsDragging(false);
-
     };
-
-
 
 
     function useOutsideAlerter(ref) {
@@ -139,7 +223,6 @@ const LookImage = (props) => {
                     setPosition({ x: 0, y: 0 });
                     setZoomLevel(1);
                     setIsDragging(false)
-
                 }
             }
             // Bind the event listener
@@ -153,31 +236,103 @@ const LookImage = (props) => {
 
     useOutsideAlerter(containerRef);
 
+
+    const handleDoubleClick = (e) => {
+        if (zoomLevel > 1) {
+            setZoomLevel(1)
+            return setPosition({ x: 0, y: 0 })
+        }
+
+        // Clic sur l'élément lui-même
+        props.setFullScreenImg()
+        setPosition({ x: 0, y: 0 });
+        setZoomLevel(1);
+        setIsDragging(false)
+
+
+    }
+
     const [width, setWidth] = useState('')
     const [height, setHeight] = useState('')
 
+
+
     const imageSize = () => {
-        if (imageRef.current && containerRef.current) {
-            const imageRect = imageRef.current.getBoundingClientRect();
-            const containerRect = containerRef.current.getBoundingClientRect();
+        if (zoomLevel === 1) {
+            if (imageRef.current && containerRef.current) {
+                //Cancel.current.animationFrameId.requestAnimationFrame(() => {
+                const imageRect = imageRef.current.getBoundingClientRect();
+                //const containerRect = containerRef.current.getBoundingClientRect();
 
-            // vertical
-            if (imageRect.width < containerRect.width) {
-                setWidth('max-content')
-                setHeight('100%')
+                //console.log(window.innerWidth, window.innerHeight);
 
-            } else {
-                setHeight('max-content')
-                setWidth('100%')
+                //console.log({width: imageRect.width}, {height: imageRect.height});
+
+                //setHeight('100%')
+                //setWidth('100%')
+                
+                if (imageRect.width < imageRect.height) {
+                    //console.log(1);
+                    setWidth('max-content')
+                    setHeight('100%')
+                }
+                if (imageRect.width > imageRect.height) {
+                    //console.log(2);
+                    setHeight('max-content')
+                    setWidth('100%')
+                    
+                }
+                if (imageRect.width == imageRect.height) {
+                    //console.log(3);
+                    setHeight('100%')
+                    setWidth('max-content')
+                }
+
+                //if (window.innerWidth < 980) {
+                //    //setWidth('100%')
+                //    //return setHeight('max-content')
+                //    if (imageRect.height > imageRect.width) {
+                //        //setWidth('max-content')
+                //        //setHeight('100%')
+                //        console.log(1);
+                //        setWidth('100%')
+                //        setHeight('100%')
+                //    } else {
+                //        //setHeight('max-content')
+                //        //setWidth('100%')
+                //        console.log(2);
+                //        setWidth('100%')
+                //        setHeight('max-content')
+                //    }
+                //} else {
+                //    if (imageRect.height > imageRect.width) {
+                //        //setWidth('max-content')
+                //        //setHeight('100%')
+                //        //console.log(1);
+                //        setWidth('max-content')
+                //        setHeight('100%')
+                //    } else {
+                //        //setHeight('max-content')
+                //        //setWidth('100%')
+                //        //console.log(2);
+                //        setWidth('100%')
+                //        setHeight('max-content')
+                //    }
+                //}
             }
+
+
+            //requestAnimationFrame(imageSize);
+            //})
         }
     };
 
+    //console.log(width);
+    //console.log(height);
+
     useEffect(() => {
         imageSize();
-        // Appelez imageSize() une fois lors du montage initial
-        // Surveillez les changements de fullScreenImg
-    }, [props.fullScreenImg, imageRef, containerRef]);
+    }, []);
 
 
     return (
@@ -189,14 +344,23 @@ const LookImage = (props) => {
                 onMouseUp={handleMouseUp}
                 onMouseMove={handleMouseMove}
                 onMouseOut={handleMouseUp}
+                onDoubleClick={handleDoubleClick}
+
+
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handletouchEnd}
+                onTouchCancel={(e) => {
+                    e.preventDefault();
+                    props.setFullScreenImg(null)
+                }}
                 style={{
                     cursor: minZoom < zoomLevel ? 'all-scroll' : 'default'
                 }}
             >
 
+                <img loading="lazy"
 
-
-                <img
                     onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()}
                     ref={imageRef}
                     src={props.fullScreenImg || props.picture}
@@ -211,7 +375,6 @@ const LookImage = (props) => {
                         overflow: 'clip'
                     }}
                 />
-
             </div>
         </>
     )

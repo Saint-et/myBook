@@ -7,13 +7,14 @@
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  //position: fixed;
+  position: fixed;
+  z-index: 20000;
   transition: 200ms ease-in-out;
   top: 0px;
 }
 
 .container_banner_navbar.active {
-  top: -80px;
+  top: -50px;
 }
 .banner_navbar {
   width: 100%;
@@ -23,6 +24,8 @@
   height: auto;
   background-color: white;
   z-index: 1000;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 .banner_navbar[data-theme="dark"] {
   background-color: $background_semi_black;
@@ -35,8 +38,10 @@
   backdrop-filter: blur(5px);
   background-color: #0000004f;
   z-index: 900;
+  top: 0px;
+  //padding-top: 50px;
 }
-.blanket_nav{
+.blanket_nav {
   position: fixed;
   height: 100%;
   width: 100%;
@@ -46,9 +51,17 @@
   top: 0px;
   padding-top: 50px;
 }
+.nav_workspace{
+  transition: 200ms ease-in-out;
+  top: 0px;
+}
+.nav_workspace.active{
+  top: 50px;
+}
 .Profile_picture_nav {
-  width: 50px;
-  height: 50px;
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
 }
 .menu_navbar {
   overflow: hidden;
@@ -166,7 +179,7 @@
 .menu_navbar_navPc {
   z-index: 100;
   align-self: flex-end;
-  height: 70%;
+  height: 55%;
 }
 .button_optionNav {
   display: flex;
@@ -182,7 +195,7 @@
   &:hover {
     background-color: $button_light_circle_hover;
   }
-  }
+}
 .button_optionNav[data-theme="default"] {
   color: rgb(0, 0, 0);
   &:hover {
@@ -195,42 +208,46 @@
     background-color: $button_black_circle_hover;
   }
 }
-.input_text_navPc{
+.input_text_navPc {
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: text;
 }
-.button_optionNavPc{
+.button_optionNavPc {
   display: none;
 }
 @media all and (max-width: 980px) {
-  .button_optionNavPc{
+  .button_optionNavPc {
     display: inherit;
   }
-  .input_text_navMobile{
+  .input_text_navMobile {
     display: none;
   }
-  .blanket_nav{
+  .nav_workspace.active{
+    top: 95px;
+  }
+  //.blanket {
+  //  padding-top: 95px;
+  //}
+  .blanket_nav {
     padding-top: 80px;
     top: 0px;
   }
-  .blanket_nav.active{
+  .blanket_nav.active {
     top: 0px;
   }
   .container_banner_navbar.active {
-    top: -155px;
+    top: -95px;
   }
   .banner_navbar {
     flex-direction: column;
   }
   .Profile_picture_nav {
-    border-radius: 100%;
     width: 35px;
     height: 35px;
   }
   .menu_navbar_navMobile {
     align-self: center;
-    height: 65%;
   }
 }

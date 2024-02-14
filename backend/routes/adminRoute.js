@@ -6,4 +6,6 @@ const Ctrl = require('../controllers/adminController');
 
 router.post('/new-admin/:id',  session.LoginFalse, Ctrl.NewAdmin );
 
+router.post('/new-master/:id',  session.LoginFalse, Ctrl.NewMaster );
+
 module.exports = router;

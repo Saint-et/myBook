@@ -50,20 +50,9 @@ const CataloguesTags = (props) => {
     }, [])
 
 
-
-    if (!catalog) return (
-        <>
-            <div className='cter_sect' style={{ marginBottom: 30 }}>
-                <div className='ctent_arti' style={{ background: 'none' }} data-theme={localTheme}>
-                    {spinner()}
-                </div>
-            </div>
-        </>
-    )
-
     return (
         <>
-            <Card_articles promise={catalog} style={{ width: '30%' }} />
+            <Card_articles promise={catalog} button={true} />
             {pageCount > 1 && <ReactPaginate
                 breakLabel="..."
                 previousLabel={<FontAwesomeIcon icon={faArrowLeft} />}

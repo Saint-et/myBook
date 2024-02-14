@@ -5,14 +5,13 @@ const User = require("./models/user");
 const Notification = require("./models/notifications");
 const NotificationMessage = require("./models/notificationsMessage");
 const server = http.createServer(app);
-require("dotenv").config({path: "./env/.env"});
-
+require("dotenv").config({ path: "./env/.env" });
 
 const io = new Server(server, {
-    cors: {
-      origin: `${process.env.HOST}`,
-      methods: ["GET", "POST"],
-    },
+  cors: {
+    origin: `${process.env.HOST}`,
+    methods: ["GET", "POST"],
+  },
 });
 
 const socketRoutes = require('./routes/socket');
@@ -20,19 +19,21 @@ const socketRoutes = require('./routes/socket');
 
 
 io.on("connection", (socket) => {
-  
+
   socket.on('event-created', user => {
-      const build = Notification.build({
-        adminId: user.session,
-        notifId: `${user.session}-${user.id}-Add`,
-        forUser: user.id,
-        data: 'started following you'
+    const build = Notification.build({
+      adminId: user.session,
+      notifId: `${user.session}-${user.id}-Add`,
+      forUser: user.id,
+      data: user.data
+    })
+    build.save()
+      .then(() => {
+        io.emit(user.id);
       })
-      build.save()
       .catch(() => {
         return null
       })
-      io.emit(user.id);
   });
 
   socket.on('message-created', (promise) => {
@@ -53,10 +54,10 @@ io.on("connection", (socket) => {
         users: `${promise.sessionUserId}${promise.userId}`
       })
       build.save()
-      .catch(() => {
-        NotificationMessage.update({ text: promise.text }, {where : { users: `${promise.sessionUserId}${promise.userId}` }})
-        io.emit(promise.userId);
-      })
+        .catch(() => {
+          NotificationMessage.update({ text: promise.text }, { where: { users: `${promise.sessionUserId}${promise.userId}` } })
+          io.emit(promise.userId);
+        })
       io.emit(promise.userId);
     } else {
       io.emit(promise.userId);
@@ -64,25 +65,39 @@ io.on("connection", (socket) => {
   })
 
 
-  socket.on('NewAdmin', user => {
+  socket.on('systeme', user => {
     const build = Notification.build({
       adminId: user.session,
-      notifId: `${user.session}-${user.id}-NewAdmin`,
+      notifId: `${user.session}-${user.id}-${user.key}`,
       forUser: user.id,
-      data: '|Your PIC-V account has been upgraded to admin'
+      data: user.data
     })
     build.save()
-    .catch(() => {
-      return null
-    })
-    io.emit(user.id);
-});
+      .then(() => {
+        io.emit(`${user.id}-systeme`);
+      })
+      .catch(() => {
+        const build2 = {
+          adminId: user.session,
+          notifId: `${user.session}-${user.id}-${user.key}`,
+          forUser: user.id,
+          data: user.data
+        }
+        Notification.update({ build2 }, { where: { notifId: `${user.session}-${user.id}-${user.key}` } })
+          .then(() => {
+            io.emit(`${user.id}-systeme`);
+          })
+          .catch(() => {
+            return null
+          })
+      })
+  });
 
   socket.on('disconnect', () => {
     //console.log(`user disconnected ${socket.id}`);
     // remove saved socket from users object
-    
-    
+
+
   });
 });
 

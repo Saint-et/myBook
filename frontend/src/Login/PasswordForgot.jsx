@@ -6,7 +6,7 @@ import logo from '../assets/images/logo_transparent_banner.png';
 import logoBlack from '../assets/images/logo_transparent_banner_black.png';
 import { useAppContext } from '../contexts/UseAppContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLanguage, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+import { faCubes, faLanguage, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +16,7 @@ const PasswordForgot = () => {
 
     const { t } = useTranslation();
 
-    const { localTheme, handleTheme, promiseIdentifiedUser, setLanguageSelect } = useAppContext();
+    const { localTheme, handleTheme, promiseIdentifiedUser, setLanguageSelect, handleModeEco, animationSelect } = useAppContext();
 
     const navigate = useNavigate()
 
@@ -89,7 +89,9 @@ const PasswordForgot = () => {
                             {localTheme === 'default' && <FontAwesomeIcon icon={faMoon} />}
                             {localTheme === 'dark' && <FontAwesomeIcon icon={faSun} />}
                         </div>
-
+                        <div className='buttonCircle' onClick={handleModeEco} style={{ color: animationSelect === 'eco' ? '#00aa00' : '#ec1c24' }} data-theme={localTheme}>
+                            <FontAwesomeIcon icon={faCubes} />
+                        </div>
                         <div onClick={() => { setLanguageSelect(true) }} className='buttonCircle' data-theme={localTheme}>
                             <FontAwesomeIcon icon={faLanguage} />
                         </div>

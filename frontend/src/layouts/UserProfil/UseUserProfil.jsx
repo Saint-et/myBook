@@ -3,6 +3,7 @@ import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import io from "socket.io-client";
 import { useAppContext } from '../../contexts/UseAppContext';
+import { DATA_picv } from '../../assets/data/data';
 
 
 export const UseUserProfil = () => {
@@ -12,9 +13,10 @@ export const UseUserProfil = () => {
     const url = window.location.href;
     const urlCatalogue = url.split("/")[5];
 
-    const { promiseIdentifiedUser, GetMyProfilFromAPI, IdContext } = useAppContext()
+    const { promiseIdentifiedUser, GetMyProfilFromAPI, IdContext, setThemeBackground, setResizeThemeBackground } = useAppContext()
 
     const ref = useRef(null);
+    const refScroll = useRef(null);
     const refRange = useRef(null);
     const hiddenFileInput = useRef(null);
 
@@ -34,6 +36,7 @@ export const UseUserProfil = () => {
     const [hiddenInfoUser, setHiddenInfoUser] = useState(false)
     const [bookmark, setBookmark] = useState(true)
     const [checkboxAdmin, setChekboxAdmin] = useState(false)
+    const [checkboxMaster, setChekboxMaster] = useState(false)
     // err
     const [error, setError] = useState("");
 
@@ -51,6 +54,11 @@ export const UseUserProfil = () => {
                     setResize(res.data.user.resizeImageUrlCover);
                     setImg(res.data.user.imageUrl);
                     setImgUpload(res.data.user.imageUrl);
+                    //if (res.data.user.background) {
+                    //    setThemeBackground(res.data.user.background);
+                    //    setResizeThemeBackground(res.data.user.resizeThemeBackground)
+                    //}
+                    refScroll.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
                 })
         } catch (error) {
             console.log(error.response.data)
@@ -192,7 +200,7 @@ export const UseUserProfil = () => {
         axios.post(`${API_URL}api/eventv/addfriend`, { userId: [Id] },
             { withCredentials: true })
             .then(() => {
-                socket.emit('event-created', { id: Id, session: session });
+                socket.emit('event-created', { id: Id, session: session, data: 'started following you' });
                 GetProfilFromAPI(IdContext)
             })
     }
@@ -245,7 +253,32 @@ export const UseUserProfil = () => {
                     GetProfilFromAPI(IdContext)
                     setChekboxAdmin(false)
                     if (value === true) {
-                        socket.emit('NewAdmin', { id: id, session: session });
+                        socket.emit('systeme', { id: id, key: 'newAdmin', session: session, data: `|Your ${DATA_picv} account has been upgraded to Admin` });
+                    } else {
+                        socket.emit('systeme', { id: id, key: 'delAdmin', session: session, data: `|Your ${DATA_picv} account has been demote to user` })
+                    }
+                })
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    // POST for master to update user to master
+    const UpdateMaster = async (id, value, session) => {
+        setChekboxMaster(true)
+        try {
+            await axios.post(`${API_URL}api/admin/new-master/${id}`,
+                {
+                    isMaster: value
+                }
+                ,
+                { withCredentials: true })
+                .then(() => {
+                    GetProfilFromAPI(IdContext)
+                    setChekboxMaster(false)
+                    if (value === true) {
+                        socket.emit('systeme', { id: id, key: 'newMaster', session: session, data: `|Your ${DATA_picv} account has been upgraded to Master and admin` });
+                    } else {
+                        socket.emit('systeme', { id: id, key: 'delMaster', session: session, data: `|Your ${DATA_picv} account has been demote to admin` });
                     }
                 })
         } catch (error) {
@@ -259,6 +292,30 @@ export const UseUserProfil = () => {
             GetProfilFromAPI(IdContext)
         }
     }, []);
+
+    useEffect(() => {
+        if (promiseUser) {
+            // Si promiseUser est défini, mettre à jour les états avec ses valeurs
+            if (url.split("/")[5] == 'game-user') return;
+            if (promiseUser?.user.background) {
+                if (promiseUser?.user.id === promiseIdentifiedUser?.user.id) {
+                    setThemeBackground(promiseIdentifiedUser?.user.background);
+                    setResizeThemeBackground(promiseUser?.user.resizeThemeBackground);
+                } else {
+                    setThemeBackground(promiseUser?.user.background);
+                    setResizeThemeBackground(promiseUser?.user.resizeThemeBackground);
+                }
+            } else {
+                setThemeBackground(promiseUser?.user.imageUrlCover);
+                setResizeThemeBackground(promiseUser?.user.resizeImageUrlCover);
+            }
+            // Retourner une fonction de nettoyage vide car aucune action spécifique n'est nécessaire lors du démontage
+            return () => {
+                setThemeBackground(promiseIdentifiedUser?.user.background);
+                setResizeThemeBackground(promiseIdentifiedUser?.user.resizeThemeBackground);
+            };
+        }
+    }, [promiseUser, promiseIdentifiedUser, url]);
 
     return {
         promiseIdentifiedUser,
@@ -292,6 +349,9 @@ export const UseUserProfil = () => {
         bookmark, setBookmark,
         ref, refRange,
         UpdateAdmin,
-        checkboxAdmin
+        UpdateMaster,
+        checkboxAdmin,
+        checkboxMaster,
+        refScroll
     }
 }

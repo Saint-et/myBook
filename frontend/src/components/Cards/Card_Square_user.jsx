@@ -4,11 +4,13 @@ import { spinner } from '../../utils';
 import { useAppContext } from '../../contexts/UseAppContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const Card_Square_user = (props) => {
-    const { localTheme,
-        setHiddenMenuMiniProfil,
-        setHiddenMenu } = useAppContext();
+    
+    const navigate = useNavigate()
+
+    const { localTheme } = useAppContext();
 
     //____Search
 
@@ -41,10 +43,7 @@ const Card_Square_user = (props) => {
             <div style={{ width: '100%', display: 'flex', flexWrap: 'wrap', paddingBottom: 50, display: 'flex', justifyContent: 'center' }}>
 
                 {props.promise?.map((user) => (
-                    <div onClick={() => {
-                        setHiddenMenu(true)
-                        setHiddenMenuMiniProfil(user)
-                    }} className='card_user  animation' style={{ margin: 10, display: 'flex', alignItems: 'center', flexDirection: 'column' }} key={user.id} data-theme={localTheme}>
+                    <div onClick={() => {navigate(`/profile/${user.id}/page?type=Illustrations`)}} className='card_user  animation' style={{ margin: 10, display: 'flex', alignItems: 'center', flexDirection: 'column' }} key={user.id} data-theme={localTheme}>
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
                             <img onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} style={{ objectPosition: `${50}% ${10}%` }} src={user.imageUrl || Picture} alt='' />
                             {user.premium == 1 && <div style={{ display: 'flex', flexDirection: 'row-reverse', marginTop: 100 }}>

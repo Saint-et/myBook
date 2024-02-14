@@ -14,9 +14,6 @@ router.get('/myfiles/files/:key', session.LoginFalse, Ctrl.GetMyfiles);
 // get one file
 router.get('/myfile/file/:id', Ctrl.GetOnefiles);
 
-// get Images file
-//router.get('/myfile-image/file-image/:id', Ctrl.GetOnefilesImages);
-
 // post one file
 router.post('/create/file', session.LoginFalse, Ctrl.CreateFile);
 
@@ -27,7 +24,7 @@ router.get('/search/myfiles/files/:key', Ctrl.SearchMyfiles);
 router.delete('/delete/file/:id', session.LoginFalse, Ctrl.fileDelete)
 
 // put one file
-router.put('/update/article/:id', Ctrl.UpdateArticle);
+router.put('/update/article/:id', session.LoginFalse, Ctrl.UpdateArticle);
 
 // put one file
 router.post('/download/imgs/:id', multer_multi, Ctrl.downloadImgArticle);
@@ -56,6 +53,12 @@ router.put('/update/group-files', Ctrl.UpdateFilesGroup);
 // get files
 router.get('/mygroups/groups/files/:id', session.LoginFalse, Ctrl.GetMyfilesGroup);
 
+// delete groups
+router.delete('/delete/group/:id', Ctrl.DeleteGroup);
+
+// delete groups
+router.delete('/delete-all/group-and-files/:id', Ctrl.DeleteGroupAndFiles);
+
 // delete one image
 router.post('/delete/image/:id', session.LoginFalse, Ctrl.DeleteMyImage)
 
@@ -67,15 +70,6 @@ router.get('/get/get-tags', session.LoginFalse, Ctrl.GetTags);
 
 // delete one tag
 router.put('/update/update-tags', session.LoginFalse, Ctrl.UpdateTags);
-
-// get news files
-router.get('/newsfiles/get-files/:id', verification.Url, Ctrl.GetNewsfiles);
-
-// get catalog files
-router.get('/catalogfiles/get-files/:key/:id', verification.Url, session.LoginFalse, Ctrl.GetCatalogfiles);
-
-// get catalog files
-router.get('/catalogfilestags/get-files/:key/:id/:name', verification.Url, session.LoginFalse, Ctrl.GetCatalogfilesTags);
 
 
 

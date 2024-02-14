@@ -1,52 +1,53 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass, faX, faBars, faSquare, faArrowLeft, faArrowRight, faArrowUpAZ, faArrowUp19, faFilterCircleXmark, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons';
-import React, { useState, useEffect } from "react";
+import { faMagnifyingGlass, faArrowLeft, faArrowRight, faListCheck, faXmark, faListUl, faGear, faEllipsisVertical } from '@fortawesome/free-solid-svg-icons';
+import React, { useState } from "react";
 import { API_URL } from '../../../config';
 import axios from "axios";
-import useKeypress from 'react-use-keypress';
 import ReactPaginate from 'react-paginate';
 import { useAppContext } from '../../../contexts/UseAppContext';
 import Card_select from '../../../components/Cards/Card_select';
 import Select from '../../../components/Select/Select';
 import { optionsType } from '../../../assets/data/data';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { RemoveScroll } from 'react-remove-scroll';
 
 
-
-
-let myRegex = new RegExp(/^[0-9a-zA-Z-éçàùè]+$/i);
 
 const Files = (props) => {
 
+  let myRegex = new RegExp(/^[0-9a-zA-Z-éçàùè]+$/i);
+
   const { t } = useTranslation();
 
-  const { localTheme,
+  const { localTheme, localThemeBackground,
     promise, setPromise,
-    total, GetMyFilesFromAPI,PER_PAGE,setNumPage, numPage } = useAppContext();
+    total, GetMyFilesFromAPI, PER_PAGE, setNumPage, numPage, menuFile, setMenuFile } = useAppContext();
 
-
-  //const [promise, setPromise] = useState([])
 
   const [hiddenPaginationSearch, setHiddenPaginationSearch] = useState(false)
+  const [edite, setEdite] = useState({ name: '' });
+  const [editeType, setEditeType] = useState(null);
+  const [created, setCreated] = useState('')
+  const [filesSelected, setFilesSelected] = useState([])
+  const [editeTypeAllSelected, setEditeTypeAllSelected] = useState(null);
+  const [searchPromise, setSearchPromise] = useState(null)
+  const [commonOption, setCommonOption] = useState(false)
 
   const [editSearch, setEditSearch] = useState('');
+  const [errorFiles, setErrorFiles] = useState("");
   const [errFront, setErrFront] = useState({
     err: ''
   })
 
-  const handleSearch = event => {
-    setEditSearch(event.target.value);
-  };
 
+  // gestion pagination
   const pageCount = Math.ceil(total / PER_PAGE || 1)
-
   const handlePage = async ({ selected: selectedPage }) => {
     setNumPage(selectedPage)
     GetMyFilesFromAPI()
-
   }
 
+  // recherche API
   const SearchFiles = async () => {
     if (editSearch === "") {
       setErrFront({
@@ -61,43 +62,39 @@ const Files = (props) => {
       await axios.get(`${API_URL}api/eventv/search/myfiles/files/${editSearch}`,
         { withCredentials: true })
         .then((res) => {
-          setPromise(res.data.rows);
+          setSearchPromise(res.data);
           setErrFront({ err: '' });
           setHiddenPaginationSearch(true);
         })
     }
   }
 
+  // saisie de text pour la recherche
+  const handleSearch = event => {
+    setEditSearch(event.target.value);
+    if (event.target.value.length === 0) {
+      setSearchPromise(null)
+      setHiddenPaginationSearch(false)
+    }
+    if (event.key === 'Enter') {
+      event.preventDefault()
+      SearchFiles()
+    }
+  };
+
+  // nettoyage à la fermeture de recherche
   const handleCloseSearch = () => {
+    setEditSearch('')
+    setSearchPromise(null)
     setHiddenPaginationSearch(false)
-    GetMyFilesFromAPI()
   }
 
-  const [edite, setEdite] = useState({ name: '' });
-
-  const [editeType, setEditeType] = useState(null);
-  const [editeTypeCategorie, setEditeTypeCategorie] = useState(null);
-
-  //const GetMyFilesFromAPI = async (selectedPage) => {
-  //  //setTotal('');
-  //  await axios.get(`${API_URL}api/eventv/myfiles/files/${selectedPage * PER_PAGE || 0}`,
-  //    { withCredentials: true })
-  //    .then((res) => {
-  //      setPromise(res.data.rows);
-  //      setTotal(res.data.count);
-  //    })
-  //}
-  //useEffect(() => {
-  //  GetMyFilesFromAPI()
-  //}, []);
-
-  const [created, setCreated] = useState('')
-
+  // texte pour le nom lors de la création
   const handleChange = (name) => event => {
     setEdite({ ...edite, [name]: event.target.value })
   };
 
-  const [errorFiles, setErrorFiles] = useState("");
+  // création de nouveau document
   const createFile = async () => {
     setErrorFiles('')
     try {
@@ -118,18 +115,15 @@ const Files = (props) => {
 
   }
 
-  useKeypress('Enter', () => {
-    if (editSearch !== "") {
-      SearchFiles()
-    }
-  })
+  ///useKeypress('Enter', () => {
+  ///  if (editSearch !== "") {
+  ///    SearchFiles()
+  ///  }
+  ///})
 
 
 
-  const [filesSelected, setFilesSelected] = useState([])
 
-
-  // const filteredUsers = filesSelected.filter((id) => id == fileId);
 
   const handleFilesSelected = (fileId) => {
     const unique = Array.from(new Set([...filesSelected, fileId]));
@@ -140,7 +134,6 @@ const Files = (props) => {
     setFilesSelected(filteredUsers)
   }
 
-  const [editeTypeAllSelected, setEditeTypeAllSelected] = useState(null);
 
   const handleAllSelected = async () => {
     if (editeTypeAllSelected !== null) {
@@ -157,33 +150,14 @@ const Files = (props) => {
     setEditeTypeAllSelected(null)
   }
 
-
-
-  //const handleOpen = () => {
-  //  // Récupérez les données existantes depuis localStorage (s'il y en a)
-  //  const localData = JSON.parse(localStorage.getItem('tab-Work-Place')) || [];
-  //  // création de la nouvelle data
-  //  const filteredItems = promise
-  //    .filter((el) => filesSelected.includes(el.id))
-  //    .map((el) => ({ id: el.id, name: el.name, miniature: el.miniature }));
-  //  const uniqueData = filteredItems.filter((newItem) => {
-  //    // Vérifiez si l'élément existe déjà dans les données existantes
-  //    return !localData.some((existingItem) => existingItem.id === newItem.id);
-  //  });
-  //  // Étape 3 : Ajoutez uniquement les éléments uniques
-  //  const updatedData = [...localData, ...uniqueData];
-  //  // Étape 4 : Mettez à jour les données du localStorage
-  //  localStorage.setItem('tab-Work-Place', JSON.stringify(updatedData));
-  //  navigate(`/works/file/${filteredItems[0]?.id}`)
-  //};
-
   return (
     <div className='open-elementPage'>
-      <div className='cter_sect'>
-        <div className='ctent_arti animation' style={{ overflow: 'visible', height: '100%', minHeight: 250, justifyContent: 'center', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap' }} data-theme={localTheme}>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', maxWidth: 500 }} >
-            <div style={{ marginBottom: 10 }}>{t('create_a_new_project')}</div>
-            <input className='input_text' onChange={handleChange('name')} style={{ width: '90%' }} placeholder={t('named')} type="text" name="Named" id="Named" value={edite.name} data-theme={localTheme} />
+
+      {menuFile && <div className='blanket' style={{ zIndex: 15000, display: 'flex', alignItems: 'center', justifyContent: 'center', top: 0 }} >
+        <div className='ctent_arti animation' style={{ overflow: 'visible', height: 'max-content', justifyContent: 'center', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap', maxWidth: 600 }} data-theme={localTheme}>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }} >
+            <div style={{ marginBottom: 10, marginTop: 10 }}>{t('create_a_new_project')}</div>
+            <input autoFocus={true} className='input_text' onChange={handleChange('name')} style={{ width: '90%' }} placeholder={t('named')} type="text" name="Named" id="Named" value={edite.name} data-theme={localTheme} />
             <div>{t('type_of_file')}</div>
             <div style={{ width: '100%', maxWidth: 300, marginTop: 10 }}>
               <Select setSelectedValue={setEditeType} selectedValue={editeType} arrays={optionsType} localTheme={localTheme} />
@@ -191,71 +165,98 @@ const Files = (props) => {
             {created !== '' && <div>{created}</div>}
             {errorFiles !== '' && <div style={{ color: 'red' }}>{errorFiles}</div>}
             <div className='button_option_container' style={{ width: '100%', maxWidth: 300, marginTop: 20 }} data-theme={localTheme}>
-              <div className='button_option' onClick={createFile} style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme}>{t('save')}</div>
+              <div className='button_optionPic_v' onClick={createFile} style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme}>{t('save')}</div>
+              <div className='button_option' onClick={() => { setMenuFile(!menuFile) }} style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme}>{t('cancel')}</div>
+            </div>
+          </div>
+        </div>
+      </div>}
+
+      {commonOption && <RemoveScroll className='blanket scrollbar' style={{ zIndex: 25000, display: 'flex', alignItems: 'start', justifyContent: 'center', top: 0, overflowY: 'auto' }} >
+        <div className='menu_navbar open-elementPage' style={{ width: '100%', flexDirection: 'column', maxWidth: 600, alignItems: 'center', justifyContent: 'center', marginBottom: 10 }} data-theme={localTheme}>
+
+          <h3>{t("options")}</h3>
+
+          <div style={{ width: '94%' }} className="copy-box two">
+            <div className="inner">
+              <div className="line right"></div>
+              <div>{t("libraryWorkSpaceDisplay.optionText2")}</div>
             </div>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', maxWidth: 500 }} >
-            {filesSelected.length !== 0 && <>
-              <div style={{ marginBottom: 10 }}>{t('options')}</div>
-              <div className='button_option_container' style={{ width: '100%', maxWidth: 300 }} data-theme={localTheme}>
-                <div style={{ paddingTop: 5, paddingBottom: 5, color: 'red' }} className='button_option' data-theme={localTheme}>{t('permanentlyDelete')}</div>
+          <div className='button_option_container' style={{ width: '100%', maxWidth: 300, marginTop: 10 }} data-theme={localTheme}>
+            <div className='button_optionPic_v' data-theme={localTheme}>{t("delete")}</div>
+          </div>
+
+          <div className='button_option_container' style={{ width: '100%', maxWidth: 300, marginTop: 40 }} data-theme={localTheme}>
+            <div onClick={() => { setCommonOption(false) }} className='button_option' data-theme={localTheme}>{t("cancel")}</div>
+          </div>
+        </div>
+      </RemoveScroll>}
+
+      <div className='cter_sect'>
+        <div style={{ width: '97%' }}>
+          <div className="copy-box two text" data-theme={localTheme} data-background={localThemeBackground}>
+            <div className="inner">
+              <div className="line right"></div>
+
+              <h4>{t("file.title")}</h4>
+              <div>{t("file.text1")}</div>
+              <div>{t("file.text2")}</div>
+              <div>{t("file.text3")}</div>
+
+              <div className='button_option_container shadowbox' style={{ width: '90%', maxWidth: 300, display: 'flex', marginTop: 20 }} data-theme={localTheme}>
+                <div onClick={() => { setMenuFile(!menuFile) }} className='button_optionPic_v' data-theme={localTheme}>{t('create_a_new_project')} ?</div>
               </div>
-            </>}
-            <div className='button_option_container' style={{ width: '100%', maxWidth: 300, marginTop: 10 }} data-theme={localTheme}>
 
-
-              <div onClick={() => {
-                setFilesSelected([])
-              }} style={{ paddingTop: 5, paddingBottom: 5 }} className='button_option' data-theme={localTheme}><span>{t('cancelSelection')}</span><FontAwesomeIcon style={{ marginLeft: 10 }} icon={faMinus} /></div>
-              <div style={{ paddingTop: 5, paddingBottom: 5, color: '#0084ff' }} onClick={handleAllSelected} className='button_option' data-theme={localTheme}><span>{t('allSelected')}</span><FontAwesomeIcon style={{ marginLeft: 10 }} icon={faPlus} /></div>
-
-
-            </div>
-            <div style={{ width: '100%', maxWidth: 300, marginTop: 20, marginBottom: 10 }}>{t('type_of_file')}</div>
-            <div style={{ width: '100%', maxWidth: 300 }}>
-              <Select setSelectedValue={setEditeTypeAllSelected} selectedValue={editeTypeAllSelected} arrays={optionsType} localTheme={localTheme} />
+              <div style={{ marginTop: 20, display: 'flex', width: '98%', alignItems: 'center', justifyContent: 'center' }}>
+                <input onKeyDown={handleSearch} onChange={handleSearch} className='input_text' placeholder={t('search')} type="text" name="Search" id="Search" value={editSearch} data-theme={localTheme} data-background={localThemeBackground} />
+                {editSearch !== "" && <div className='button_option_container shadowbox' style={{ width: '100%', maxWidth: 80, marginLeft: 10, display: 'flex' }} data-theme={localTheme}>
+                  <div className='button_option' onClick={handleCloseSearch} style={{ width: '100%' }} data-theme={localTheme}><FontAwesomeIcon icon={faXmark} /></div>
+                  <div className='button_option' onClick={SearchFiles} style={{ width: '100%' }} data-theme={localTheme}><FontAwesomeIcon icon={faMagnifyingGlass} /></div>
+                </div>}
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-
-
       <div className='cter_sect'>
-        <div className='ctent_arti animation' data-theme={localTheme}>
-          <div style={{ margin: 20, display: 'flex', width: '98%', alignItems: 'center' }}>
-
-            <input onChange={handleSearch} className='input_text' placeholder={t('search')} type="search" name="Search" id="Search" value={editSearch} data-theme={localTheme} />
-
-            {editSearch !== "" && <div className='button_option_container' style={{ width: '100%', maxWidth: 80, marginLeft: 10, display: 'flex' }} data-theme={localTheme}>
-              <div className='button_option' onClick={SearchFiles} style={{ width: '100%' }} data-theme={localTheme}><FontAwesomeIcon icon={faMagnifyingGlass} /></div>
-              {hiddenPaginationSearch && <div className='button_option' onClick={handleCloseSearch} style={{ width: '100%' }} data-theme={localTheme}><FontAwesomeIcon icon={faX} /></div>}
-            </div>}
-
-            <div style={{ display: 'flex', width: 'max-content', alignItems: 'center', justifyContent: 'space-between', marginLeft: 10, }}>
-              <div style={{ display: 'flex' }}>{t('select')}:<div style={{ fontWeight: 800, color: '#0084ff' }}>{filesSelected.length}</div></div>
+        <div className='ctent_arti animation' style={{paddingTop: 10}} data-theme={localTheme}>
+        <div style={{ display: 'flex', width: '98%', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+          <div style={{ width: '100%', maxWidth: 150 }}>
+            <div style={{ display: 'flex' }}>{t('select')}:<div style={{ marginLeft: 10 }}>{filesSelected.length}</div></div>
+            <div className='button_option_container' style={{ marginTop: 10, display: 'flex' }} data-theme={localTheme}>
+              <div onClick={() => {
+                setFilesSelected([])
+              }} className='button_option' style={{ color: '#ec1c24' }} data-theme={localTheme}><FontAwesomeIcon icon={faListUl} /></div>
+              <div style={{ color: '#0084ff' }} onClick={handleAllSelected} className='button_option' data-theme={localTheme}><span><FontAwesomeIcon icon={faListCheck} /></span></div>
+              <div className={filesSelected.length === 0 ? 'button_optionDisable' : 'button_optionBlue'} onClick={filesSelected.length === 0 ? null : () => { setCommonOption(true) }} data-theme={localTheme}><FontAwesomeIcon icon={faEllipsisVertical} /></div>
             </div>
           </div>
-          <div style={{ marginTop: 10, width: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
-            <Card_select setTab={props.setTab} checkbox={true} filesSelected={filesSelected} handleFilesSelected={handleFilesSelected} handleFilesSelectedRemove={handleFilesSelectedRemove} promise={promise} localTheme={localTheme} />
-
-
-            {!hiddenPaginationSearch && <>
-              <ReactPaginate
-                breakLabel="..."
-                previousLabel={<FontAwesomeIcon icon={faArrowLeft} />}
-                nextLabel={<FontAwesomeIcon icon={faArrowRight} />}
-                pageCount={pageCount}
-                onPageChange={handlePage}
-                initialPage={numPage}
-                containerClassName={"pagination"}
-                previousLinkClassName={"pagination_link"}
-                nextLinkClassName={"pagination_link"}
-                disabledClassName={"pagination_link--disabled"}
-                activeClassName={"pagination_link--active"}
-              /></>}
+          <div style={{ fontSize: 16, fontWeight: 'bold' }}>{numPage + 1}/{pageCount}</div>
+          <div style={{ width: '100%', maxWidth: 150 }}>
+            <div style={{ marginBottom: 10 }}>{t('type_of_file')}:</div>
+            <Select setSelectedValue={setEditeTypeAllSelected} selectedValue={editeTypeAllSelected} arrays={optionsType} localTheme={localTheme} />
           </div>
+        </div>
+          <div style={{ marginTop: 10, width: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
+            <Card_select setTab={props.setTab} checkbox={true} filesSelected={filesSelected} handleFilesSelected={handleFilesSelected} handleFilesSelectedRemove={handleFilesSelectedRemove} promise={searchPromise === null ? promise : searchPromise} localTheme={localTheme} />
+          </div>
+          {!hiddenPaginationSearch && <>
+            <ReactPaginate
+              breakLabel="..."
+              previousLabel={<FontAwesomeIcon icon={faArrowLeft} />}
+              nextLabel={<FontAwesomeIcon icon={faArrowRight} />}
+              pageCount={pageCount}
+              onPageChange={handlePage}
+              initialPage={numPage}
+              containerClassName={"pagination"}
+              previousLinkClassName={"pagination_link"}
+              nextLinkClassName={"pagination_link"}
+              disabledClassName={"pagination_link--disabled"}
+              activeClassName={"pagination_link--active"}
+            /></>}
         </div>
       </div>
     </div>

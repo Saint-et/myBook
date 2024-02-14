@@ -167,10 +167,6 @@ exports.PasswordForgot = async (req, res, next) => {
             },
           });
 
-          //<div style='display: flex, width: 100%, align-items: center'>
-          //  <img style='width: 100%, height: 90px, object-fit: contain' src={logo} alt="" />
-          //</div >
-
 
           const mailOptions = {
             from: 'picturevweb@gmail.com',
@@ -185,7 +181,7 @@ exports.PasswordForgot = async (req, res, next) => {
             <p style="width: 100%;">You recently requested a recovery of your password. To ensure the security of your account, please use the verification code below to reset your password:</p>
             <p>Verification Code:</p>
             <a href='http://192.168.1.12:3000/password-forgot/${token}' target="_blank" rel="noopener noreferrer">
-            <button style='background: #0069cc; border: none; border-radius: 10px; height: 40px; font-size: 20px; font-weight: 600; cursor: pointer;'>
+            <button style='background: #ec1c24; border: none; border-radius: 10px; height: 40px; font-size: 20px; font-weight: 600; cursor: pointer;'>
             Password reset
             </button>
             </a>

@@ -40,7 +40,6 @@ const Pub = () => {
     return (
         <>
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-        <h3 translate='no' style={{ color: '#747474', margin: 0 }}>{DATA_picv}</h3>
         <div style={{width: '100%', maxWidth: 800}}>
         <Slide>
          {slideImages.map((slideImage, index)=> (

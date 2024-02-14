@@ -1,5 +1,5 @@
 import { spinner } from '../../utils';
-import Picture from '../../assets/icons/disposition-boites-expedition-angle-eleve.jpg';
+import Picture from '../../assets/images/logo.png';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye } from '@fortawesome/free-solid-svg-icons';

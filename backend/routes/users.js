@@ -22,14 +22,13 @@ router.get('/getfollewers', session.Invited,  Ctrl.getProfilFollowers);
 // get one user
 router.put('/updateUserPrivate', session.Invited,  Ctrl.updateUserPrivate);
 router.put('/updateUserPremium', session.Invited,  Ctrl.updateUserPremium);
+router.put('/updateUserAll', session.Invited,  Ctrl.updateUserAll);
 
 // get one user
 router.put('/updateUserAdultAccess', session.Invited,  Ctrl.updateUserAdultAccess);
 
 // update one user
 router.put('/update/username', session.LoginFalse, Ctrl.updateUserName);
-
-router.put('/update/user', session.LoginFalse, Ctrl.updateUserAll);
 
 // update one user
 router.put('/users/update', session.LoginFalse,  multer, Ctrl.updateUser);
@@ -47,6 +46,9 @@ router.put('/users/update/security', session.LoginFalse, Ctrl.updateSecurityUser
 router.put('/users/update/pinned', session.LoginFalse, Ctrl.updatePinnedUser);
 
 // get users
-router.get('/user/get/pinned', session.LoginFalse, Ctrl.getUserPinned);
+router.get('/user/get/pinned/:id', session.LoginFalse, Ctrl.getUserPinned);
+
+// get users
+router.get('/user/get/pinned-illustration/:id', session.LoginFalse, Ctrl.getIllustrationPinned);
 
 module.exports = router;

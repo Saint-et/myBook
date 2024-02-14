@@ -1,7 +1,7 @@
 import { RemoveScroll } from "react-remove-scroll";
 import { useAppContext } from "../contexts/UseAppContext";
 import { useRef, useState } from "react";
-import { Editor, EditorState, convertToRaw, Modifier, selectionState, convertFromHTML, ContentState, blocksFromHTML, convertFromRaw } from 'draft-js';
+import { Editor } from 'draft-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinimize, faMaximize } from '@fortawesome/free-solid-svg-icons';
 import { stateToHTML } from 'draft-js-export-html';
@@ -110,24 +110,24 @@ const Posts = (props) => {
 
     return (
         <>
-            <div className='blanket animation' style={{ zIndex: 15000, display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', top: 0 }} >
-                <RemoveScroll className='menu_navbar scrollbar open-elementPage' style={{ width: '100%', height: '100%', flexDirection: 'column', maxWidth: 1000, overflowY: 'auto', alignItems: 'center', background: 'none' }} data-theme={localTheme}>
+            <div className='blanket animation' style={{ zIndex: 25000, display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', top: 0, left: 0 }} >
+                <RemoveScroll removeScrollBar={false} className='menu_navbar scrollbar open-elementPage' style={{ width: '100%', height: '100%', flexDirection: 'column', maxWidth: 1000, overflowY: 'auto', alignItems: 'center', background: 'none' }} data-theme={localTheme}>
                     <div className='cter_sect'>
                         <div className='ctent_artiMiniProfil' data-theme={localTheme}>
                             <h3>Published something</h3>
                             <input ref={props.hiddenFileInput} onChange={props.handleLoad} accept="img/*" type='file' multiple={false} key={props.imgUpload} hidden={true} />
-                            {props.img == '' ? <div onClick={props.handleClick} style={{ height: 200, width: 100, border: '1px dashed grey', borderRadius: 15, cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            {props.img == '' ? <div onClick={props.handleClick} style={{ height: 200, width: 200, border: '1px dashed grey', borderRadius: 15, cursor: 'pointer', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                 <FontAwesomeIcon icon={faPlus} />
                             </div>
                                 :
                                 <img onClick={props.handleClick} style={{ width: 'max-content', objectFit: 'contain', height: 400, borderRadius: 15, cursor: 'pointer' }} src={props.img || imgProfile} alt="" />
                             }
                             <div className='button_option_container' style={{ width: '100%', maxWidth: 500, marginTop: 20, display: 'flex' }} data-theme={localTheme}>
-                                {props.img != '' && <div onClick={props.handleRemoveImg} className='button_optionRed' style={{ width: '100%' }} data-theme={localTheme}>Remove picture</div>}
-                                <div onClick={props.handleClick} className='button_option' data-theme={localTheme}>Add picture</div>
+                                {props.img != '' && <div onClick={props.handleRemoveImg} className='button_option' style={{ width: '100%' }} data-theme={localTheme}>Remove picture</div>}
+                                <div onClick={props.handleClick} className='button_optionBlue' data-theme={localTheme}>Add picture</div>
                             </div>
 
-                            <div className='title_color' style={{ fontSize: 16, margin: 0 }}><span style={{ fontWeight: 800 }}>Supported formats</span>PNG/JPG/JPEG</div>
+                            <div className='title_color' style={{ fontSize: 16, margin: 0 }}><span style={{ fontWeight: 800 }}>Supported formats</span>PNG/JPG/JPEG/GIF</div>
                             <div className='title_color' style={{ fontSize: 16, margin: 0 }}><span style={{ fontWeight: 800 }}>Maximum file size</span>5MB</div>
 
 
@@ -135,7 +135,7 @@ const Posts = (props) => {
                             <input onChange={(e) => { props.setTitle(e.target.value) }} defaultValue={props.title} style={{ marginTop: 20, marginBottom: 20 }} className="input_text" placeholder="Title..." type="text" name="" id="" data-theme={localTheme} />
 
                             <div style={{ marginTop: 10, width: '90%', display: 'flex', justifyContent: 'space-between' }}><span>Caption :</span> <span style={{ cursor: 'pointer' }} onClick={() => { setCaptionSize(!captionSize) }}>{!captionSize && <span>Maximize<FontAwesomeIcon style={{ marginLeft: 10 }} icon={faMaximize} /></span>}{captionSize && <span>Minimize<FontAwesomeIcon style={{ marginLeft: 10 }} icon={faMinimize} /></span>}</span></div>
-                            <div className="textarea_mess scrollbar" style={{ maxHeight: !captionSize ? 250 : '100%', overflow: 'auto' }} data-theme={localTheme}>
+                            <div className="textarea_mess scrollbar" style={{ maxHeight: !captionSize ? 150 : '100%', overflow: 'auto' }} data-theme={localTheme}>
                                 <Editor
                                     ref={editor}
                                     editorState={props.editorState}
@@ -191,9 +191,9 @@ const Posts = (props) => {
 
 
                             <div className='button_option_container' style={{ width: '100%', maxWidth: 500, display: 'flex', marginTop: 20 }} data-theme={localTheme}>
-                                <div className='button_option' onClick={() => { props.setAnnouncement(false) }} data-theme={localTheme}>Cancel</div>
                                 
-                                <div className='button_optionBlue' style={{ width: '100%' }} onClick={props.submit} data-theme={localTheme}>Publish</div>
+                                <div className='button_option' style={{ width: '100%' }} data-theme={localTheme}>Delete</div>
+                                <div className='button_optionPic_v' style={{ width: '100%' }} onClick={props.submit} data-theme={localTheme}>Publish</div>
                             </div>
 
                             <div className="checkbox-wrapper-46" style={{ marginBottom: 10, marginTop: 20 }}>
@@ -204,6 +204,10 @@ const Posts = (props) => {
                                         <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
                                     </svg></span><span style={{ marginLeft: 10 }}>Do you want to notify subscribers ?</span>
                                 </label>
+                            </div>
+
+                            <div className='button_option_container' style={{ width: '100%', maxWidth: 500, display: 'flex', marginTop: 20 }} data-theme={localTheme}>
+                            <div className='button_option' onClick={() => { props.setAnnouncement(false) }} data-theme={localTheme}>Cancel</div>
                             </div>
 
                         </div>

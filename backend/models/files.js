@@ -24,14 +24,11 @@ File.init({
   type: {
     type: DataTypes.STRING
   },
-  fileLvl: {
-    type: DataTypes.STRING
-  },
   categorie: {
     type: DataTypes.STRING
   },
   data: {
-    type: DataTypes.STRING
+    type: DataTypes.TEXT
   },
   miniature: {
     type: DataTypes.STRING
@@ -42,11 +39,17 @@ File.init({
   ai: {
     type: DataTypes.BOOLEAN
   },
+  autoLayout: {
+    type: DataTypes.BOOLEAN
+  },
+  allowUserEditTag: {
+    type: DataTypes.BOOLEAN
+  },
   comments: {
     type: DataTypes.BOOLEAN
   },
   visibility: {
-    type: DataTypes.BOOLEAN
+    type: DataTypes.INTEGER
   },
   resize: {
     type: DataTypes.INTEGER
@@ -56,7 +59,19 @@ File.init({
   },
   adult: {
     type: DataTypes.INTEGER
-  }
+  },
+  bookMarks: {
+    type: DataTypes.INTEGER
+  },
+  view: {
+    type: DataTypes.INTEGER
+  },
+  viewUsers: {
+    type: DataTypes.ARRAY(DataTypes.STRING)
+  },
+  dateRework: {
+    type: DataTypes.DATE
+  },
 
 },
   {

@@ -15,6 +15,9 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      data: {
+        type: Sequelize.TEXT
+      },
       groupTags: {
         type: Sequelize.TEXT
       },

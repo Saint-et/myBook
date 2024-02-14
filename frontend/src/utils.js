@@ -49,6 +49,17 @@ export const URLProfile = () => {
         return false
     }
     }
+    export const URLGame = () => {
+        const url = window.location.href;
+        const Id = url.split("/");
+        useNavigate();
+        
+        if (Id[3] === 'ArtfulAnime-game') {
+            return true
+        } else {
+            return false
+        }
+        }
     export const URLUser = () => {
         const url = window.location.href;
         const Id = url.split("/");
@@ -60,6 +71,17 @@ export const URLProfile = () => {
             return false
         }
         }
+        export const URLShopNavbar = () => {
+            const url = window.location.href;
+            const Id = url.split("/");
+            useNavigate();
+            
+            if (Id[3] === 'ArtfulAnime-shop') {
+                return true
+            } else {
+                return false
+            }
+            }
 
 export const spinner = () => {
     return(
