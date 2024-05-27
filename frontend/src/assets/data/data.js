@@ -1,28 +1,48 @@
-import img1 from '../background/84391.jpg';
-import img2 from '../background/2150790434.jpg';
-import img3 from '../background/5463.jpg';
-import img4 from '../background/5477.jpg';
-import img5 from '../background/2150790404.jpg';
-import img6 from '../background/2150693733.jpg';
-import img7 from '../background/majestic-mountain-peak-tranquil-winter-landscape-generated-by-ai.jpg';
-import img8 from '../background/nighttime-nature-landscape-galaxy-mountain-water-star-beauty-generative-ai.jpg';
-import img9 from '../background/sunset-silhouettes-trees-mountains-generative-ai.jpg';
-import img10 from '../background/tranquil-autumn-forest-reflects-serene-pond-generative-ai.jpg';
-import img11 from '../background/idyllic-rural-scene-green-meadow-sunset-sky-generative-ai.jpg';
-import img12 from '../background/2151151098.jpg';
-import img13 from '../background/2151151051.jpg';
-import img14 from '../background/131300.jpg';
-import img15 from '../background/tranquil-scene-nature-beauty-majestic-mountain-landscape-generated-by-artificial-intelligence.jpg';
-import img16 from '../background/falling-snowflakes-dark-background-winter-background-with-snowflakes-3d-rendering.jpg';
 
-export const DATA_picv = 'ArtfulAnime';//'PIC-V'
+import systemPicture2 from '../images/vaisseau-spatial-futuriste-orbite-autour-mysterieuse-planete-dans-galaxie-profonde-generee-par-intelligence-artificielle.jpg';
+import SystemLogo2 from '../images/logo.png';
+import SystemNavLogo2 from '../images/logo_transparent_banner.png';
+//export const DATA_picv = 'ArtVibes';//'PIC-V' //ArtfulAnime
+
+export const SystemName = 'ArtVibes';//'PIC-V' //ArtfulAnime //ArtVibes
+
+export const SystemLogo = SystemLogo2;
+
+export const SystemPicture = systemPicture2;
+
+export const SystemNavLogo = SystemNavLogo2;
+
+export const NSFW = 'NSFW';
+
+export const SystemCash_data = 0.70;
+export const SystemCash_data_add = 0.30;
+export const SystemCash_data_pourcent = 30;
+
+export const RealCash_data = 100;
+
+export const CashBack_data_premium = 10;
+export const CashBack_data = 5;
 
 export const optionsType = [
     'Illustrations',
     'Manga',
     //'Zip',
     //'3D',
-    //'Animation'
+    //'Animation',
+]
+
+export const number_recently_views = [
+    5,
+    10,
+    20,
+    30,
+    40,
+    50,
+    60,
+    70,
+    80,
+    90,
+    100
 ]
 
 export const languages = [
@@ -30,7 +50,26 @@ export const languages = [
     'English',
 ]
 
-export const imagesBackground = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10, img11, img12, img13, img14, img15, img16]
+export const assistance = [
+    'I have a suggestion',
+    'I have a question',
+    'I have a problem'
+]
+export const assistance_text = [
+    'Thank you for taking the time to analyze and help us improve our app. 🙂', // I have a suggestion
+    'Ask us your question and we will try to get back to you as soon as possible ❓', // I have a question
+    'Write your problem here in detail to help us find it easily and solve it. ⚠️' // I have a problem
+]
+export const assistance_option = [
+    'Workspace',
+    'Page illustration',
+    'Page manga',
+    'Profile',
+    'Account',
+    'Service',
+    'System',
+    'Other'
+]
 
 export const customColors = [
     // red

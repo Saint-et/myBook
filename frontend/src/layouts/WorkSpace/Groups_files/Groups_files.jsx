@@ -7,6 +7,8 @@ import axios from "axios";
 import CardGroup from '../../../components/Cards/CardGroup';
 import ReactPaginate from 'react-paginate';
 import { useTranslation } from 'react-i18next';
+import Pagination from "../../../components/pagination/pagination";
+import { useWorkspaceContext } from "../../../contexts/UseWorkspaceContexte";
 
 let myRegex = new RegExp(/^[0-9a-zA-Z-éçàùè]+$/i);
 
@@ -14,14 +16,16 @@ const Groups_files = () => {
 
     const { t } = useTranslation();
 
-    const { localTheme, localThemeBackground,
+    const { localTheme } = useAppContext();
+        
+    const {
         setPromiseGetMyGroupsFromAPI: setPromise,
         promiseGetMyGroupsFromAPI: promise,
         GetMyGroupsFromAPI,
         numPageGetMyGroupsFromAPI: numPage,
         setNumPageGetMyGroupsFromAPI: setNumPage,
         PER_PAGE,
-        menuFile, setMenuFile } = useAppContext();
+        menuFile, setMenuFile } = useWorkspaceContext();
 
     const [edite, setEdite] = useState({ name: '' });
     const [created, setCreated] = useState('');
@@ -33,6 +37,7 @@ const Groups_files = () => {
 
     const [editSearch, setEditSearch] = useState('');
 
+    const [hiddenPaginationSearch, setHiddenPaginationSearch] = useState(false)
 
     const [total, setTotal] = useState('')
     const pageCount = Math.ceil(total / PER_PAGE || 1)
@@ -83,6 +88,7 @@ const Groups_files = () => {
         GetMyGroupsFromAPI()
         setEditSearch('')
         setHiddenfaX(false)
+        setHiddenPaginationSearch(false)
     }
 
     const SearchGroups = async (selectedPage) => {
@@ -105,16 +111,17 @@ const Groups_files = () => {
                     setPromise(res.data.rows);
                     setTotal(res.data.count);
                     setErrFront({ err: '' })
+                    setHiddenPaginationSearch(true)
                 })
         }
     }
 
 
     return (
-        <div className='open-elementPage'>
+        <div className='open-element-page-melted'>
 
-            {menuFile && <div className='blanket' style={{ zIndex: 15000, display: 'flex', alignItems: 'center', justifyContent: 'center', top: 0 }} >
-                <div className='ctent_arti animation' style={{ paddingTop: 15, paddingBottom: 10, maxWidth: 600 }} data-theme={localTheme}>
+            {menuFile && <div className='blanket open-element-page-melted' style={{ zIndex: 15000, display: 'flex', alignItems: 'center', justifyContent: 'center', top: 0 }} >
+                <div className='ctent_arti' style={{ paddingTop: 15, paddingBottom: 10, maxWidth: 600 }} data-theme={localTheme}>
                     <div>{t('create_a_library')}</div>
                     <input autoFocus={true} className='input_text' onChange={handleChange('name')} style={{ width: '100%' }} placeholder={t('named')} type="text" name="Named" id="Named" value={edite.name} data-theme={localTheme} />
                     {created !== '' && <div>{created}</div>}
@@ -128,7 +135,7 @@ const Groups_files = () => {
 
             <div className='cter_sect'>
                 <div style={{ width: '97%' }}>
-                    <div className="copy-box two text" data-theme={localTheme} data-background={localThemeBackground}>
+                    <div className="copy-box two" data-theme={localTheme}>
                         <div className="inner">
                             <div className="line right"></div>
 
@@ -142,7 +149,7 @@ const Groups_files = () => {
                             </div>
 
                             <div style={{ marginTop: 20, display: 'flex', width: '98%', alignItems: 'center', justifyContent: 'center' }}>
-                                <input onKeyDown={handleSearch} onChange={handleSearch} className='input_text' placeholder={t('search')} type="text" name="Search" id="Search" value={editSearch} data-theme={localTheme} data-background={localThemeBackground} />
+                                <input onKeyDown={handleSearch} onChange={handleSearch} className='input_text' placeholder={t('search')} type="text" name="Search" id="Search" value={editSearch} data-theme={localTheme} />
                                 {editSearch !== "" && <div className='button_option_container shadowbox' style={{ width: '100%', maxWidth: 80, marginLeft: 10, display: 'flex' }} data-theme={localTheme}>
                                     <div className='button_option' onClick={handleCloseSearch} style={{ width: '100%' }} data-theme={localTheme}><FontAwesomeIcon icon={faXmark} /></div>
                                     <div className='button_option' onClick={SearchGroups} style={{ width: '100%' }} data-theme={localTheme}><FontAwesomeIcon icon={faMagnifyingGlass} /></div>
@@ -154,24 +161,19 @@ const Groups_files = () => {
             </div>
 
             <div className='cter_sect'>
-                <div className='ctent_arti animation' style={{paddingTop: 10}} data-theme={localTheme}>
+                <div className='ctent_arti' style={{ paddingTop: 10 }} data-theme={localTheme}>
                     <div style={{ fontSize: 16, fontWeight: 'bold', marginBottom: 30 }}>{numPage + 1}/{pageCount}</div>
                     <div style={{ marginTop: 10, width: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
                         <CardGroup promise={promise} />
                     </div>
-                    <ReactPaginate
-                        breakLabel="..."
-                        previousLabel={<FontAwesomeIcon icon={faArrowLeft} />}
-                        nextLabel={<FontAwesomeIcon icon={faArrowRight} />}
-                        pageCount={pageCount}
-                        onPageChange={handlePage}
-                        initialPage={numPage}
-                        containerClassName={"pagination"}
-                        previousLinkClassName={"pagination_link"}
-                        nextLinkClassName={"pagination_link"}
-                        disabledClassName={"pagination_link--disabled"}
-                        activeClassName={"pagination_link--active"}
-                    />
+
+                    {pageCount > 1 &&<>{!hiddenPaginationSearch &&
+                        <Pagination
+                            pageCount={pageCount}
+                            onPageChange={handlePage}
+                            initialPage={numPage}
+                            localTheme={localTheme}
+                        />}</>}
                 </div>
             </div>
         </div>

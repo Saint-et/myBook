@@ -14,7 +14,7 @@ const Card_Post = (props) => {
 
     const navigate = useNavigate()
 
-    const { localTheme, localThemeBackground, promiseIdentifiedUser, handleFullScreen } = useAppContext()
+    const { localTheme, promiseIdentifiedUser, handleFullScreen } = useAppContext()
 
 
     const { t } = useTranslation();
@@ -41,7 +41,7 @@ const Card_Post = (props) => {
                 {props.promise?.map((promise, index) => (
                     <div className='ctent_arti' style={{ maxWidth: 1000, paddingTop: 5, marginBottom: 100 }} key={promise.id} data-theme={localTheme}>
                         {!props.buttonName && <><div className='article_card_menu'>
-                            <div onClick={() => { navigate(`/profile/${promise.user.id}/page?type=Illustrations`) }} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', width: 'max-content', overflow: 'hidden', marginLeft: 5 }}>
+                            <div onClick={() => { navigate(`/profile/${promise.user.id}/home?type=Illustrations`) }} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', width: 'max-content', overflow: 'hidden', marginLeft: 5 }}>
                                 {promiseIdentifiedUser?.user.id == promise.user.id && <img className='article_card_menu_img' style={{ width: 40, height: 40 }} onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} src={promiseIdentifiedUser?.user.imageUrl || Picture} alt='' />}
                                 {promiseIdentifiedUser?.user.id != promise.user.id && <img className='article_card_menu_img' style={{ width: 40, height: 40 }} onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} src={promise.user.imageUrl || Picture} alt='' />}
                                 <div className='article_card_menu_text'>

@@ -10,6 +10,8 @@ import Select from '../../../components/Select/Select';
 import { optionsType } from '../../../assets/data/data';
 import { useTranslation } from 'react-i18next';
 import { RemoveScroll } from 'react-remove-scroll';
+import Pagination from '../../../components/pagination/pagination';
+import { useWorkspaceContext } from '../../../contexts/UseWorkspaceContexte';
 
 
 
@@ -19,9 +21,18 @@ const Files = (props) => {
 
   const { t } = useTranslation();
 
-  const { localTheme, localThemeBackground,
-    promise, setPromise,
-    total, GetMyFilesFromAPI, PER_PAGE, setNumPage, numPage, menuFile, setMenuFile } = useAppContext();
+  const { localTheme, promiseIdentifiedUser } = useAppContext();
+
+
+  const {
+    promise,
+    totalFiles,
+    GetMyFilesFromAPI,
+    PER_PAGE,
+    setNumPage,
+    numPage,
+    menuFile,
+    setMenuFile } = useWorkspaceContext();
 
 
   const [hiddenPaginationSearch, setHiddenPaginationSearch] = useState(false)
@@ -41,7 +52,7 @@ const Files = (props) => {
 
 
   // gestion pagination
-  const pageCount = Math.ceil(total / PER_PAGE || 1)
+  const pageCount = Math.ceil(totalFiles / PER_PAGE)
   const handlePage = async ({ selected: selectedPage }) => {
     setNumPage(selectedPage)
     GetMyFilesFromAPI()
@@ -150,18 +161,18 @@ const Files = (props) => {
     setEditeTypeAllSelected(null)
   }
 
-  return (
-    <div className='open-elementPage'>
+  if (!promiseIdentifiedUser) return null
 
-      {menuFile && <div className='blanket' style={{ zIndex: 15000, display: 'flex', alignItems: 'center', justifyContent: 'center', top: 0 }} >
-        <div className='ctent_arti animation' style={{ overflow: 'visible', height: 'max-content', justifyContent: 'center', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap', maxWidth: 600 }} data-theme={localTheme}>
+  return (
+    <div className='open-element-page-melted'>
+
+      {menuFile && <div className='blanket open-element-page-melted' style={{ zIndex: 15000, display: 'flex', alignItems: 'center', justifyContent: 'center', top: 0 }} >
+        <div className='ctent_arti' style={{ overflow: 'visible', height: 'max-content', justifyContent: 'center', flexDirection: 'row', justifyContent: 'space-around', flexWrap: 'wrap', maxWidth: 600 }} data-theme={localTheme}>
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }} >
             <div style={{ marginBottom: 10, marginTop: 10 }}>{t('create_a_new_project')}</div>
             <input autoFocus={true} className='input_text' onChange={handleChange('name')} style={{ width: '90%' }} placeholder={t('named')} type="text" name="Named" id="Named" value={edite.name} data-theme={localTheme} />
             <div>{t('type_of_file')}</div>
-            <div style={{ width: '100%', maxWidth: 300, marginTop: 10 }}>
-              <Select setSelectedValue={setEditeType} selectedValue={editeType} arrays={optionsType} localTheme={localTheme} />
-            </div>
+              <Select setSelectedValue={setEditeType} selectedValue={editeType} arrays={optionsType} localTheme={localTheme} styles={{width: '100%', maxWidth: 300, marginTop: 10}} />
             {created !== '' && <div>{created}</div>}
             {errorFiles !== '' && <div style={{ color: 'red' }}>{errorFiles}</div>}
             <div className='button_option_container' style={{ width: '100%', maxWidth: 300, marginTop: 20 }} data-theme={localTheme}>
@@ -172,8 +183,8 @@ const Files = (props) => {
         </div>
       </div>}
 
-      {commonOption && <RemoveScroll className='blanket scrollbar' style={{ zIndex: 25000, display: 'flex', alignItems: 'start', justifyContent: 'center', top: 0, overflowY: 'auto' }} >
-        <div className='menu_navbar open-elementPage' style={{ width: '100%', flexDirection: 'column', maxWidth: 600, alignItems: 'center', justifyContent: 'center', marginBottom: 10 }} data-theme={localTheme}>
+      {commonOption && <RemoveScroll className='blanket scrollbar open-element-page-melted' style={{ zIndex: 25000, display: 'flex', alignItems: 'start', justifyContent: 'center', top: 0, overflowY: 'auto' }} >
+        <div className='menu_navbar' style={{ width: '100%', flexDirection: 'column', maxWidth: 600, alignItems: 'center', justifyContent: 'center', marginBottom: 10 }} data-theme={localTheme}>
 
           <h3>{t("options")}</h3>
 
@@ -196,7 +207,7 @@ const Files = (props) => {
 
       <div className='cter_sect'>
         <div style={{ width: '97%' }}>
-          <div className="copy-box two text" data-theme={localTheme} data-background={localThemeBackground}>
+          <div className="copy-box two text" data-theme={localTheme}>
             <div className="inner">
               <div className="line right"></div>
 
@@ -210,7 +221,7 @@ const Files = (props) => {
               </div>
 
               <div style={{ marginTop: 20, display: 'flex', width: '98%', alignItems: 'center', justifyContent: 'center' }}>
-                <input onKeyDown={handleSearch} onChange={handleSearch} className='input_text' placeholder={t('search')} type="text" name="Search" id="Search" value={editSearch} data-theme={localTheme} data-background={localThemeBackground} />
+                <input onKeyDown={handleSearch} onChange={handleSearch} className='input_text' placeholder={t('search')} type="text" name="Search" id="Search" value={editSearch} data-theme={localTheme} />
                 {editSearch !== "" && <div className='button_option_container shadowbox' style={{ width: '100%', maxWidth: 80, marginLeft: 10, display: 'flex' }} data-theme={localTheme}>
                   <div className='button_option' onClick={handleCloseSearch} style={{ width: '100%' }} data-theme={localTheme}><FontAwesomeIcon icon={faXmark} /></div>
                   <div className='button_option' onClick={SearchFiles} style={{ width: '100%' }} data-theme={localTheme}><FontAwesomeIcon icon={faMagnifyingGlass} /></div>
@@ -222,41 +233,36 @@ const Files = (props) => {
       </div>
 
       <div className='cter_sect'>
-        <div className='ctent_arti animation' style={{paddingTop: 10}} data-theme={localTheme}>
-        <div style={{ display: 'flex', width: '98%', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
-          <div style={{ width: '100%', maxWidth: 150 }}>
-            <div style={{ display: 'flex' }}>{t('select')}:<div style={{ marginLeft: 10 }}>{filesSelected.length}</div></div>
-            <div className='button_option_container' style={{ marginTop: 10, display: 'flex' }} data-theme={localTheme}>
-              <div onClick={() => {
-                setFilesSelected([])
-              }} className='button_option' style={{ color: '#ec1c24' }} data-theme={localTheme}><FontAwesomeIcon icon={faListUl} /></div>
-              <div style={{ color: '#0084ff' }} onClick={handleAllSelected} className='button_option' data-theme={localTheme}><span><FontAwesomeIcon icon={faListCheck} /></span></div>
-              <div className={filesSelected.length === 0 ? 'button_optionDisable' : 'button_optionBlue'} onClick={filesSelected.length === 0 ? null : () => { setCommonOption(true) }} data-theme={localTheme}><FontAwesomeIcon icon={faEllipsisVertical} /></div>
+        <div className='ctent_arti' style={{ paddingTop: 10 }} data-theme={localTheme}>
+          <div style={{ display: 'flex', width: '98%', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+            <div style={{ width: '100%', maxWidth: 150 }}>
+              <div style={{ display: 'flex' }}>{t('select')}:<div style={{ marginLeft: 10 }}>{filesSelected.length}</div></div>
+              <div className='button_option_container' style={{ marginTop: 10, display: 'flex' }} data-theme={localTheme}>
+                <div onClick={() => {
+                  setFilesSelected([])
+                }} className='button_option' style={{ color: '#ec1c24' }} data-theme={localTheme}><FontAwesomeIcon icon={faListUl} /></div>
+                <div style={{ color: '#0084ff' }} onClick={handleAllSelected} className='button_option' data-theme={localTheme}><span><FontAwesomeIcon icon={faListCheck} /></span></div>
+                <div className={filesSelected.length === 0 ? 'button_optionDisable' : 'button_optionBlue'} onClick={filesSelected.length === 0 ? null : () => { setCommonOption(true) }} data-theme={localTheme}><FontAwesomeIcon icon={faEllipsisVertical} /></div>
+              </div>
+            </div>
+            <div style={{ fontSize: 16, fontWeight: 'bold' }}>{numPage + 1}/{pageCount}</div>
+            <div style={{ width: '100%', maxWidth: 150 }}>
+              <div style={{ marginBottom: 10 }}>{t('type_of_file')}:</div>
+              <Select setSelectedValue={setEditeTypeAllSelected} selectedValue={editeTypeAllSelected} arrays={optionsType} localTheme={localTheme} />
             </div>
           </div>
-          <div style={{ fontSize: 16, fontWeight: 'bold' }}>{numPage + 1}/{pageCount}</div>
-          <div style={{ width: '100%', maxWidth: 150 }}>
-            <div style={{ marginBottom: 10 }}>{t('type_of_file')}:</div>
-            <Select setSelectedValue={setEditeTypeAllSelected} selectedValue={editeTypeAllSelected} arrays={optionsType} localTheme={localTheme} />
-          </div>
-        </div>
           <div style={{ marginTop: 10, width: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
-            <Card_select setTab={props.setTab} checkbox={true} filesSelected={filesSelected} handleFilesSelected={handleFilesSelected} handleFilesSelectedRemove={handleFilesSelectedRemove} promise={searchPromise === null ? promise : searchPromise} localTheme={localTheme} />
+            <Card_select checkbox={true} filesSelected={filesSelected} handleFilesSelected={handleFilesSelected} handleFilesSelectedRemove={handleFilesSelectedRemove} promise={searchPromise === null ? promise : searchPromise} localTheme={localTheme} />
           </div>
-          {!hiddenPaginationSearch && <>
-            <ReactPaginate
-              breakLabel="..."
-              previousLabel={<FontAwesomeIcon icon={faArrowLeft} />}
-              nextLabel={<FontAwesomeIcon icon={faArrowRight} />}
+
+          {pageCount > 1 && <>{!hiddenPaginationSearch &&
+            <Pagination
               pageCount={pageCount}
               onPageChange={handlePage}
               initialPage={numPage}
-              containerClassName={"pagination"}
-              previousLinkClassName={"pagination_link"}
-              nextLinkClassName={"pagination_link"}
-              disabledClassName={"pagination_link--disabled"}
-              activeClassName={"pagination_link--active"}
-            /></>}
+              localTheme={localTheme}
+            />}</>}
+
         </div>
       </div>
     </div>

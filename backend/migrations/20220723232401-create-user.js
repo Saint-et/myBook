@@ -30,12 +30,6 @@ module.exports = {
       resizeImageUrlCover: {
         type: Sequelize.INTEGER,
       },
-      background: {
-        type: Sequelize.STRING,
-      },
-      resizeThemeBackground: {
-        type: Sequelize.INTEGER,
-      },
       pseudo: {
         type: Sequelize.STRING,
       },
@@ -45,10 +39,13 @@ module.exports = {
       adultAccess: {
         type: Sequelize.INTEGER,
       },
+      total_followers: {
+        type: Sequelize.INTEGER,
+      },
       followers: {
         type: Sequelize.JSON,
       },
-      iFollow: {
+      subscriptions: {
         type: Sequelize.JSON
       },
       isAdmin: {
@@ -60,8 +57,17 @@ module.exports = {
       private: {
         type: Sequelize.INTEGER,
       },
-      background: {
-        type: Sequelize.STRING
+      privatePinnedIllustrations: {
+        type: Sequelize.INTEGER,
+      },
+      privatePinnedUsers: {
+        type: Sequelize.INTEGER,
+      },
+      accessPass: {
+        type: Sequelize.INTEGER,
+      },
+      diamondPass: {
+        type: Sequelize.INTEGER,
       },
       myTags: {
         type: Sequelize.JSON
@@ -71,6 +77,21 @@ module.exports = {
       },
       filesBookmark: {
         type: Sequelize.JSON
+      },
+      caption: {
+        type: Sequelize.TEXT,
+      },
+      coinBack: {
+        type: Sequelize.INTEGER,
+      },
+      coinBuy: {
+        type: Sequelize.INTEGER,
+      },
+      totalCoinPurchase: {
+        type: Sequelize.INTEGER,
+      },
+      coinPurchase: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,

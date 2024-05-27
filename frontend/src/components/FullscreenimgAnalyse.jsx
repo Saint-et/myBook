@@ -27,8 +27,8 @@ const FullscreenimgAnalyse = () => {
 
     return (
         <>
-            <RemoveScroll className='blanket scrollbar' style={{ zIndex: 14000, display: 'flex', alignItems: 'start', justifyContent: 'center', top: 0, overflowY: 'auto' }} >
-                <div className='menu_navbar open-elementPage' style={{ width: '100%', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, maxWidth: 900 }} data-theme={localTheme}>
+            <RemoveScroll className='blanket scrollbar' style={{ zIndex: 25000, display: 'flex', alignItems: 'start', justifyContent: 'center', top: 0, overflowY: 'auto' }} >
+                <div className='menu_navbar open-element-page-melted' style={{ width: '100%', flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between', marginBottom: 50, maxWidth: 900 }} data-theme={localTheme}>
                     <img onClick={() => handleFullScreen({img: fullScreenImgAnalyse.element.imageUrl})} style={{ objectFit: 'contain', width: '90%', maxWidth: 350, borderRadius: 10 }} src={fullScreenImgAnalyse.element.imageUrl || Picture} alt="" />
 
                     <div style={{ marginTop: 10, width: '90%' }}>Leave a note at this image :</div>

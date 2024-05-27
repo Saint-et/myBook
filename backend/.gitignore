@@ -6,3 +6,13 @@
 /images/*
 /uploads/*
 /videos/*
+/error/*
+# Ignore les fichiers de l'environnement virtuel
+venv/
+.venv/
+env/
+.env/
+ENV/
+.ENV/
+env.bak/
+.env.bak/

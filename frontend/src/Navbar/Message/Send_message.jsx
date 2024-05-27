@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { API_URL, SOCKET_URL } from '../../config';
 import axios from "axios";
-import PageNoFound from "../../components/PageNoFound";
+import PageNoFound from "../../components/page_err";
 import Picture from '../../assets/images/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfo, faFlag, faArrowLeft, faPaperPlane, faX } from '@fortawesome/free-solid-svg-icons';
@@ -123,7 +123,7 @@ const Send_message = (props) => {
     if (promiseDiscussion === true) return (<PageNoFound localTheme={localTheme} />)
 
     return (
-        <>
+        <div className='main'>
 
             {hiddenInfo && <div className='blanket' style={{ zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: -100 }} >
                 <div className='menu_navbar' style={{ width: '100%', flexDirection: 'column', maxWidth: 900, height: 400 }} data-theme={localTheme}>
@@ -195,7 +195,7 @@ const Send_message = (props) => {
                 </div>
             </div>
 
-        </>
+        </div>
     )
 }
 

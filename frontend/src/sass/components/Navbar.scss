@@ -11,26 +11,29 @@
   z-index: 20000;
   transition: 200ms ease-in-out;
   top: 0px;
+  background-color: white;
 }
-
+.container_banner_navbar[data-theme="dark"] {
+  background-color: $background_semi_black;
+}
 .container_banner_navbar.active {
   top: -50px;
 }
 .banner_navbar {
-  width: 100%;
+  width: 98%;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   height: auto;
-  background-color: white;
   z-index: 1000;
   padding-top: 5px;
   padding-bottom: 5px;
 }
-.banner_navbar[data-theme="dark"] {
-  background-color: $background_semi_black;
+.content_banner_navbar {
+  display: flex;
+  justify-content: start;
+  align-items: center;
 }
-
 .blanket {
   position: fixed;
   height: 100%;
@@ -51,11 +54,27 @@
   top: 0px;
   padding-top: 50px;
 }
-.nav_workspace{
+.blanket_opacte {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: #f7f7f7;
+  z-index: 900;
+  top: 0px;
+}
+.blanket_opacte[data-theme="dark"] {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgb(5, 5, 5);
+  z-index: 900;
+  top: 0px;
+}
+.nav_fixed {
   transition: 200ms ease-in-out;
   top: 0px;
 }
-.nav_workspace.active{
+.nav_fixed.active {
   top: 50px;
 }
 .Profile_picture_nav {
@@ -66,7 +85,7 @@
 .menu_navbar {
   overflow: hidden;
   padding: 5px;
-  border-radius: 15px;
+  border-radius: 5px;
   width: 100%;
   display: flex;
   font-size: 16px;
@@ -76,41 +95,21 @@
   color: $text_black;
   background-color: white;
 }
-.menu_navbar[data-theme="default"] {
-  color: $text_black;
-  background-color: white;
-  //background: url($background_img);
-  //background-position: center;
-  //background-size: cover;
-  //background-repeat: no-repeat;
-  //background-attachment: fixed;
-}
 .menu_navbar[data-theme="dark"] {
   color: $text_white;
   background-color: $background_semi_black;
-  //background: linear-gradient(transparent, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9)),
-  //  url($background_img);
-  //background-position: center;
-  //background-size: cover;
-  //background-repeat: no-repeat;
-  //background-attachment: fixed;
 }
 .notif {
   display: flex;
-  align-items: center;
+  align-items: start;
   justify-content: space-between;
   width: 89%;
-  height: 50px;
+  height: auto;
+  overflow: hidden;
   cursor: pointer;
   text-decoration: none;
-  color: $text_white;
   padding: 5px;
   border-radius: 10px;
-  &:hover {
-    background-color: rgba(255, 255, 255, 0.199);
-  }
-}
-.notif[data-theme="default"] {
   color: $text_black;
   &:hover {
     background-color: $button_light_circle_hover;
@@ -179,34 +178,7 @@
 .menu_navbar_navPc {
   z-index: 100;
   align-self: flex-end;
-  height: 55%;
-}
-.button_optionNav {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: 200ms;
-  height: 40px;
-  text-decoration: none;
-  color: rgb(0, 0, 0);
-  cursor: pointer;
-  transition: 500ms;
-  width: 100%;
-  &:hover {
-    background-color: $button_light_circle_hover;
-  }
-}
-.button_optionNav[data-theme="default"] {
-  color: rgb(0, 0, 0);
-  &:hover {
-    background-color: $button_light_circle_hover;
-  }
-}
-.button_optionNav[data-theme="dark"] {
-  color: white;
-  &:hover {
-    background-color: $button_black_circle_hover;
-  }
+  height: 80vh;
 }
 .input_text_navPc {
   display: flex;
@@ -217,37 +189,51 @@
 .button_optionNavPc {
   display: none;
 }
+.button_works_container {
+  background-color: $navbar_light;
+}
+.button_works_container[data-theme="dark"] {
+  background-color: $background_semi_black;
+}
+.nav_bar_scnd {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 5px;
+  padding-bottom: 10px;
+  color: #000000;
+  background: #ffffff;
+}
+.nav_bar_scnd[data-theme="dark"] {
+  color: #fff;
+  background: #0c0c0c;
+}
+.container_input_text_nav {
+  display: flex;
+  width: 100%;
+  max-width: 600px;
+  justify-content: center;
+  align-items: center;
+}
+.hiddenMax {
+  display: none;
+}
+.hidden980 {
+  display: initial;
+}
 @media all and (max-width: 980px) {
-  .button_optionNavPc {
-    display: inherit;
-  }
-  .input_text_navMobile {
+  .hidden980 {
     display: none;
   }
-  .nav_workspace.active{
-    top: 95px;
-  }
-  //.blanket {
-  //  padding-top: 95px;
-  //}
-  .blanket_nav {
-    padding-top: 80px;
-    top: 0px;
-  }
-  .blanket_nav.active {
-    top: 0px;
-  }
-  .container_banner_navbar.active {
-    top: -95px;
-  }
-  .banner_navbar {
-    flex-direction: column;
+  .hiddenMax {
+    display: initial;
   }
   .Profile_picture_nav {
     width: 35px;
     height: 35px;
   }
-  .menu_navbar_navMobile {
+  .menu_navbar_nav980 {
     align-self: center;
   }
 }

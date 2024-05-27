@@ -3,15 +3,15 @@ import { useAppContext } from "../../../contexts/UseAppContext";
 import Warning from "../../../components/Warning";
 
 const Problem_works = () => {
-    const { localTheme, localThemeBackground } = useAppContext();
+    const { localTheme} = useAppContext();
     const { t } = useTranslation();
 
     return (
-        <div className='open-elementPage'>
+        <div className='open-element-page-melted'>
             <Warning />
             <div className='cter_sect'>
                 <div style={{ width: '97%' }}>
-                    <div className="copy-box two text" data-theme={localTheme} data-background={localThemeBackground}>
+                    <div className="copy-box two" data-theme={localTheme}>
                         <div className="inner">
                             <div className="line right"></div>
 
@@ -24,7 +24,7 @@ const Problem_works = () => {
             </div>
 
             <div className='cter_sect'>
-                <div className='ctent_arti animation' data-theme={localTheme}>
+                <div className='ctent_arti' data-theme={localTheme}>
 
                 </div>
             </div>

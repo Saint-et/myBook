@@ -1,18 +1,47 @@
 .badge {
   color: #000000;
   width: max-content;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
+  border-radius: 5px;
   display: flex;
   justify-content: center;
   background-color: rgb(255, 255, 255);
-  padding-left: 5px;
-  padding-right: 5px;
+  padding: 3px;
   font-size: 16px;
 }
 .badge[data-theme="dark"] {
-  background-color: rgb(19, 19, 19);
+  background-color: #131313;
   color: #ffffff;
+}
+.badge_System_color {
+  color: #ffffff;
+  width: max-content;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ec1c24;
+  padding: 3px;
+  font-size: 16px;
+}
+.badgeShop {
+  color: #ffffff;
+  width: max-content;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(to right, #fc00ff, #00dbde);
+  padding: 3px;
+  font-size: 16px;
+}
+.badgeColoring {
+  color: #ffffff;
+  width: max-content;
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(to right, #ee0979, #ff6a00);
+  padding: 3px;
+  font-size: 16px;
 }
 .badgeBlue {
   color: #ffffff;
@@ -21,56 +50,48 @@
   display: flex;
   justify-content: center;
   background-color: #0077ff;
-  padding-left: 5px;
-  padding-right: 5px;
+  padding: 3px;
 }
 .master {
   color: #ffffff;
   width: 100%;
   max-width: 100px;
   border-radius: 50px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 3px;
   display: flex;
   justify-content: center;
   background: linear-gradient(to right, #8e2de2, #4a00e0);
-  font-weight: 600;
 }
 .admin {
   color: #ffffff;
   width: 100%;
   max-width: 100px;
   border-radius: 50px;
-  padding-left: 10px;
-  padding-right: 10px;
+  padding: 3px;
   display: flex;
   justify-content: center;
   background: linear-gradient(to right, #00b09b, #96c93d);
-  font-weight: 600;
 }
 .badge_adult {
-  background-color: #a0008b;
+  background: linear-gradient(to right, #d31027, #ea384d);
   border-radius: 50px;
   color: #ffffff;
   width: 100%;
   max-width: 100px;
-  font-weight: 600;
   display: flex;
   justify-content: center;
-  
+  padding: 3px;
 }
 .adult {
+  text-decoration: none;
   color: #ffffff;
-  width: 30px;
-  font-size: 12px;
+  width: max-content;
   border-radius: 5px;
   font-size: 14px;
   display: flex;
   justify-content: center;
-  background-color: #a0008b;
-  text-decoration: none;
-  padding-left: 5px;
-  padding-right: 5px;
+  background: linear-gradient(to right, #d31027, #ea384d);
+  padding: 3px;
 }
 .AI {
   color: #ffffff;
@@ -101,16 +122,6 @@
   height: 15px;
   background-color: #00aa00;
 }
-.professional {
-  color: #ffffff;
-  width: 100%;
-  max-width: 100px;
-  border-radius: 50px;
-  display: flex;
-  justify-content: center;
-  background-color: #800000;
-  font-weight: 600;
-}
 .standard {
   color: #ffffff;
   width: 100%;
@@ -119,13 +130,8 @@
   display: flex;
   justify-content: center;
   background-color: green;
-  font-weight: 600;
   text-decoration: none;
-}
-.badge_premium {
-  color: #ffffff;
-  background-color: #d18800;
-  border-radius: 50px;
+  padding: 3px;
 }
 .premium {
   color: #ffffff;
@@ -135,24 +141,6 @@
   display: flex;
   justify-content: center;
   background-color: #d18800;
-  font-weight: 600;
   text-decoration: none;
+  padding: 3px;
 }
-//@media all and (max-width: 980px) {
-//  .adult {
-//    font-size: 10px;
-//    padding-left: 0px;
-//    padding-right: 0px;
-//  }
-//  .AI {
-//    font-size: 10px;
-//    padding-left: 0px;
-//    padding-right: 0px;
-//  }
-//  .badge,
-//  .badgeBlue {
-//    font-size: 12px;
-//    padding-left: 2px;
-//    padding-right: 2px;
-//  }
-//}

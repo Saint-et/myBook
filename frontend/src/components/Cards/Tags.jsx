@@ -17,7 +17,7 @@ const Tags = (props) => {
 
     if (props.promise.length == 0) return (
         <>
-            <h3>No tags</h3>
+            <h4>No tags</h4>
         </>
     )
 

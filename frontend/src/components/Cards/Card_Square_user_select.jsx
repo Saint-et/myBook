@@ -12,6 +12,14 @@ const Card_Square_user_select = (props) => {
         </div>
     )
 
+    if (props.promise?.length === 0) return (
+        <>
+            <div className='cter_sect' style={{ paddingTop: 30 }}>
+                <h4 data-theme={localTheme}>No results</h4>
+            </div>
+        </>
+    )
+
     return (
         <>
             <div style={{ width: '100%', display: 'flex', flexWrap: 'wrap', paddingBottom: 50, display: 'flex', justifyContent: 'center' }}>

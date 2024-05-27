@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DATA_picv } from "../../../assets/data/data";
+import { SystemName } from "../../../assets/data/data";
 import { useAppContext } from "../../../contexts/UseAppContext";
 import imgCoverCard1 from '../../../assets/images/2151121007.jpg';
 import MyGameComponentBeta from "./pages/MyGameComponentBeta";
@@ -8,7 +8,7 @@ import { faCirclePlay, faClock, faEye } from "@fortawesome/free-regular-svg-icon
 
 const GameWerewolf = () => {
     const { localTheme, promiseIdentifiedUser } = useAppContext()
-    
+
     let levelUser = 2;
 
     const [play, setPlay] = useState(false)
@@ -19,26 +19,26 @@ const GameWerewolf = () => {
     }
 
     return (
-        <>
+        <div className='main'>
 
             {!play ? <><div className='cter_sect'>
                 <div className='ctent_arti' style={{ maxWidth: 800 }} data-theme={localTheme}>
-                    <h1 className='textLoto' style={{ fontSize: 40, textAlign: 'center' }}>{DATA_picv} Game Werewolf Attack!</h1>
+                    <h1 className='textLoto' style={{ fontSize: 40, textAlign: 'center' }}>{SystemName} Game Werewolf Attack!</h1>
 
                     <div style={{ maxWidth: 600, backgroundImage: `url(${imgCoverCard1})`, backgroundPosition: `50% 50%`, display: 'flex', alignItems: 'center', justifyContent: 'center' }} className='CoverImage FlexEmbed FlexEmbed--2by1'>
-                        {promiseIdentifiedUser &&<div onClick={() => { setPlay(!play) }} className='button_option_container textLoto' style={{ fontSize: 25, width: '100%', marginTop: 10, maxWidth: 300 }} data-theme={localTheme}>
+                        {promiseIdentifiedUser && <div onClick={() => { setPlay(!play) }} className='button_option_container textLoto' style={{ fontSize: 25, width: '100%', marginTop: 10, maxWidth: 300 }} data-theme={localTheme}>
                             <div className='btn'>Click to play</div>
                         </div>}
                     </div>
 
                     <div style={{ color: 'grey', fontSize: 13, marginTop: 10 }}>
-                                <FontAwesomeIcon style={{ marginRight: 5 }} icon={faCirclePlay} />
-                                453,
-                                <FontAwesomeIcon style={{ marginRight: 5, marginLeft: 5 }} icon={faEye} />
-                                768,
-                                <FontAwesomeIcon style={{ marginRight: 5, marginLeft: 5 }} icon={faClock} />
-                                1.5min
-                            </div>
+                        <FontAwesomeIcon style={{ marginRight: 5 }} icon={faCirclePlay} />
+                        453,
+                        <FontAwesomeIcon style={{ marginRight: 5, marginLeft: 5 }} icon={faEye} />
+                        768,
+                        <FontAwesomeIcon style={{ marginRight: 5, marginLeft: 5 }} icon={faClock} />
+                        1.5min
+                    </div>
 
 
                     <div className="textBungeeSpice" style={{ textAlign: 'center' }}>
@@ -87,17 +87,17 @@ const GameWerewolf = () => {
                 :
                 <div className='cter_sect'>
                     <div className='ctent_arti' style={{ padding: 0, maxWidth: 'max-content', height: 700 }} data-theme={localTheme}>
-                        {play && <MyGameComponentBeta 
-                        onClick={onClick}
-                        userPseudo={promiseIdentifiedUser?.user.pseudo}
-                        userImg={promiseIdentifiedUser?.user.imageUrl}
-                        userLevel={levelUser}
-                         />}
+                        {play && <MyGameComponentBeta
+                            onClick={onClick}
+                            userPseudo={promiseIdentifiedUser?.user.pseudo}
+                            userImg={promiseIdentifiedUser?.user.imageUrl}
+                            userLevel={levelUser}
+                        />}
                     </div>
                 </div>}
 
 
-        </>
+        </div>
     )
 }
 

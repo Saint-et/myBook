@@ -4,10 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { useAppContext } from '../../contexts/UseAppContext';
+import { useWorkspaceContext } from '../../contexts/UseWorkspaceContexte';
 import { IndexedDB, recupererTousLesElements } from '../../assets/data/IndexedDB';
+import { NSFW } from '../../assets/data/data';
 
 const Card = (props) => {
-  const { localTheme, GetMyFileFromLocal } = useAppContext();
+  const { localTheme } = useAppContext();
+  
+  const { GetMyFileFromLocal } = useWorkspaceContext();
 
   const navigate = useNavigate()
 
@@ -64,7 +68,7 @@ const Card = (props) => {
       {props.promise?.map((doc, index) => (
         <div className='long_card open-elementPage' key={doc.id}>
 
-            {!props.checkbox ? <>{doc.groupId != props.location ?
+            {!props.checkboxDisable && <>{!props.checkbox ? <>{doc.groupId != props.location ?
               // Groups display manages the selection
               <div className="checkbox-wrapper-46" style={{ display: 'flex', alignItems: 'center', marginRight: 10 }}>
                 <input
@@ -88,7 +92,7 @@ const Card = (props) => {
                     <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
                   </svg></span>
                 </label>
-              </div>}
+              </div>}</>}
 
 
 
@@ -100,8 +104,7 @@ const Card = (props) => {
               {doc.visibility == 0 && <FontAwesomeIcon style={{ color: '#ec1c24' }} icon={faEye} />}
               {doc.visibility == 2 && <FontAwesomeIcon style={{ color: '#0077ff' }} icon={faEye} />}
               {doc.adult == 0 && <div style={{ width: 45 }}></div>}
-              {doc.adult == 1 && <div style={{ width: 35 }} className='adult' translate='no'>18+</div>}
-              {doc.adult == 2 && <div style={{ width: 35 }} className='adult' translate='no'>18++</div>}
+              {doc.adult == 1 && <div style={{ width: 35, marginLeft: 5 }} className='adult' translate='no'>{NSFW}</div>}
             </div>
             {doc.type && <div style={{ overflow: 'hidden', width: 200, textOverflow: 'ellipsis' }} translate='no'>Type: <span translate='yes' style={{ color: '#0078e9', marginLeft: 5 }}>{doc.type}</span></div>}
             <div style={{ overflow: 'hidden', width: 200, textOverflow: 'ellipsis' }}>Group: {doc.groupsfile ? <span translate='no' style={{ color: '#ec1c24', marginLeft: 5 }}>{doc.groupsfile.name.charAt(0).toUpperCase() + doc.groupsfile.name.slice(1)}</span> : <span style={{ color: '#747474', marginLeft: 5 }}>None</span>}</div>

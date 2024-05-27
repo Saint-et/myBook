@@ -24,8 +24,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-
-
 // Middleware pour recevoir plusieurs images
 const uploadMultipleImages = upload.array('uploads', 200) // 'images' est le nom du champ de formulaire qui contient les images, 5 est le nombre maximum d'images acceptées
 

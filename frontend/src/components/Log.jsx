@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import React from "react";
-import logo from '../assets/images/logo_transparent_banner.png';
-import logoBlack from '../assets/images/logo_transparent_banner_black.png';
+import logo from '../assets/images/logo_max_size.png';
 import { useAppContext } from '../contexts/UseAppContext';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCubes, faLanguage, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
@@ -14,15 +13,11 @@ const Log = (props) => {
 
 
   return (
-    <>
+    <div className='open-element-page-melted'>
       <div className='cter_sect' style={{ marginTop: 20 }}>
         <div style={{ display: 'flex', width: '100%', alignItems: 'center' }}>
-          <img style={{ width: '100%', height: 100, objectFit: 'contain' }} src={
-            localTheme === null && logoBlack ||
-            localTheme === 'dark' && logo ||
-            localTheme === 'default' && logoBlack
-          } alt="" onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} />
-        </div >
+          <img style={{ width: '100%', height: 100, objectFit: 'contain' }} src={logo} alt="" onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} />
+        </div>
       </div>
 
       <div className='cter_sect'>
@@ -61,7 +56,7 @@ const Log = (props) => {
 
 
 
-    </>
+    </div>
   )
 }
 

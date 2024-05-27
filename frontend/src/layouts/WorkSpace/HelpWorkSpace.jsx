@@ -1,13 +1,13 @@
-import { DATA_picv } from "../../assets/data/data"
+import { SystemName } from "../../assets/data/data"
 import { useAppContext } from "../../contexts/UseAppContext"
 
 
 const HelpWorkSpace = () => {
 
-    const { localTheme, localThemeBackground } = useAppContext()
+    const { localTheme } = useAppContext()
 
     return (
-        <>
+        <div className="open-element-page-melted">
             <div className='cter_sect'>
                 <div className='ctent_arti' style={{alignItems: 'start'}} data-theme={localTheme}>
                     <div className="copy-box two">
@@ -29,13 +29,13 @@ const HelpWorkSpace = () => {
                                 </ul>
                                 <p>If you are using a different browser or encountering issues related to IndexedDB, we suggest updating your browser to the latest available version or considering one of the recommended browsers.</p>
                                 <p>We apologize for any inconvenience this may cause, and we are here to assist you with any further questions or concerns.</p>
-                                <p>Best regards, {DATA_picv}</p>
+                                <p>Best regards, {SystemName}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

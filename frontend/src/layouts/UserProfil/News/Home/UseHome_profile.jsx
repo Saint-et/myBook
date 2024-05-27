@@ -2,9 +2,12 @@ import { useState, useEffect } from "react";
 import { API_URL } from '../../../../config';
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import { useAppContext } from "../../../../contexts/UseAppContext";
 
 
 export const UseHome_profile = () => {
+
+  const {promiseIdentifiedUser} = useAppContext()
 
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
@@ -47,11 +50,11 @@ export const UseHome_profile = () => {
 
     useEffect(() => {
         GetMyFilesFromAPIAnnouncement()
-    }, []);
+    }, [promiseIdentifiedUser]);
 
     useEffect(() => {
         GetMyFilesFromAPI(typeUrl)
-    }, [typeUrl]);
+    }, [typeUrl, promiseIdentifiedUser]);
 
     return {
         IdUser,

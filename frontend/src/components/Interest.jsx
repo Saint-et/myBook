@@ -48,7 +48,7 @@ const Interest = () => {
 
   if (!promiseIdentifiedUser.user.interest) return (
     <>
-      <div className='blanket animation' style={{ zIndex: 10500, display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
+      <div className='blanket open-element-page-melted' style={{ zIndex: 10500, display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
         <RemoveScroll className='menu_navbar scrollbar' style={{ width: '100%', flexDirection: 'column', maxWidth: 1100, height: '98%', overflowY: 'auto', background: 'none' }} data-theme={localTheme}>
           <Condition/>
           <div className='cter_sect' style={{ paddingBottom: 25 }}>

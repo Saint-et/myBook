@@ -2,54 +2,47 @@
 
 .input_text {
   color: $text_black;
-  &[data-background="on"] {
-    color: $text_white;
-  }
-  //background: $input_light;
   height: 25px;
-  //border-radius: 25px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-radius: 5px;
   font-size: 16px;
   outline: none;
   border: none;
-  text-align: center;
-  width: 100%;
+  //text-align: center;
+  width: 90%;
   background: none;
-  max-width: 500px;
-  border-bottom: 1px solid gray;
+  //max-width: 500px;
+  border: 1px solid gray;
   padding: 5px;
   transition: 200ms;
-  &[data-background="on"] {
-    color: white;
-    border-bottom: 1px solid rgb(255, 255, 255);
-    &::placeholder {
-      color: rgb(240, 240, 240);
-    }
-  }
   &:hover {
     background: #acacac33;
-    border-bottom: 1px solid #ec1c24;
+    border: 1px solid #0077ff;
+  }
+  &:focus {
+    border: 1px solid #0077ff;
   }
 }
 .input_text[data-theme="dark"] {
   color: $text_white;
-  &[data-background="on"] {
-    color: white;
-    border-bottom: 1px solid rgb(255, 255, 255);
-    &::placeholder {
-      color: rgb(240, 240, 240);
-    }
-  }
+
   &:hover {
     background: #acacac33;
-    border-bottom: 1px solid #ec1c24;
+    border: 1px solid #0077ff;
+  }
+  &:focus {
+    border: 1px solid #0077ff;
+  }
+}
+.input_text[data-disable="true"] {
+  background: #acacac33;
+  border: 1px solid gray;
+  &:hover {
+    background: #acacac33;
+    border: 1px solid gray;
   }
 }
 .textarea_mess {
-  //color: #000000;
-  background-color: #ececec;
-  //margin-top: 10px;
+  background-color: rgb(240, 240, 240);
   border-radius: 5px;
   padding-top: 5px;
   padding-bottom: 5px;
@@ -58,11 +51,5 @@
   width: 98%;
 }
 .textarea_mess[data-theme="dark"] {
-  //color: #fff;
   background-color: #333333;
 }
-//@media all and (max-width: 980px) {
-//  .input_text{
-//    height: 25px;
-//  }
-//}

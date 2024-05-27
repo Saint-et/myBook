@@ -11,10 +11,16 @@ const verification = require('../middlewares/verification');
 router.get('/newsfiles/get-files/:id/:key', verification.Url, Ctrl.GetNewsfiles);
 
 // get catalog files
-router.get('/catalogfiles/get-files/:key/:id', verification.Url, session.LoginFalse, Ctrl.GetCatalogfiles);
+router.get('/catalogfiles/get-files/:key/:type/:id', verification.Url, Ctrl.GetCatalogfiles);
+
+// get one tag
+router.get('/get-profil/get-tags/:id', Ctrl.GetTagsprofil);
 
 // get catalog files
-router.get('/catalogfilestags/get-files/:key/:id/:name', verification.Url, session.LoginFalse, Ctrl.GetCatalogfilesTags);
+router.get('/catalogfilestags/get-files/:key/:type/:id/:name', verification.Url, Ctrl.GetCatalogfilesTags);
+
+// get catalog files
+router.get('/cataloglibrarys/get-library/:id', verification.Url, Ctrl.Get_library_user);
 
 
 module.exports = router;

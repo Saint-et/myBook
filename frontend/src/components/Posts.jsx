@@ -4,114 +4,23 @@ import { useRef, useState } from "react";
 import { Editor } from 'draft-js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faMinimize, faMaximize } from '@fortawesome/free-solid-svg-icons';
-import { stateToHTML } from 'draft-js-export-html';
 import createLinkifyPlugin from '@draft-js-plugins/linkify';
 import createHashtagPlugin from '@draft-js-plugins/hashtag';
 import imgProfile from '../assets/images/logo.png';
-import { API_URL } from '../config';
-import axios from "axios";
 
 const Posts = (props) => {
     const { localTheme } = useAppContext();
 
     const editor = useRef(null);
-//
-    //const [title, setTitle] = useState('')
-    //const [comments, setComments] = useState(null)
-    //const [img, setImg] = useState('');
-    //const [imgUpload, setImgUpload] = useState('');
-    //const [errorFiles, setErrorFiles] = useState("");
-    //const [editeTags, setEditeTags] = useState([]);
-    //const [text, setText] = useState('');
-//
-    const [captionSize, setCaptionSize] = useState(false)
-//
-    ////Methode afin de cacher le bouton pour choisir un fichier
-    //const hiddenFileInput = useRef(null);
-//
-    //// utilisation d'un bouton personalisé pour choisir une image
-    //const handleClick = async () => {
-    //    hiddenFileInput.current.click();
-//
-    //};
-//
-//
-    ////chargement de l'image & Affichage de l’image
-    //const handleLoad = (event) => {
-    //    const fileUploaded = event.target.files[0]
-    //    setImgUpload(fileUploaded);
-    //    setImg(URL.createObjectURL(fileUploaded));
-    //};
-//
-//
-    //const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
-//
-    //const onChange = (newEditorState) => {
-    //    props.setEditorState(newEditorState);
-    //};
-//
-    ////console.log(stateToHTML(editorState.getCurrentContent()));
-//
-    //const createPost = async () => {
-    //    setErrorFiles('')
-    //    const contentStateRaw = convertToRaw(editorState.getCurrentContent());
-    //    const contentStateJSON = JSON.stringify(contentStateRaw);
-    //    const tags = JSON.stringify(editeTags);
-//
-    //    const formData = new FormData();
-    //    formData.append("image", imgUpload || null);
-    //    formData.append("title", title);
-    //    formData.append("data", contentStateJSON);
-    //    formData.append("tags", tags);
-    //    //    formData.append("comments", comments);
-    //    try {
-    //        await axios.post(`${API_URL}api/eventv/post/new-post`,
-    //            formData
-    //            , { withCredentials: true })
-    //            .then(() => {
-    //                props.GetMyFilesFromAPIAnnouncement()
-    //                props.setAnnouncement(false)
-    //                console.log(1);
-    //            })
-    //    } catch (error) {
-    //        setErrorFiles(error.response.data.message)
-    //    }
-    //}
-//
-//
+    const [captionSize, setCaptionSize] = useState(false);
+
     const linkifyPlugin = createLinkifyPlugin();
     const hashtagPlugin = createHashtagPlugin();
-//
-//
-    //const handleChangeTags = (e) => {
-    //    const expressionReguliere = /\s/;
-    //    const regexTags = /#[a-zA-Z0-9_]+/g;
-    //    const tagsTrouves = e.target.value.match(regexTags) || [];;
-//
-    //    // Utilisez setText pour mettre à jour l'état du texte
-    //    setText(e.target.value);
-//
-//
-    //    if (expressionReguliere.test(e.target.value) || e.target.value.length > 30 || e.key === 'Enter') {
-    //        // Utilisez le setEditeTags pour mettre à jour l'état des tags
-    //        e.preventDefault()
-    //        setEditeTags(Array.from(new Set([...editeTags, ...tagsTrouves])));
-    //        setText('');
-    //    }
-    //};
-//
-//
-    //const handleRemoveTag = (el) => {
-    //    const filteredPromise = editeTags?.filter((array) => array != el)
-    //    setEditeTags(filteredPromise)
-    //}
-
-
 
     return (
         <>
-            <div className='blanket animation' style={{ zIndex: 25000, display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', top: 0, left: 0 }} >
-                <RemoveScroll removeScrollBar={false} className='menu_navbar scrollbar open-elementPage' style={{ width: '100%', height: '100%', flexDirection: 'column', maxWidth: 1000, overflowY: 'auto', alignItems: 'center', background: 'none' }} data-theme={localTheme}>
+            <div className='blanket open-element-page-melted' style={{ zIndex: 25000, display: 'flex', alignItems: 'center', flexDirection: 'column', justifyContent: 'center', top: 0, left: 0 }} >
+                <RemoveScroll removeScrollBar={false} className='menu_navbar scrollbar open-element-page-melted' style={{ width: '100%', height: '100%', flexDirection: 'column', maxWidth: 1000, overflowY: 'auto', alignItems: 'center', background: 'none' }} data-theme={localTheme}>
                     <div className='cter_sect'>
                         <div className='ctent_artiMiniProfil' data-theme={localTheme}>
                             <h3>Published something</h3>
@@ -191,7 +100,7 @@ const Posts = (props) => {
 
 
                             <div className='button_option_container' style={{ width: '100%', maxWidth: 500, display: 'flex', marginTop: 20 }} data-theme={localTheme}>
-                                
+
                                 <div className='button_option' style={{ width: '100%' }} data-theme={localTheme}>Delete</div>
                                 <div className='button_optionPic_v' style={{ width: '100%' }} onClick={props.submit} data-theme={localTheme}>Publish</div>
                             </div>
@@ -207,7 +116,7 @@ const Posts = (props) => {
                             </div>
 
                             <div className='button_option_container' style={{ width: '100%', maxWidth: 500, display: 'flex', marginTop: 20 }} data-theme={localTheme}>
-                            <div className='button_option' onClick={() => { props.setAnnouncement(false) }} data-theme={localTheme}>Cancel</div>
+                                <div className='button_option' onClick={() => { props.setAnnouncement(false) }} data-theme={localTheme}>Cancel</div>
                             </div>
 
                         </div>

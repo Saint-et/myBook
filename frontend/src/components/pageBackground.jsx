@@ -5,8 +5,10 @@ import { API_URL } from '../config';
 import axios from "axios";
 import { useTranslation } from 'react-i18next';
 import imgCoverProfile from '../assets/images/vaisseau-spatial-futuriste-orbite-autour-mysterieuse-planete-dans-galaxie-profonde-generee-par-intelligence-artificielle.jpg';
-import { DATA_picv, imagesBackground } from "../assets/data/data";
+import { SystemName, imagesBackground } from "../assets/data/data";
 import useKeypress from 'react-use-keypress';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBan } from "@fortawesome/free-solid-svg-icons";
 
 
 
@@ -96,9 +98,9 @@ const PageBackground = () => {
     return (
         <>
             <RemoveScroll removeScrollBar={false} className='blanket scrollbar' style={{ zIndex: 26000, display: 'flex', alignItems: 'start', justifyContent: 'center', top: 0, overflowY: 'auto' }} >
-                <div className='menu_navbar open-elementPage' style={{ width: '100%', flexDirection: 'column', maxWidth: 800, alignItems: 'center', justifyContent: 'center', marginBottom: 10 }} data-theme={localTheme}>
+                <div className='menu_navbar open-element-page-melted' style={{ width: '100%', flexDirection: 'column', maxWidth: 800, alignItems: 'center', justifyContent: 'center', marginBottom: 10 }} data-theme={localTheme}>
 
-                    <h4>Background {DATA_picv}</h4>
+                    <h4>Background {SystemName}</h4>
                     <div ref={refRange} onWheel={myFunction} style={{ backgroundImage: `url(${themeBackgroundSystem || imgCoverProfile})`, backgroundPosition: `50% ${resizeThemeBackgroundSystem}%`, width: '95%' }} className='CoverImage FlexEmbed FlexEmbed--2by1 shadowbox'></div>
                     <div className="range-container">
                         <input
@@ -120,7 +122,7 @@ const PageBackground = () => {
                         />
                     </div>
                     <div className='button_option_container' style={{ width: '100%', maxWidth: 400, marginBottom: 20, marginTop: 20, display: 'flex' }} data-theme={localTheme}>
-                    <div className='button_option' onClick={() => {
+                        <div className='button_option' onClick={() => {
                             setThemeBackgroundSystem(promiseIdentifiedUser.user.background)
                             setResizeThemeBackgroundSystem(promiseIdentifiedUser.user.resizeThemeBackground)
                             setHiddenPageBackground(false)
@@ -129,6 +131,15 @@ const PageBackground = () => {
                     </div>
 
                     <h4>Choose a background</h4>
+                    <div className="checkbox-wrapper-46Radio" style={{ marginBottom: 20 }}>
+                        <input onClick={() => { setThemeBackgroundSystem(null) }} className="inp-cbxRadio" type="radio" name="rdo54725254" id={`optImagesBackgroundmlp`} defaultChecked={themeBackgroundSystem == null} />
+                        <label className="cbxRadio" htmlFor={`optImagesBackgroundmlp`}>
+                            <span></span><span style={{ marginLeft: 10 }}>
+                                <div className='card_post' style={{ minWidth: 150, maxWidth: 100, height: 100, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 40, color: '#8080804d' }} data-theme={localTheme}>
+                                    <FontAwesomeIcon icon={faBan} />
+                                </div></span>
+                        </label>
+                    </div>
                     <div style={{ display: 'flex', maxWidth: 750, flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around', paddingTop: 10 }} data-theme={localTheme}>
                         {imagesBackground?.map((img, index) => (
                             <div className="checkbox-wrapper-46Radio" key={index} style={{ marginBottom: 20 }}>

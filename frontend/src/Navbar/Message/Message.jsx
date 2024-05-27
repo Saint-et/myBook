@@ -13,25 +13,33 @@ import { useAppContext } from '../../contexts/UseAppContext';
 const socket = io.connect(SOCKET_URL);
 
 const Message = () => {
-  const {localTheme, promiseIdentifiedUser } = useAppContext()
+  const { localTheme, promiseIdentifiedUser } = useAppContext()
 
-  const [promiseUserProfil, setPromiseUserProfil] = useState()
+  const [promiseUserProfil, setPromiseUserProfil] = useState({ promise: [] })
   const GetProfilFromAPI = async () => {
-    await axios.get(`${API_URL}api/eventv/getfollewers`,
-      { withCredentials: true })
-      .then((res) => {
-        setPromiseUserProfil(res.data);
-      })
+    try {
+      await axios.get(`${API_URL}api/eventv/getfollewers`,
+        { withCredentials: true })
+        .then((res) => {
+          setPromiseUserProfil(res.data);
+        })
+    } catch (error) {
+      setPromiseUserProfil({ followers: [] });
+    }
   }
 
   const [promiseDiscussion, setPromiseDiscussion] = useState([])
 
   const GetDiscussion = async () => {
-    await axios.get(`${API_URL}api/eventv/discussion/get`,
-      { withCredentials: true })
-      .then((res) => {
-        setPromiseDiscussion(res.data);
-      })
+    try {
+      await axios.get(`${API_URL}api/eventv/discussion/get`,
+        { withCredentials: true })
+        .then((res) => {
+          setPromiseDiscussion(res.data);
+        })
+    } catch (error) {
+      setPromiseDiscussion({ promise: [] });
+    }
   }
 
   // vérification du login avant d'exécuter les post
@@ -81,7 +89,8 @@ const Message = () => {
   })
 
   return (
-    <div className="animation">
+    <div className='main'>
+    <div className="open-element-page-melted">
 
       <div className='cter_sect' style={{ marginTop: 30, marginBottom: 20 }}>
         <div className='ctent_arti' style={{ maxWidth: 500 }} data-theme={localTheme}>
@@ -119,9 +128,10 @@ const Message = () => {
             </div>
           </div>}
           {!hideMenu && <Long_card_discussion promise={promiseDiscussion.promise} />}
-          {hideMenu && <Card promise={promiseUserProfil.promise} setUserId={setUserId} userId={userId} />}
+          {hideMenu && <Card promise={promiseUserProfil.followers} setUserId={setUserId} userId={userId} />}
         </div>
       </div>
+    </div>
     </div>
   )
 }

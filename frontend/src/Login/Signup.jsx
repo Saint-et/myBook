@@ -5,9 +5,10 @@ import { API_URL } from '../config';
 import { useNavigate } from 'react-router-dom';
 import { useAppContext } from '../contexts/UseAppContext';
 import { useEffect } from "react";
+import { SystemName } from "../assets/data/data";
 
 const Signup = () => {
-    const { setPromiseIdentifiedUser, GetMyProfilFromAPI, promiseIdentifiedUser } = useAppContext()
+    const { setPromiseIdentifiedUser, GetMyProfilFromAPI, promiseIdentifiedUser, addErrorMessage } = useAppContext()
 
     const navigate = useNavigate()
 
@@ -49,6 +50,7 @@ const Signup = () => {
                     if (res.data.message == 'log') {
                         GetMyProfilFromAPI()
                         setPromiseIdentifiedUser()
+                        addErrorMessage(`Bienvenu sur ${SystemName} 🙂.`, 5000, '#396afc')
                         return navigate('/')
                     }
                 })
@@ -66,7 +68,7 @@ const Signup = () => {
 
 
     return (
-        <>
+        <div className='main'>
             <Log
                 signup={false}
                 handleChange={handleChange}
@@ -75,7 +77,7 @@ const Signup = () => {
                 handleChangeLanguage={handleChangeLanguage}
                 submit={submit}
             />
-        </>
+        </div>
     )
 }
 

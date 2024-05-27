@@ -5,6 +5,7 @@ import axios from "axios";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { EditorState, ContentState, convertFromRaw, convertToRaw } from "draft-js";
 import { IndexedDB, supprimerDesElements } from '../../../assets/data/IndexedDB';
+import { useWorkspaceContext } from '../../../contexts/UseWorkspaceContexte';
 
 let myRegex = new RegExp(/^[0-9a-zA-Z-éçàùè]+$/i);
 
@@ -12,14 +13,18 @@ export const UseGroups_display = () => {
 
     const navigate = useNavigate()
 
-    const locations = useLocation().pathname.split("/")
+    const fullUrl = useLocation()
+    const searchParams = new URLSearchParams(fullUrl.search);
+    const location = parseInt(searchParams.get("update-group-file"));
 
-    const location = locations[3]
+    //const location = locations[3]
 
-    const { localTheme, localThemeBackground, promiseIdentifiedUser,
+    const { localTheme, promiseIdentifiedUser } = useAppContext();
+
+    const {
         promise: SelectFilesFromAPI,
         handleRecupererTousLesElements,
-        total, GetMyFilesFromAPI: GetSelectFilesFromAPI, PER_PAGE, setNumPage, numPage } = useAppContext();
+        total, GetMyFilesFromAPI: GetSelectFilesFromAPI, PER_PAGE, setNumPage, numPage } = useWorkspaceContext();
 
 
     const [hiddenSearch, setHiddenSearch] = useState(false)
@@ -107,7 +112,8 @@ export const UseGroups_display = () => {
                     }
                 })
         } catch (error) {
-            navigate('*')
+            setPromiseGroup(false)
+            //navigate('*')
         }
     }
 
@@ -257,7 +263,7 @@ export const UseGroups_display = () => {
     useEffect(() => {
         GetMyGroupFromAPI()
         GetMyFilesFromAPI()
-    }, []);
+    }, [promiseIdentifiedUser]);
 
 
     const handleAllSelected = async () => {
@@ -382,7 +388,7 @@ export const UseGroups_display = () => {
     //console.log(promise);
 
     return {
-        localTheme, localThemeBackground, promiseIdentifiedUser,
+        localTheme, promiseIdentifiedUser,
         SelectFilesFromAPI, numPage, location,
         hiddenSearch,
         hiddenButton, setHiddenButton,

@@ -2,7 +2,7 @@
   display: flex;
   height: 100%;
   width: 100%;
-  max-width: 1200px;
+  //max-width: 1200px;
   overflow: hidden;
   align-items: center;
   justify-content: center;
@@ -11,4 +11,21 @@
   flex-shrink: 1;
   margin: 0;
   padding: 0;
+}
+.open-element-info-left {
+  $timer: 300ms;
+  $animation: animation-element-info-left;
+
+  animation: $animation $timer ease-in-out;
+  -moz-animation: $animation $timer ease-in-out; /* Firefox */
+  -webkit-animation: $animation $timer ease-in-out; /* Safari et Chrome */
+  -o-animation: $animation $timer ease-in-out; /* Opera */
+}
+@keyframes animation-element-info-left {
+  0% {
+    margin-left: 30%;
+  }
+  100% {
+    margin-left: 0%;
+  }
 }

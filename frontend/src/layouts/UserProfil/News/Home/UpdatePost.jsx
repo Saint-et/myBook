@@ -18,7 +18,6 @@ export const UpdatePost = (props) => {
     const [editeTags, setEditeTags] = useState(props.update.tags);
     const [text, setText] = useState('');
 
-    console.log(props.update.tags);
 
     //Methode afin de cacher le bouton pour choisir un fichier
     const hiddenFileInput = useRef(null);

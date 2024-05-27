@@ -23,7 +23,7 @@ i18n.use(initReactI18next)
                     description: 'Description',
                     miniature: 'Miniature',
                     ai: 'Artificial intelligence',
-                    adult: 'Is this work intended for an adult audience',
+                    adult: 'Does this file contain adult content?',
                     public: 'Want to make it public',
                     comment: 'Allow you comments',
                     addTags: 'Add tags',
@@ -63,13 +63,13 @@ i18n.use(initReactI18next)
                     workspace: 'Workspace',
                     background: 'Background',
                     download: "Download image",
-                    problem:'Report a problem',
+                    problem: 'Report a problem',
                     terms_of_use: 'Terms of Use',
                     assistance: 'Assistance',
                     parameter: 'Parameter',
                     follewers: 'Follewers',
                     copyPageURL: 'Copy Page URL',
-                    shop: 'Shop',
+                    accessPass: 'Access Pass',
                     follow: 'Follow',
                     unfollow: 'Unfollow',
                     continue: 'continue',
@@ -94,12 +94,13 @@ i18n.use(initReactI18next)
                     projects: 'Projects',
                     library: 'Library',
                     tags: 'Tags',
-                    donationsButton: 'Donations',
                     projectSharing: 'Shared project',
                     Known_Issue: 'Known Issue',
-
+                    subscription: 'Access Diamond',
                     named: 'Named',
                     create_a_new_project: 'Create a new project',
+                    start: 'Start',
+                    last_view: 'Recently viewed',
 
                     create_a_new_library: 'Create a new library',
                     type_of_file: 'Type of file',
@@ -118,13 +119,32 @@ i18n.use(initReactI18next)
                     public: 'public',
                     private: 'private',
                     byLink: 'By link',
-
+                    little_known: 'Little known',
+                    open: 'open',
 
                     //inputs
                     search: 'Search',
                     select: 'Select',
                     none: 'None',
                     Back_to_previous_page: 'Back to previous page',
+
+                    //assistance translation
+                    assistanceTranslation1: `I have a suggestion`,
+                    assistanceTranslation2: `I have a question`,
+                    assistanceTranslation3: `I have a problem`,
+
+                    //assistance translation
+                    assistanceTranslation4: `Workspace`,
+                    assistanceTranslation5: `Page illustration`,
+                    assistanceTranslation6: `Page manga`,
+                    assistanceTranslation7: `Profile`,
+                    assistanceTranslation8: `Account`,
+                    assistanceTranslation9: `Service`,
+                    assistanceTranslation10: `System`,
+                    assistanceTranslation11: `Other`,
+
+                    // reconnection
+                    message_reconnection: 'You are logged in as a guest, To access this part of the site, please create an account or log in if you already have an account.',
 
                     //Forgot your password notice
                     "resetPasswordSteps": {
@@ -169,20 +189,21 @@ i18n.use(initReactI18next)
                         "text3": "Thank you for being part of our creative community!"
                     },
                     'projectDeletedMessage': {
-                        "title": "Authentication error / nonexistent",
+                        "title": "Error 403: Authentication error / nonexistent",
                         "message1": "An error occurred while loading the project:",
                         "message2": "You do not have the right to access this page.",
                         "message3": "The search page is non-existent.",
+                        "message4": "Try refreshing the page.",
                     },
                     "subscriptions": {
-                        "title1": "Manage subscriptions!",
-                        "text1": "Create subscriptions that you can link to certain projects to restrict them to users who don't have a subscription.",
-                        "text2": "With premium, unlock 2 new subscription cards to expand your possibilities.",
+                        "title1": "📊 Statistics: Tracking Your Account's Evolution",
+                        "text1": "Statistics are a powerful tool that allows you to track your account's evolution over time. By monitoring your statistics, you can obtain valuable insights into the growth of your activity, audience engagement, and other important metrics.",
 
-                        "title2": "Be careful,",
-                        "text3": "however, if you no longer own the premium,",
-                        "text4": "subscription cards will no longer be available to new users wishing to subscribe,",
-                        "text5": "but users will still pay the same amount and will still have access to the content available at the chosen subscription.",
+                        "title2": "Why Statistics Matter?",
+                        "text2": "Growth Tracking: You can track the number of new subscribers, interactions with your posts, and other key metrics to see how your account is evolving over time.",
+                        "text3": "Audience Understanding: Statistics help you better understand your audience, including their preferences, behavior, and content consumption habits.",
+                        "text4": "Content Optimization: By analyzing the performance of your posts, you can identify what works well and what can be improved, helping you refine your content strategy.",
+                        "text5": "Informed Decision Making: With accurate data on your account's performance, you can make more informed decisions to optimize your presence on the platform and achieve your goals.",
 
                     },
                     "libraryWorkSpace": {
@@ -212,6 +233,7 @@ i18n.use(initReactI18next)
                     "all_parameter": {
                         "option_message1": "Premium will allow you to take full advantage of the app, more options in the workspace.",
 
+                        "button0": "Parameter profile",
                         "button1": "Parameter account",
                         "button2": "Premium",
                         "button3": "Assistance",
@@ -252,9 +274,10 @@ i18n.use(initReactI18next)
 
                         "workFileNotice5": "We appreciate your efforts in organizing the images. Your task is simple: review and arrange the order of the images as you like. The rest is on us!",
                         "workFileNotice6": "Our system will automatically handle the display and presentation of the images according to the order you set. Sit back and relax as your content comes to life in the perfect sequence.",
-                        "workFileNotice7": "The cover image and thumbnail will be displayed normally at the beginning of your full-size project in the order set.",
 
                         "workFileNotice8": "It is not mandatory to fill out the form to save the order of your images, however, if you decide to complete the form, please note that you must do so in its entirety for your changes to take effect.",
+
+                        "workFileNotice9": "Please note that even if you block the thumbnail, it will still be used for reference or display purposes in our app. While you can choose not to display the thumbnail, it's still important to improve the user experience and ensure the visual consistency of our platform. If you have any questions or concerns, please do not hesitate to contact us.",
 
                         "projectDeletedMessage": {
                             "message1": "Project Deleted",
@@ -262,12 +285,6 @@ i18n.use(initReactI18next)
                             "message3": "You cannot access this page.",
                             "message4": "The search page no longer exists.",
                             "message5": "Back to previous page",
-                        },
-
-                        "autoLayout": {
-                            "autoLayout": "Auto Layout",
-                            "autoLayoutText": "Auto Layout will adapt your thumbnail and cover image, use this option only if your thumbnail and cover image don't have a layout",
-                            "autoLayoutButton": "Automatic layout"
                         },
 
                         "selectionAnBlock": {
@@ -297,7 +314,7 @@ i18n.use(initReactI18next)
                     description: 'Description',
                     miniature: 'Miniature',
                     ai: 'Intelligence artificielle',
-                    adult: 'Cette œuvre est-elle destinée à un public adulte',
+                    adult: 'Ce fichier contient-il du contenu pour adultes ?',
                     public: 'Vous voulez le rendre public',
                     comment: 'Vous autoriser les commentaires',
                     warning: "Attention",
@@ -312,6 +329,7 @@ i18n.use(initReactI18next)
                     imageCover: 'Image de couverture',
                     lastPublications: 'Dernières publications',
                     lastAdds: 'Derniers ajouts',
+                    start: 'Commencer',
 
                     //log component
                     login: 'Connexion',
@@ -339,9 +357,8 @@ i18n.use(initReactI18next)
                     parameter: 'Paramètre',
                     follewers: 'Abonnés',
                     copyPageURL: 'Copier l’URL de la page',
-                    shop: 'Boutique',
                     background: 'Arrière-plan',
-                    problem:'Signaler un problème',
+                    problem: 'Signaler un problème',
                     download: "Télécharger l’image",
                     follow: 'Suivre',
                     unfollow: 'Ne plus suivre',
@@ -367,9 +384,10 @@ i18n.use(initReactI18next)
                     projects: 'Projets',
                     library: 'Bibliothèque',
                     tags: 'Tags',
-                    donationsButton: 'Cadeaux',
                     projectSharing: 'Projet partagé',
                     Known_Issue: 'Problème signalé',
+                    last_view: 'Vu récemment',
+                    little_known: 'Peu connu',
 
                     named: 'Nommé',
                     create_a_new_project: 'Créer un nouveau projet',
@@ -390,6 +408,7 @@ i18n.use(initReactI18next)
                     public: 'publique',
                     private: 'privée',
                     byLink: 'Par lien',
+                    open: 'ouvrir',
 
                     //inputs
                     search: 'Recherche',
@@ -397,6 +416,23 @@ i18n.use(initReactI18next)
                     none: 'Aucun',
                     Back_to_previous_page: 'Retour à la page précédente',
 
+                    //assistance translation
+                    assistanceTranslation1: `J'ai une suggestion`,
+                    assistanceTranslation2: `J'ai une question`,
+                    assistanceTranslation3: `J'ai un problème`,
+
+                    //assistance translation
+                    assistanceTranslation4: `Workspace`,
+                    assistanceTranslation5: `Page d’illustration`,
+                    assistanceTranslation6: `Page de manga`,
+                    assistanceTranslation7: `Profil`,
+                    assistanceTranslation8: `Compte`,
+                    assistanceTranslation9: `Service`,
+                    assistanceTranslation10: `Système`,
+                    assistanceTranslation11: `Autre`,
+
+                    // reconnection
+                    message_reconnection: 'Vous êtes connecté en tant qu’invité, Pour accéder à cette partie du site, veuillez créer un compte ou vous connecter si vous avez déjà un compte.',
 
                     //Forgot your password notice
                     "resetPasswordSteps": {
@@ -440,20 +476,21 @@ i18n.use(initReactI18next)
                         "text3": "Merci de faire partie de notre communauté créative!"
                     },
                     'projectDeletedMessage': {
-                        "title": "Erreur d’authentification / inexistant",
+                        "title": "Erreur 403: Erreur d’authentification / inexistant",
                         "message1": "Une erreur s’est produite lors du chargement du projet:",
                         "message2": "Vous n’avez pas le droit d’accéder à cette page.",
                         "message3": "La page de recherche est inexistante.",
+                        "message4": "Essayez d’actualiser la page.",
                     },
                     "subscriptions": {
-                        "title1": "Gérez les abonnements!",
-                        "text1": "Créez des abonnements que vous pouvez lier à certains projets pour limiter l’accès aux utilisateurs qui n’ont pas d’abonnement.",
-                        "text2": "Avec Premium, débloquez 1 nouvelles cartes d’abonnement pour élargir vos possibilités.",
+                        "title1": "📊 Statistiques : Suivi de l'évolution de votre compte",
+                        "text1": "Les statistiques sont un outil puissant qui vous permettent de suivre l'évolution de votre compte au fil du temps. En surveillant vos statistiques, vous pouvez obtenir des informations précieuses sur la croissance de votre activité, l'engagement de votre audience et d'autres métriques importantes.",
 
-                        "title2": "Attention,",
-                        "text3": "toutefois, si vous ne possédez plus le Premium,",
-                        "text4": "les cartes d’abonnement ne seront plus disponibles pour les nouveaux utilisateurs souhaitant s’abonner,",
-                        "text5": "mais les utilisateurs qui possèdent déjà l’abonnement paieront toujours le même montant et auront toujours accès au contenu disponible de l’abonnement choisi.",
+                        "title2": "Pourquoi les statistiques sont importantes ?",
+                        "text2": "Suivi de la croissance : Vous pouvez suivre le nombre de nouveaux abonnés, les interactions avec vos publications et d'autres indicateurs clés pour voir comment votre compte évolue au fil du temps.",
+                        "text3": "Compréhension de l'audience : Les statistiques vous aident à mieux comprendre votre audience, y compris ses préférences, son comportement et ses habitudes de consommation de contenu.",
+                        "text4": "Optimisation du contenu : En analysant les performances de vos publications, vous pouvez identifier ce qui fonctionne bien et ce qui peut être amélioré, ce qui vous aide à affiner votre stratégie de contenu.",
+                        "text5": "Prise de décision éclairée : En disposant de données précises sur les performances de votre compte, vous pouvez prendre des décisions plus éclairées pour optimiser votre présence sur la plateforme et atteindre vos objectifs.",
 
                     },
                     "libraryWorkSpace": {
@@ -482,6 +519,7 @@ i18n.use(initReactI18next)
                     "all_parameter": {
                         "option_message1": "Premium vous permettra de profiter pleinement de l’application, plus d’options dans l’espace de travail.",
 
+                        "button0": "Paramètres du profil",
                         "button1": "Paramètres du compte",
                         "button4": "Supprimer le compte",
 
@@ -496,7 +534,7 @@ i18n.use(initReactI18next)
                         "title3": "Compte",
                         "user_title": "Nom d’utilisateur",
                         "user_text": "Vous pouvez changer le nom d’utilisateur, il doit contenir un minimum de 5 caractères pour être accepté.",
-                        
+
                         "email_title": "Modifier l’adresse e-mail",
                         "email_text": "Cette option vous permet de modifier l’adresse e-mail de connexion de votre compte.",
 
@@ -518,12 +556,13 @@ i18n.use(initReactI18next)
                         "workFileNotice3": "Votre respect du droit d'auteur et des droits de publication est essentiel pour maintenir un environnement sûr et respectueux pour tous les membres de notre communauté. Nous vous encourageons à vous assurer que vous avez les droits nécessaires avant de partager du contenu sur notre plateforme.",
                         "workFileNotice4": "Merci pour votre compréhension et votre coopération.",
 
-                        
+
                         "workFileNotice5": "Nous apprécions vos efforts dans l’organisation des images. Votre tâche est simple : révisez et organisez l’ordre des images comme vous le souhaitez. Le reste est sur nous!",
                         "workFileNotice6": "Notre système se chargera automatiquement de l’affichage et de la présentation des images selon l’ordre que vous définissez. Asseyez-vous et détendez-vous pendant que votre contenu prend vie en parfait ordre.",
-                        "workFileNotice7": "L’image de couverture et la vignette seront affichées normalement au début de votre projet en taille réelle dans l’ordre défini.",
 
                         "workFileNotice8": "Il n'est pas obligatoire de remplir le formulaire pour enregistrer l'ordre de vos images, cependant, si vous décidez de remplir le formulaire, veuillez noter que vous devez le faire entièrement pour que vos modifications soient prises en compte.",
+
+                        "workFileNotice9": "Veuillez noter que même si vous bloquez la miniature, celle-ci sera toujours utilisée à des fins de référence ou d'affichage dans notre application. Bien que vous puissiez choisir de ne pas afficher la miniature, elle reste importante pour améliorer l'expérience utilisateur et assurer la cohérence visuelle de notre plateforme. Si vous avez des questions ou des préoccupations, n'hésitez pas à nous contacter.",
 
                         "projectDeletedMessage": {
                             "message1": "Projet supprimé",
@@ -531,12 +570,6 @@ i18n.use(initReactI18next)
                             "message3": "Vous ne pouvez pas accéder à cette page.",
                             "message4": "La page de recherche n’existe plus.",
                             "message5": "Retour à la page précédente",
-                        },
-
-                        "autoLayout": {
-                            "autoLayout": "Disposition automatique",
-                            "autoLayoutText": "La mise en page automatique adaptera votre miniature et votre image de couverture, utilisez cette option uniquement si votre vignette et votre image de couverture n’ont pas de mise en page",
-                            "autoLayoutButton": "Mise en page automatique"
                         },
 
                         "selectionAnBlock": {
@@ -548,7 +581,7 @@ i18n.use(initReactI18next)
                     }
 
                 },
-            },
+            }
             // Ajoutez d'autres langues et leurs traductions ici
         },
         lng: 'en', // Langue par défaut

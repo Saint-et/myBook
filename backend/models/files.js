@@ -24,10 +24,10 @@ File.init({
   type: {
     type: DataTypes.STRING
   },
-  categorie: {
-    type: DataTypes.STRING
-  },
   data: {
+    type: DataTypes.TEXT
+  },
+  dataDescription: {
     type: DataTypes.TEXT
   },
   miniature: {
@@ -39,11 +39,9 @@ File.init({
   ai: {
     type: DataTypes.BOOLEAN
   },
-  autoLayout: {
-    type: DataTypes.BOOLEAN
-  },
   allowUserEditTag: {
-    type: DataTypes.BOOLEAN
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   },
   comments: {
     type: DataTypes.BOOLEAN
@@ -51,26 +49,46 @@ File.init({
   visibility: {
     type: DataTypes.INTEGER
   },
-  resize: {
-    type: DataTypes.INTEGER
-  },
   tags: {
     type: DataTypes.ARRAY(DataTypes.STRING)
   },
   adult: {
-    type: DataTypes.INTEGER
+    type: DataTypes.BOOLEAN
   },
   bookMarks: {
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
+  price: {
+    type: DataTypes.DECIMAL(10, 2),
+    defaultValue: null
+  },
+  shop: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
+  },
+  diamond: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false
   },
   view: {
-    type: DataTypes.INTEGER
+    type: DataTypes.INTEGER,
+    defaultValue: 0
   },
   viewUsers: {
-    type: DataTypes.ARRAY(DataTypes.STRING)
+    type: DataTypes.ARRAY(DataTypes.STRING),
+    defaultValue: []
   },
   dateRework: {
     type: DataTypes.DATE
+  },
+  purchase: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  },
+  totalCoins: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
   },
 
 },

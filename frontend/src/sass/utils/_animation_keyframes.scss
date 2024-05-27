@@ -1,0 +1,114 @@
+@keyframes animation-melted {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes swipe-mobile {
+  from {
+    transform: scale(0.98);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes err-animation {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  60% {
+    transform: scale(0.9);
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  80% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes animation-open-element-page-side-left {
+  0% {
+    margin-left: -500px;
+  }
+  100% {
+    margin-left: 0px;
+  }
+}
+
+@keyframes animation-close-element-page-side-left {
+  0% {
+    margin-left: 0px;
+  }
+  100% {
+    margin-left: -500px;
+  }
+}
+
+@keyframes animation-open-element-page-side-right {
+  0% {
+    margin-right: -500px;
+  }
+  100% {
+    margin-right: 0px;
+  }
+}
+
+@keyframes animation-close-element-page-side-right {
+  0% {
+    margin-right: 0px;
+  }
+  100% {
+    margin-right: -500px;
+  }
+}
+@keyframes loading-rotate-refresh-arrows {
+  0% {
+    transform: rotate(0);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes bounce {
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-5px);
+  }
+  60% {
+    transform: translateY(-3px);
+  }
+}
+@keyframes ellipsis {
+  0% {
+    width: 0;
+  }
+  25% {
+    width: 25%;
+  }
+  50% {
+    width: 50%;
+  }
+  75% {
+    width: 75%;
+  }
+  100% {
+    width: 100%;
+  }
+}

@@ -22,6 +22,10 @@ Image.init({
   },
   order: {
     type: DataTypes.NUMBER
+  },
+  limited: {
+    type: DataTypes.NUMBER,
+    defaultValue: 0
   }
 },
   {

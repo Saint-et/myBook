@@ -100,7 +100,7 @@ const MiniProfil = () => {
   return (
     <>
       <div className='blanket animation' style={{ zIndex: 10500, display: 'flex', alignItems: 'center', justifyContent: 'center' }} >
-        <RemoveScroll ref={Ref} className='menu_navbar scrollbar open-elementPage' style={{ width: '100%', height: '98%', flexDirection: 'column', maxWidth: 1100, overflowY: 'auto', background: 'none' }} data-theme={localTheme}>
+        <RemoveScroll ref={Ref} className='menu_navbar scrollbar open-element-page-melted' style={{ width: '100%', height: '98%', flexDirection: 'column', maxWidth: 1100, overflowY: 'auto', background: 'none' }} data-theme={localTheme}>
           <div className='cter_sect' style={{ padding: 0 }}>
             <div className='ctent_artiMiniProfil' style={{ paddingBottom: 20 }} data-theme={localTheme}>
               {hiddenMenuMiniProfil.premium == 1 && <>

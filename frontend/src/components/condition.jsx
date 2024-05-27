@@ -1,5 +1,10 @@
-import { DATA_picv } from "../assets/data/data";
-import { useAppContext } from "../contexts/UseAppContext"
+import { RemoveScroll } from "react-remove-scroll";
+import { SystemName } from "../assets/data/data";
+import { useAppContext } from "../contexts/UseAppContext";
+import logo from '../assets/images/logo_transparent_banner.png';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -7,16 +12,28 @@ import { useAppContext } from "../contexts/UseAppContext"
 
 const Condition = () => {
     const { localTheme } = useAppContext();
+    const navigate = useNavigate()
 
     return (
         <>
+        <RemoveScroll className="blanket_opacte open-elementHeightPage scrollbar" style={{ zIndex: 25000, paddingTop: 0, display: 'flex', justifyContent: 'start', flexDirection: 'column', overflow: 'auto', paddingTop: 50 }} data-theme={localTheme}>
+                <div className='nav_bar_scnd' style={{ margin: 0, padding: 0, height: 50, borderRadius: 0, alignItems: 'start', position: 'fixed', top: 0, zIndex: 10000 }} data-theme={localTheme}>
+                    <div style={{ display: 'flex', justifyContent: 'start', alignItems: 'center', marginTop: 5 }}>
+                        <div onClick={() => navigate(-1)} className='button_option_container' style={{ maxWidth: 50, marginLeft: 10, display: 'flex', background: 'none' }} data-theme={localTheme}>
+                            <div className='button_option' style={{ height: 40, width: 40, borderRadius: 100, marginRight: 5 }} data-theme={localTheme}><FontAwesomeIcon icon={faArrowLeft} /></div>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', maxWidth: 200, justifyContent: 'center' }}>
+                            <img className='logo_event' style={{ height: 30 }} src={logo} alt="" onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} />
+                        </div>
+                    </div>
+                </div>
             <div className='cter_sect'>
                 <div className='ctent_arti' style={{ maxWidth: 1100, paddingBottom: 20, marginTop: 20 }} data-theme={localTheme}>
 
                     <ol>
 
                         <h1 style={{ color: '#403eb6' }}>Introduction and Acceptance of Terms</h1>
-                        <p>Welcome to {DATA_picv}. These terms of use ("Terms") govern your use of our application. By accessing or using the application, you agree to comply with and be bound by these Terms. If you do not agree with these Terms, please do not use the application.</p>
+                        <p>Welcome to {SystemName}. These terms of use ("Terms") govern your use of our application. By accessing or using the application, you agree to comply with and be bound by these Terms. If you do not agree with these Terms, please do not use the application.</p>
 
                         <li><h3>Description of the Service</h3></li>
                         <p>Our application provides various features that allow users to share, publish, and interact with content. Users can [briefly describe the main functionalities of your application].</p>
@@ -128,6 +145,7 @@ const Condition = () => {
 
                 </div>
             </div>
+            </RemoveScroll>
         </>
     )
 }

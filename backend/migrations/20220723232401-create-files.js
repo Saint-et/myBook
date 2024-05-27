@@ -24,9 +24,6 @@ module.exports = {
       ai: {
         type: Sequelize.INTEGER,
       },
-      autoLayout: {
-        type: Sequelize.INTEGER,
-      },
       allowUserEditTag: {
         type: Sequelize.INTEGER,
       },
@@ -51,13 +48,10 @@ module.exports = {
       data: {
         type: Sequelize.TEXT,
       },
+      dataDescription: {
+        type: Sequelize.TEXT,
+      },
       visibility: {
-        type: Sequelize.INTEGER,
-      },
-      categorie: {
-        type: Sequelize.STRING,
-      },
-      resize: {
         type: Sequelize.INTEGER,
       },
       tags: {
@@ -66,9 +60,24 @@ module.exports = {
       adult: {
         type: Sequelize.INTEGER,
       },
+      price: {
+        type: Sequelize.INTEGER,
+      },
+      shop: {
+        type: Sequelize.INTEGER,
+      },
+      diamond: {
+        type: Sequelize.INTEGER,
+      },
       dateRework: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      purchase: {
+        type: Sequelize.INTEGER,
+      },
+      totalCoins: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,

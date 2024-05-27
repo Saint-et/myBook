@@ -17,7 +17,7 @@ const Card_Square = (props) => {
 
       if (props.promise.length === 0) return (
         <div style={{display: 'flex', justifyContent: 'center'}}>
-        <h3>No results</h3>
+        <h4>No results</h4>
         </div>
       )
 

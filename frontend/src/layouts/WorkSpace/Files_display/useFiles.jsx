@@ -1,20 +1,60 @@
 import { useState, useRef, useEffect } from "react";
 import { API_URL } from '../../../config';
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAppContext } from '../../../contexts/UseAppContext';
 import { EditorState, ContentState, convertFromRaw, convertToRaw } from "draft-js";
 import { IndexedDB, ajouterElement, chercherElement, mettreAJourElement, supprimerElement } from '../../../assets/data/IndexedDB';
+import { Manage_Img } from "../../../components/versatile_function/manage_Img";
+import { Manage_Tags } from "../../../components/versatile_function/manage_Tags";
+import { useWorkspaceContext } from "../../../contexts/UseWorkspaceContexte";
+import Function_utils from "../../../components/versatile_function/usefunction_utils";
+import { SystemName } from "../../../assets/data/data";
+
+
 
 export const UseFiles = () => {
 
-    const { handleRecupererTousLesElements, promiseIdentifiedUser } = useAppContext();
+    const { promiseIdentifiedUser, addErrorMessage } = useAppContext();
 
+    const { handleRecupererTousLesElements, GetMyFilesFromAPI } = useWorkspaceContext();
+
+    const {
+        hiddenFileInput,
+
+        img,
+        imgUpload,
+        items,
+        setItems,
+
+        handleClick,
+        handleLoad,
+        handleRemoveImgUpload,
+        removeImage } = Manage_Img()
+
+    const {
+        handleConversionCoins,
+        realCash,
+        cashBack
+    } = Function_utils()
+
+    const {
+        textTags,
+        editeTags,
+        setEditeTags,
+        handleChangeTags,
+        handleRemoveTag
+    } = Manage_Tags()
 
     const navigate = useNavigate()
 
-    const url = window.location.href;
-    const Id = url.split("/")[5];
+    //const url = window.location.href;
+    //const Id = url.split("/")[5];
+
+    const location = useLocation();
+    const searchParams = new URLSearchParams(location.search);
+    const Id = parseInt(searchParams.get(`${SystemName}-file`));
+
 
     const [refresh, setRefresh] = useState(false);
     const [notifyCommunity, setNotifyCommunity] = useState(false);
@@ -24,6 +64,7 @@ export const UseFiles = () => {
     const [messageDownloadImg, setMessageDownloadImg] = useState(true);
     const [err, setErr] = useState(true);
     const [checked, setCheckbox] = useState(false);
+    const [accessPassAut, setAccessPassAut] = useState(false);
     const [manage, setManage] = useState(false)
     const [manageBlockSelectedActive, setManageBlockSelectedActive] = useState(false)
     const [refreshAuto, setRefreshAuto] = useState(localStorage.getItem('autoRefresh-Work-Place') === 'true');
@@ -39,27 +80,22 @@ export const UseFiles = () => {
 
     const [manageSelected, setManageSelected] = useState([])
     const [manageBlockSelected, setManageBlockSelected] = useState([])
-    const [items, setItems] = useState([]);
     const [copyShow, setCopyShow] = useState([]);
-    const [img, setImg] = useState([]);
-    const [imgUpload, setImgUpload] = useState([]);
-    const [test, setTest] = useState([])
 
     const [promise, setPromise] = useState([]);
+    const [promiseAccessPass, setPromiseAccessPass] = useState([]);
     const [errorLogin, setErrorLogin] = useState();
     const [allowUserEditTag, setAllowUserEditTag] = useState(false);
-    const [autoLayout, setAutoLayout] = useState(false);
     const [editorState, setEditorState] = useState(() => EditorState.createEmpty());
+    const [editorState1, setEditorState1] = useState(() => EditorState.createEmpty());
 
+    const [subscription, setSubscription] = useState();
+    const [limited, setLimited] = useState();
 
     const [edite, setEdite] = useState('');
-    const [text, setText] = useState('#');
-    const [editeTags, setEditeTags] = useState([]);
-
-    const [resize, setResize] = useState('0');
 
     const editor = useRef(null);
-    const hiddenFileInput = useRef(null);
+    const contextMenuRef = useRef(null);
 
 
     // active auto refresh.
@@ -81,6 +117,9 @@ export const UseFiles = () => {
         chercherElement(db, parseInt(Id))
             .then(async (element) => {
                 if (element) {
+                    if (element.adminId !== promiseIdentifiedUser?.user.id) {
+                        return setPromise(false)
+                    }
                     setRefresh(false);
                     setPromise(element);
                     setEdite(element.name);
@@ -90,13 +129,11 @@ export const UseFiles = () => {
                     setEditeAI(element.ai);
                     setComments(element.comments);
                     setItems(element.images);
-                    setResize(element.resize);
                     setAllowUserEditTag(element.allowUserEditTag);
-                    setAutoLayout(element.autoLayout);
                     handleAjouterElement(element);
-                    if (element.data != null && element.data != "") {
-                        setEditorState(() => EditorState.createWithContent(ContentState.createFromText(convertFromRaw(JSON.parse(element.data)).getPlainText())))
-                    }
+                    //if (element.data != null && element.data != "") {
+                    //    setEditorState(() => EditorState.createWithContent(ContentState.createFromText(convertFromRaw(JSON.parse(element.data)).getPlainText())))
+                    //}
                 } else {
                     // If nothing has been found search on the server
                     GetMyFileFromAPI()
@@ -109,26 +146,27 @@ export const UseFiles = () => {
 
     // Search on the server second
     const GetMyFileFromAPI = async () => {
-        setRefresh(false);
+        //setRefresh(false);
         try {
             await axios.get(`${API_URL}api/eventv/myfile/file/${Id}`,
                 { withCredentials: true })
                 .then((res) => {
                     setPromise(res.data);
+                    setRefresh(false);
                     setEdite(res.data.name);
                     setEditeTags(res.data.tags || []);
                     setEditeAdult(res.data.adult);
                     setEditeVisibility(res.data.visibility);
+                    setAllowUserEditTag(res.data.allowUserEditTag);
                     setEditeAI(res.data.ai);
                     setComments(res.data.comments);
                     setItems(res.data.images);
-                    setResize(res.data.resize);
                     // Adding an item to indexedDB
                     handleAjouterElement({ ...res.data, timestamp: Date.now() });
 
-                    if (res.data.data != null && res.data.data != "") {
-                        setEditorState(() => EditorState.createWithContent(ContentState.createFromText(convertFromRaw(JSON.parse(res.data.data)).getPlainText())));
-                    }
+                    //if (res.data.data != null && res.data.data != "") {
+                    //    setEditorState(() => EditorState.createWithContent(ContentState.createFromText(convertFromRaw(JSON.parse(res.data.data)).getPlainText())));
+                    //}
                 })
         } catch (error) {
             // Call the delete function with the ID of the item to be deleted if there is a limited access to a page
@@ -140,16 +178,35 @@ export const UseFiles = () => {
 
     }
 
+    const GetAccessPassFromAPI = async () => {
+        //setRefresh(false);
+        try {
+            await axios.get(`${API_URL}api/eventv/get/work-space/access-pass/${Id}`,
+                { withCredentials: true })
+                .then((res) => {
+                    setPromiseAccessPass(res.data)
+                    setPrice(res.data.price || 0)
+                    handleConversionCoins(res.data.price || 0)
+                })
+        } catch (error) {
+
+        }
+    }
 
     // function: Adding an item to indexedDB
-    const handleAjouterElement = async (el) => {
+    const handleAjouterElement = async (el, refreshLocal) => {
+        if (!promiseIdentifiedUser?.user.id) return;
         try {
             const db = await IndexedDB();
             const nouvelElement = el;
             await ajouterElement(db, nouvelElement)
                 .then(() => {
-                    handleRecupererTousLesElements()
+                    handleRecupererTousLesElements(promiseIdentifiedUser?.user.id)
                     setRefresh(true)
+                    if (refreshLocal?.refreshLocal) {
+                        GetMyFileFromLocal()
+                    }
+
                 })
         } catch (error) {
             console.error('Erreur lors de l ajout de l élément :', error);
@@ -176,6 +233,8 @@ export const UseFiles = () => {
                     setDeleteSpin(true)
                     setMessageDownloadImg(res.data.message)
                     GetMyFileFromAPI()
+                    addErrorMessage(`🔒 Added images are locked by default 🔒`, 7000, '#00b09b')
+                    //props.GetMyFilesFromAPI()
                 })
         } catch (error) {
             GetMyFileFromAPI()
@@ -191,30 +250,6 @@ export const UseFiles = () => {
         setEdite(event.target.value)
     };
 
-    // Creation of tags for the search of the document
-    const handleChangeTags = (e) => {
-        setText(e.target.value);
-        const expressionReguliere = /\s/;
-        if (expressionReguliere.test(e.target.value) || e.target.value.length > 30 || e.key === 'Enter') {
-            const regexTags = /#[a-zA-Z0-9_]+/g;
-            const tagsTrouves = e.target.value.match(regexTags) || [];
-            // Vérifie si un élément avec les mêmes valeurs de propriété existe déjà dans le tableau
-            const isNewTagUnique = editeTags.filter((el) => el.tag === tagsTrouves[0]);
-            if (isNewTagUnique.length > 0 || tagsTrouves.length === 0) {
-                setText('#');
-            } else {
-                setEditeTags(Array.from(new Set([...editeTags, { tag: tagsTrouves[0], userId: promiseIdentifiedUser.user.id }])));
-                setText('#');
-            }
-        };
-    }
-
-    // Deleting a tag
-    const handleRemoveTag = (el) => {
-        const filteredPromise = editeTags?.filter((array) => array != el);
-        setEditeTags(filteredPromise);
-    };
-
 
     // updating the document to indexedDB and server
     const Update = async (id) => {
@@ -228,6 +263,9 @@ export const UseFiles = () => {
         const contentStateRaw = convertToRaw(editorState.getCurrentContent());
         const contentStateJSON = JSON.stringify(contentStateRaw);
 
+        const contentStateRaw1 = convertToRaw(editorState1.getCurrentContent());
+        const contentStateJSON1 = JSON.stringify(contentStateRaw1);
+
         // Server
 
         try {
@@ -235,15 +273,14 @@ export const UseFiles = () => {
                 {
                     name: edite,
                     data: contentStateJSON,
+                    dataDescription: contentStateJSON1,
                     tags: editeTags,
                     adult: editeAdult,
                     visibility: editeVisibility,
                     miniature: items[0].imageUrl,
                     comments: comments,
                     ai: editeAI,
-                    resize: resize,
                     allowUserEditTag: allowUserEditTag,
-                    autoLayout: autoLayout,
                     imagesCount: items.length,
                     items: items
 
@@ -256,6 +293,7 @@ export const UseFiles = () => {
                     setMessage(res.data.message)
                     setCheckbox(false)
                     GetMyFileFromAPI()
+                    //props.GetMyFilesFromAPI()
 
                     // IndexedDB
 
@@ -263,16 +301,15 @@ export const UseFiles = () => {
                     const nouveauContenu = {
                         name: edite,
                         data: contentStateJSON,
+                        dataDescription: contentStateJSON1,
                         tags: editeTags,
                         adult: editeAdult,
                         visibility: editeVisibility,
                         miniature: items[0].imageUrl,
                         comments: comments,
-                        resize: resize,
                         ai: editeAI,
                         images: items,
                         allowUserEditTag: allowUserEditTag,
-                        autoLayout: autoLayout
 
                     };
 
@@ -302,45 +339,15 @@ export const UseFiles = () => {
                 const db = await IndexedDB();
                 supprimerElement(db, parseInt(id))
                     .then(() => {
+                        GetMyFilesFromAPI()
                         handleRecupererTousLesElements()
                         return navigate('/works/file')
                     })
             })
+            .catch((error) => {
+                setErr(error.response.data.message)
+            })
     }
-
-
-
-
-    // Using a custom button to choose an image
-    const handleClick = async () => {
-        hiddenFileInput.current.click();
-    };
-
-
-
-    // Upload images, and create blobs
-    const handleLoad = (event) => {
-        const fileUploaded = event.target.files
-        const filesWithNames = Array.from(fileUploaded).map((imgFile, index) => ({
-            name: fileUploaded[index]?.name,
-            file: URL.createObjectURL(imgFile),
-        }));
-        setImg((img) => Array.from(new Set([...img, ...filesWithNames])).splice(0, 200 - items?.length))
-        setImgUpload(Array.from(new Set([...imgUpload, ...fileUploaded])).splice(0, 200 - items?.length));
-    };
-
-    // Delete the displayed and saved image 1 by 1
-    const handleRemoveImgUpload = (name, val) => {
-        const filteredPromise = img?.filter((array) => array != name)
-        setImg(filteredPromise)
-        imgUpload.splice(val, 1)
-    }
-
-    // Delete the displayed and saved image
-    const removeImage = async () => {
-        setImg(Array.from(new Set([])))
-        setImgUpload(Array.from(new Set([])))
-    };
 
 
     // Removing images from the server and IndexedDb
@@ -353,7 +360,6 @@ export const UseFiles = () => {
                     ...image,
                     order: newIndex,
                 }));
-                //console.log(newOrder);
                 return newOrder;
             });
         });
@@ -369,22 +375,17 @@ export const UseFiles = () => {
                 { withCredentials: true })
                 .then(() => {
                     setItems(newItems)
+                    setCopyShow([])
                     GetMyFileFromAPI()
                 });
         });
     };
 
-
-    // corver image rezize
-    const handleRange = (e) => {
-        setResize(e.target.value);
-    }
-
     // Deleting the document
     const onClick = () => {
         if (window.confirm('Are you sure you want to delete this file ?')) {
             handleDelete(promise?.id)
-            navigate(`/works/file`)
+            //navigate(`/works/file`)
         } else {
             return;
         }
@@ -425,8 +426,6 @@ export const UseFiles = () => {
         })
     }
 
-    //console.log(manageSelected);
-
     // Duplicate image detection
     const handleCopyShow = (arr) => {
         if (arr === null) return setCopyShow([])
@@ -438,26 +437,18 @@ export const UseFiles = () => {
 
     // Delete image selection
     const handleDeleteImg = (selected) => {
-        if (test.length > 0) {
-            if (window.confirm(`Voulez-vous vraiment supprimer les images sélectionnées: ${test.length}/${items.length}`)) {
-                handleDeleteImageClient(selected)
-                setTest([])
-            } else {
-                return;
-            }
+        if (window.confirm(`Voulez-vous vraiment supprimer les images sélectionnées: ${manageSelected.length}/${items.length}`)) {
+            handleDeleteImageClient(selected)
+            setManageSelected([])
+            setManageBlockSelected([])
         } else {
-            if (window.confirm(`Voulez-vous vraiment supprimer les images sélectionnées: ${manageSelected.length}/${items.length}`)) {
-                handleDeleteImageClient(selected)
-                setManageSelected([])
-                setManageBlockSelected([])
-            } else {
-                return;
-            }
+            return;
         }
+
     }
 
 
-    function handleContextMenu(event) {
+    const handleContextMenu = (event) => {
         event.preventDefault(); // Empêche le menu contextuel par défaut du navigateur
         setIsVisible(true);
         const posX = event.clientX;
@@ -471,7 +462,6 @@ export const UseFiles = () => {
         setPosition({ x: adjustedX, y: adjustedY });
     }
 
-    const contextMenuRef = useRef(null);
 
     function useOutsideAlerter(ref) {
         useEffect(() => {
@@ -480,7 +470,6 @@ export const UseFiles = () => {
              */
             function handleClickOutside(event) {
                 if (ref.current && !ref.current.contains(event.target)) {
-                    setTest([])
                     setIsVisible(false);
                 }
             }
@@ -495,6 +484,89 @@ export const UseFiles = () => {
 
     useOutsideAlerter(contextMenuRef);
 
+    const [shopWindow, setShopWindow] = useState(false);
+    const [SubscriptionWindow, setSubscriptionWindow] = useState(false);
+    const hiddenFileInputShop = useRef(null);
+
+
+    const ParamsImgs = async () => {
+        if (limited === undefined) {
+            return;
+        }
+
+        setRefresh(true);
+        setCommonOption(false)
+        try {
+            await axios.post(`${API_URL}api/eventv/update/lock-img/unlock-img/${Id}`,
+                {
+                    limited: limited,
+                    imgsListId: manageSelected
+                },
+                { withCredentials: true })
+                .then(() => {
+                    setLimited()
+                    setSubscription()
+                    GetMyFileFromAPI()
+                    setManageSelected([])
+                    setManageBlockSelected([])
+                })
+        } catch (error) {
+        }
+    }
+
+    const [price, setPrice] = useState(0)
+
+    const NewShop = async (id) => {
+        //if (price < 0) {
+        //    return;
+        //}
+        // Vérifier si req.body.price est un nombre
+        if (isNaN(price)) {
+            console.log(1);
+            return;
+        }
+
+        // Convertir req.body.price en nombre à virgule flottante
+        const price1 = parseFloat(price);
+
+        // Vérifier si le prix est valide
+        if (isNaN(price1) || price1 < 0) {
+            return;
+        }
+        //setShopWindow(false)
+        try {
+            await axios.put(`${API_URL}api/eventv/update/add-to/access-pass/${id}`,
+                {
+                    price: price
+                },
+                { withCredentials: true })
+                .then(async () => {
+                    handleAjouterElement({ ...promise, shop: true, timestamp: Date.now() }, { refreshLocal: true });
+                    GetAccessPassFromAPI()
+                })
+        } catch (error) {
+        }
+    }
+
+    const RemoveShop = async (id) => {
+        //setShopWindow(false)
+        try {
+            await axios.put(`${API_URL}api/eventv/update/remove-to/access-pass/${id}`,
+                { withCredentials: true })
+                .then(() => {
+                    handleAjouterElement({ ...promise, shop: false, timestamp: Date.now() }, { refreshLocal: true });
+                    GetAccessPassFromAPI()
+                })
+        } catch (error) {
+        }
+    }
+
+
+    // Deleting the displayed and saved image
+    const closeShop = () => {
+        setShopWindow(false)
+    };
+
     useEffect(() => {
         // block selection
         if (manageBlockSelected?.length === 2) {
@@ -504,33 +576,55 @@ export const UseFiles = () => {
             setManageSelected(Array.from(new Set([...items?.slice(startIndex, endIndex).map(item => item.id), ...manageSelected])))
             setManageBlockSelected([])
         }
-
     }, [manageBlockSelected])
 
+    //useEffect(() => {
+    //    if (!promiseIdentifiedUser) {
+    //        return;
+    //    }
+    //    if (refreshAuto === true || refreshAuto === undefined) {
+    //        GetMyFileFromAPI()
+    //    } else {
+    //        GetMyFileFromLocal()
+    //    }
+    //}, [refreshAuto, promiseIdentifiedUser, Id])
+//
+//
+    //useEffect(() => {
+    //    if (shopWindow) {
+    //        GetAccessPassFromAPI()
+    //    }
+    //}, [shopWindow])
+
+
     useEffect(() => {
-        if (refreshAuto === true || refreshAuto === undefined) {
-            GetMyFileFromAPI()
-        } else {
-            GetMyFileFromLocal()
+        if (items?.length > 0) {
+            const foundItem = items?.find(el => el.limited === 2);
+            if (foundItem) {
+                setAccessPassAut(true)
+            } else {
+                setAccessPassAut(false)
+            }
         }
-
-    }, [refreshAuto])
-
-
+    }, [items])
 
     return {
-        promise, setPromise, GetMyFileFromAPI, GetMyFileFromLocal, items, setItems, editeTags, text, handleRemoveTag,
-        handleRange, resize, setResize,
+        Id,
+        promise, setPromise, GetMyFileFromAPI, GetMyFileFromLocal, items, setItems, editeTags, textTags, handleRemoveTag,
         refreshAuto,
         refresh, handleAutoRefresh,
         setEditorState, editorState,
         img,
         edite, setEdite,
+        accessPassAut,
         checked,
         custom, setCustom,
+        editorState1, setEditorState1,
         handleChange, handleChangeTags, handleDelete,
         editeVisibility, setEditeVisibility,
         editeAdult, setEditeAdult,
+        limited, setLimited,
+        subscription, setSubscription,
         Update,
         handleClick,
         hiddenFileInput,
@@ -551,7 +645,6 @@ export const UseFiles = () => {
         copyShow,
         notifyCommunity, allowUserEditTag,
         setNotifyCommunity, setAllowUserEditTag,
-        autoLayout, setAutoLayout,
         commonOption, setCommonOption,
         isVisible, position,
         setIsVisible,
@@ -564,13 +657,24 @@ export const UseFiles = () => {
         handleCopyShow,
         handleDeleteImg,
         onClick,
-
         manage, setManage,
         manageSelected, setManageSelected,
         manageBlockSelectedActive, setManageBlockSelectedActive,
         manageBlockSelected, setManageBlockSelected,
 
-        test, setTest
+        closeShop,
+        hiddenFileInputShop,
+        shopWindow,
+        setShopWindow,
+        ParamsImgs,
+        NewShop, RemoveShop,
+        setPrice, price, promiseAccessPass,
+        realCash,
+        cashBack,
+        handleConversionCoins,
+        GetAccessPassFromAPI,
+
+        SubscriptionWindow, setSubscriptionWindow
 
     }
 }

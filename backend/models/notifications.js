@@ -18,7 +18,7 @@ const sequelize = require('../db/mysql');
       type: DataTypes.STRING
     },
     forUser: {
-      type: DataTypes.STRING
+      type: DataTypes.INTEGER
     },
     data: {
       type: DataTypes.STRING

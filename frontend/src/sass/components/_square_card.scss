@@ -1,6 +1,6 @@
 .card_user {
-  width: 100%;
-  max-width: 150px;
+  width: 180px;
+  min-width: 180px;
   height: max-content;
   border-radius: 10px;
   overflow: hidden;
@@ -9,7 +9,7 @@
   text-decoration: none;
   color: $text_black;
   margin: 5px;
-  background-color: $white;
+  //background-color: $white;
   padding-bottom: 10px;
   &:hover {
     background-color: $button_black_circle_hover;
@@ -21,7 +21,7 @@
   transition: 500ms;
 }
 .card_user[data-theme="dark"] {
-  background-color: $black;
+  // background-color: $black;
   color: $text_white;
   &:hover {
     background-color: $button_black_circle_hover;
@@ -35,52 +35,21 @@
   height: 115px;
   object-position: 50% 10%;
 }
-.card_user_presentation {
-  width: 300px;
-  min-width: 300px;
-  max-width: 300px;
-  border-radius: 5px;
-  height: max-content;
-  overflow: hidden;
-  cursor: pointer;
-  transition: 500ms;
-  text-decoration: none;
-  margin: 5px;
-  font-size: 15px;
-}
-.card_user_presentation > div > div > img {
-  margin: 5px;
-  border-radius: 5px;
-  width: 45px;
-  height: 45px;
-  object-position: 50% 10%;
-}
-.card_user_presentation > div > div {
-  background-color: $white;
-  color: $text_black;
-}
-.card_user_presentation > div > div[data-theme="dark"] {
-  background-color: $black;
-  color: $text_white;
-}
 .article_card {
   width: 14%;
   margin: 8px;
-  overflow: hidden;
   height: max-content;
   display: flex;
   align-items: center;
   flex-direction: column;
   border-radius: 5px;
-  &[data-background="on"]{
-  color: $text_white;
+  &[data-background="on"] {
+    color: $text_white;
   }
   color: $text_black;
-  //background-color: rgba(255, 255, 255, 0.5);
 }
 .article_card[data-theme="dark"] {
   color: $text_white;
-  //background-color: rgba(0, 0, 0, 0.5);
 }
 .article_card_menu {
   display: flex;
@@ -141,30 +110,28 @@
   border-radius: 5px;
   margin: 10px;
   width: 100%;
-  min-width: 300px;
-  max-width: 300px;
+  min-width: 280px;
+  max-width: 280px;
   background: rgba(255, 255, 255, 0.7);
-  transition: 500ms;
-  &:hover{
+  &:hover {
     background: rgb(255, 255, 255);
   }
 }
 .card_post[data-theme="dark"] {
   background: rgba(0, 0, 0, 0.7);
-  transition: 500ms;
-  &:hover{
+  &:hover {
     background: rgb(0, 0, 0);
   }
 }
 .loarder_article_off {
-  background-color: rgba(128, 128, 128, 0.200);
+  background-color: rgba(128, 128, 128, 0.2);
   height: 192px;
   width: 100%;
   margin: 2px;
   border-radius: 5px;
 }
 .loarder_article_in {
-  background-color: rgba(128, 128, 128, 0.200);
+  background-color: rgba(128, 128, 128, 0.2);
   height: 192px;
   width: 100%;
   margin: 2px;
@@ -209,18 +176,13 @@
     height: max-content;
   }
 }
-//@media all and (max-width: 880px) {
-//  .article_card {
-//    width: 32%;
-//    height: max-content;
-//  }
-//}
 @media all and (max-width: 750px) {
   .article_card {
     width: 45%;
+    //width: 31%;
     height: max-content;
   }
-  .card_user_presentation > div > div > img {
+  .img_card_user_presentation {
     margin: 5px;
     border-radius: 100px;
     width: 35px;
@@ -244,22 +206,16 @@
     margin-top: 20px;
   }
   .article_card {
-    width: 100%;
+    width: 42%;
     height: max-content;
   }
   .overlay_interest_none {
     display: none;
   }
 }
-//@media all and (max-width: 335px) {
-//  .article_card {
-//    width: 46%;
-//    height: max-content;
-//  }
-//}
-//@media all and (max-width: 300px) {
-//  .article_card {
-//    width: 100%;
-//    height: max-content;
-//  }
-//}
+@media all and (max-width: 326px) {
+  .article_card {
+    width: 100%;
+    height: max-content;
+  }
+}

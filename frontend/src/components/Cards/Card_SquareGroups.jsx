@@ -10,33 +10,33 @@ const Card_SquareGroups = (props) => {
 
 
     if (!props.promise) return (
-        <div style={{display: 'flex', justifyContent: 'center', marginTop: 100}}>
-        {spinner()}
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 100 }}>
+            {spinner()}
         </div>
-      )
+    )
 
-      if (props.promise.length === 0) return (
-        <div style={{display: 'flex', justifyContent: 'center'}}>
-        <h3>No results</h3>
+    if (props.promise.length === 0) return (
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <h4>No results</h4>
         </div>
-      )
+    )
 
     return (
         <>
-        <div style={{width: '100%', display: 'flex', flexWrap: 'wrap', paddingBottom: 50, display: 'flex', justifyContent: 'center'}}>
+            <div style={{ width: '100%', display: 'flex', flexWrap: 'wrap', paddingBottom: 50, display: 'flex', justifyContent: 'center' }}>
 
-        {props.promise?.map((doc) => (
-            <Link to={`/workspace/groups-files/${doc.id}`} className='card_user animation' data-theme={localTheme} key={doc.id}>
-                <div style={{display: 'flex', justifyContent: 'center'}}>
-                    <img onMouseDown={(e)=>e.preventDefault()} onContextMenu={(e)=>e.preventDefault()} style={{objectPosition: `${50}% ${10}%`, objectFit: 'cover'}} src={doc.imageUrl || Picture} alt='' />
-                </div>
-                <div style={{display: 'flex', alignItems: 'center',flexDirection: 'column'}}>
-                    <div style={{textAlign: 'center'}} translate='no'>{doc.name.charAt(0).toUpperCase() + doc.name.slice(1)}</div>
-                </div>
-            </Link>
-            ))}
-        
-        </div>
+                {props.promise?.map((doc) => (
+                    <Link to={`/workspace/groups-files/${doc.id}`} className='card_user animation' data-theme={localTheme} key={doc.id}>
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <img onMouseDown={(e) => e.preventDefault()} onContextMenu={(e) => e.preventDefault()} style={{ objectPosition: `${50}% ${10}%`, objectFit: 'cover' }} src={doc.imageUrl || Picture} alt='' />
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                            <div style={{ textAlign: 'center' }} translate='no'>{doc.name.charAt(0).toUpperCase() + doc.name.slice(1)}</div>
+                        </div>
+                    </Link>
+                ))}
+
+            </div>
         </>
     )
 }

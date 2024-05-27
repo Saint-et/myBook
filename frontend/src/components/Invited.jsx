@@ -4,18 +4,36 @@ import { useAppContext } from '../contexts/UseAppContext';
 
 
 const Invited = (props) => {
-    const { localTheme } = useAppContext();
+    const { localTheme, setHiddenConnection, hiddenConnection } = useAppContext();
 
-    return(
+    // <Pub/>
+
+    return (
         <>
-        <div style={{display: 'flex', alignItems: 'center', flexDirection: 'column', marginTop: 100, marginBottom: 100}}>
-              <h4>You are logged in as a guest, create an account to join us.</h4>
-              <Link to={'/'} className='buttonCircleBlue' style={{width: 150, height: 35, borderRadius: 10, display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize:  15, marginTop: 10, textDecoration: 'none'}} data-theme={localTheme}>
-              Visit the website ?
-              </Link>
-        </div>
-      
-        <Pub/>
+
+            <div className='cter_sect open-element-page-melted' style={{ marginTop: 50 }}>
+                <div className='ctent_arti' data-theme={localTheme}>
+                    <h4>You are logged in as a guest, To access this part of the site, please create an account.</h4>
+                    <div className='button_option_container_free' style={{ width: '100%', maxWidth: 300, marginTop: 20 }} data-theme={localTheme}>
+                        <Link to={'/'} className='button_optionPic_v' data-theme={localTheme}>
+                            Visit the website ?
+                        </Link>
+                    </div>
+                    <div className='button_option_container_free' style={{ width: '100%', maxWidth: 300, marginTop: 20 }} data-theme={localTheme}>
+                        <div onClick={() => { setHiddenConnection(!hiddenConnection) }} className='button_option' data-theme={localTheme}>
+                            Login
+                        </div>
+                    </div>
+
+                    <div className='button_option_container_free' style={{ width: '100%', maxWidth: 300, marginTop: 20 }} data-theme={localTheme}>
+                        <Link to={'/signup'} className='button_optionBlue' data-theme={localTheme}>
+                            sign'up
+                        </Link>
+                    </div>
+                </div>
+            </div>
+
+
         </>
     )
 }

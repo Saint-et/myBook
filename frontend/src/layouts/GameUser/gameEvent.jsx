@@ -3,7 +3,7 @@ import imgProfile from '../../assets/images/logo.png';
 import imgCoverCard1 from '../../assets/images/2151121007.jpg';
 import imgReward from '../../assets/images/2151013704.jpg';
 import { useTranslation } from 'react-i18next';
-import { DATA_picv } from "../../assets/data/data";
+import { SystemName } from "../../assets/data/data";
 import { Link } from "react-router-dom";
 
 
@@ -15,12 +15,12 @@ const GameEvent = () => {
 
 
     return (
-        <>
+        <div className='main'>
 
 
             <div className='cter_sect'>
                 <div className='ctent_arti' style={{ maxWidth: 500, marginBottom: 50, padding: 0 }} data-theme={localTheme}>
-                    <h1 className='textLoto' style={{ fontSize: 40, textAlign: 'center' }}>{DATA_picv} Game Events</h1>
+                    <h1 className='textLoto' style={{ fontSize: 40, textAlign: 'center' }}>{SystemName} Game Events</h1>
                 </div>
             </div>
 
@@ -42,7 +42,7 @@ const GameEvent = () => {
                     </Link>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

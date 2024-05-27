@@ -1,59 +1,27 @@
-import { useAppContext } from "../contexts/UseAppContext"
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCubes } from '@fortawesome/free-solid-svg-icons';
+import { useAppContext } from "../contexts/UseAppContext";
 
 
 
 
 const Animation = () => {
 
-    const { animationSelect, localTheme, animationNotif } = useAppContext()
+    const { animationSelect, systemDetectMobile } = useAppContext()
 
+    let num = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
+    return;
 
-    if (animationSelect === 'eco') return (
-        <>
-        {animationNotif !== null && <div className='button_option_container animation' style={{
-                width: 'max-content',
-                position: 'fixed',
-                top: '50%',
-                left: '50%',
-                zIndex: 1000,
-                padding: 10,
-                background: 'black',
-                transform: 'translate(-50%, -50%)'
-            }} data-theme={localTheme}>
-                <div style={{ color: '#00aa00', fontSize: 20, fontWeight: 'bolder' }}><span>Eco active</span><span style={{ marginLeft: 10 }}><FontAwesomeIcon icon={faCubes} /></span></div>
-            </div>}
-        </>
-    )
+    if (systemDetectMobile === true) return null
+
+    if (animationSelect === 'eco') return null
 
     return (
         <>
-            {animationNotif !== null && <div className='button_option_container open-elementPage animation' style={{
-                width: 'max-content',
-                position: 'fixed',
-                top: '50%',
-                left: '50%',
-                zIndex: 1000,
-                padding: 10,
-                background: 'black',
-                transform: 'translate(-50%, -50%)'
-            }} data-theme={localTheme}>
-                <div style={{ color: '#ec1c24', fontSize: 20, fontWeight: 'bolder' }}><span>Normal active</span><span style={{ marginLeft: 10 }}><FontAwesomeIcon icon={faCubes} /></span></div>
-            </div>}
 
             <div className="bubbles">
-                <div className="bubble"></div>
-                <div className="bubble"></div>
-                <div className="bubble"></div>
-                <div className="bubble"></div>
-                <div className="bubble"></div>
-                <div className="bubble"></div>
-                <div className="bubble"></div>
-                <div className="bubble"></div>
-                <div className="bubble"></div>
-                <div className="bubble"></div>
+                {num?.map((num) => (
+                    <div key={num} className="bubble"></div>
+                ))}
             </div>
         </>
     )

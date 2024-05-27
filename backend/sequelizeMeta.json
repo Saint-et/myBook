@@ -21,5 +21,10 @@
   "20220723232401-image-table.js",
   "40220604165225-images-associate.js",
   "20220723232401-create-post.js",
-  "40220604165226-post-to-user.js"
+  "40220604165226-post-to-user.js",
+  "20220723232301-create-system-error.js",
+  "40220604165226-system-error-user.js",
+  "20220723232406-pinned-file.js",
+  "40220604165226-pinned-file-associate-to-files.js",
+  "40220604165226-pinned-file-associate-to-users.js"
 ]

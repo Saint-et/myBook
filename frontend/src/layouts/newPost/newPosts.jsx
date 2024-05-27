@@ -4,17 +4,15 @@ import { useAppContext } from '../../contexts/UseAppContext';
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import Picture from '../../assets/images/logo.png';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
-import { convertFromRaw } from "draft-js";
 import dayjs from "dayjs";
 import 'dayjs/locale/fr';
+import Text_manage from "../../components/versatile_function/Text_manage";
 const relativeTime = require("dayjs/plugin/relativeTime");
 dayjs.extend(relativeTime);
 
 
 const NewPosts = () => {
-    const { localTheme, localThemeBackground, promiseIdentifiedUser, handleFullScreen } = useAppContext()
+    const { localTheme, promiseIdentifiedUser, handleFullScreen } = useAppContext()
     const navigate = useNavigate()
 
     const [promiseAnnouncement, setPromiseAnnouncement] = useState([]);
@@ -36,12 +34,9 @@ const NewPosts = () => {
 
     return (
         <>
-        <div className='cter_sect' style={{marginTop: 100}}>
-
-        </div>
             <div className='cter_sect' style={{flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-around'}}>
                 {promiseAnnouncement?.map((promise) => (
-                    <div className='card_post animation' style={{ height: 380, justifyContent: 'space-between' }} key={promise.id} data-theme={localTheme}>
+                    <div className='card_post open-element-page-melted' style={{ height: 380, justifyContent: 'space-between' }} key={promise.id} data-theme={localTheme}>
                         <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginTop: 5 }}>
                             <div className='article_card_menu'>
                                 <div onClick={() => { navigate(`/profile/${promise.user.id}`) }} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer', width: 'max-content', overflow: 'hidden', marginLeft: 5 }}>
@@ -68,15 +63,8 @@ const NewPosts = () => {
                             <div className='article_card_title' translate='no'>{promise.title.charAt(0).toUpperCase() + promise.title.slice(1)}</div>
                         </div>
 
-                        <div className='scrollbar' style={{ height: '100%', overflow: 'auto' }}>
-                            <div style={{ width: '100%', overflow: 'hidden', fontSize: 12, display: 'flex', justifyContent: 'center' }}>
-                                {convertFromRaw(JSON.parse(promise.data)).getPlainText().length > 0 ?
-                                    <div style={{ marginTop: 10, marginBottom: 20, width: '98%' }} data-theme={localTheme}>{convertFromRaw(JSON.parse(promise.data)).getPlainText()}</div>
-
-                                    :
-                                    <div style={{ marginTop: 10, width: '98%' }} data-theme={localTheme}>L’utilisateur n’a laissé aucun commentaire sur cette publication.</div>
-                                }
-                            </div>
+                        <div className='scrollbar' style={{ width: '100%', height: '100%', overflow: 'auto' }}>
+                        <Text_manage data={promise?.data} />
                         </div>
                         {promise.createdAt && <div style={{ fontSize: 12, color: '#0078e9' }}>{dayjs(promise.createdAt).add(0, 'hour').locale('fr').fromNow()}</div>}
                     </div>

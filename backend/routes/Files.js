@@ -1,31 +1,26 @@
-//utilisation d'express
 const express = require('express');
 const router = express.Router();
 const Ctrl = require('../controllers/Files');
+const err = require('../middlewares/middlewares-error');
+const session = require('../middlewares/session');
 
 
-// get one file
-router.get('/illustration/file/:id', Ctrl.GetIllustrationfile);
+router.get('/illustration/file/:key/:id', Ctrl.GetIllustrationfile, err.errorHandler_200);
 
-//Get Group files
-router.get('/group-illustration/files/:id', Ctrl.GetGroupfiles);
+router.get('/group-illustration/files/:key/:id', Ctrl.GetGroupfiles, err.errorHandler_200);
 
-//Get Group files
-router.get('/file-params/files/:id', Ctrl.GetParamsfiles);
+router.get('/file-params/files/:key/:id', Ctrl.GetParamsfiles, err.errorHandler_200);
 
-//Get Group files
-router.put('/new-bookmark', Ctrl.newBookMark);
+router.put('/new-bookmark/:id', session.LoginFalse, Ctrl.newBookMark, err.errorHandler_200);
 
-//Get Group files
-router.put('/file-params/update-tags/:id', Ctrl.updateTags);
+router.put('/file-params/update-tags/:id', session.LoginFalse, Ctrl.updateTags);
 
-// get one file
-router.get('/illustration-user/files/:id', Ctrl.GetUserfiles);
+router.get('/illustration-user/files/:key/:id', Ctrl.GetUserfiles);
 
-// get news files
-router.get('/announcement-similar/best-announcement/:key', Ctrl.GetSimilarAnnouncement);
+router.get('/announcement-similar/best-announcement/:key', Ctrl.GetSimilarAnnouncement, err.errorHandler_200);
 
-// get one file
-router.get('/similar/file/:key', Ctrl.GetfileSimilar);
+router.get('/similar/file/:key1/:key', Ctrl.GetfileSimilar, err.errorHandler_200);
+
+router.get('/home/files', Ctrl.GetHomefile, err.errorHandler_200);
 
 module.exports = router;

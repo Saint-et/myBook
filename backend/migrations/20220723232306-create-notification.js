@@ -13,10 +13,9 @@ module.exports = {
         unique: true
       },
       forUser: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER
       },
       adminId: {
-        allowNull: false,
         type: Sequelize.INTEGER
       },
       data: {

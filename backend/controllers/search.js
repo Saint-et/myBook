@@ -46,11 +46,11 @@ exports.UsersName = async (req, res, next) => {
 exports.ArticleName = async (req, res, next) => {
     const searchValue = req.params.key.toLowerCase();
 
-    
+
     // Fonction pour normaliser un mot
     const normalizeWord = word => natural.PorterStemmerFr.stem(word.toLowerCase());
 
-    
+
     const normalizedTag = normalizeWord(req.params.key);
 
     await File.findAll({

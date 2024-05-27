@@ -6,12 +6,13 @@ import { useNavigate } from 'react-router-dom';
 import useKeypress from 'react-use-keypress';
 import { useAppContext } from '../contexts/UseAppContext';
 import { useEffect } from "react";
+import { SystemName } from "../assets/data/data";
 
 
 const Login = () => {
 
 
-  const { setPromiseIdentifiedUser, GetMyProfilFromAPI, GetUsersPopularFromAPI, promiseIdentifiedUser } = useAppContext()
+  const { setPromiseIdentifiedUser, GetMyProfilFromAPI, GetUsersPopularFromAPI, promiseIdentifiedUser, addErrorMessage } = useAppContext()
 
   const navigate = useNavigate()
 
@@ -40,6 +41,7 @@ const Login = () => {
             GetMyProfilFromAPI()
             setPromiseIdentifiedUser()
             GetUsersPopularFromAPI()
+            addErrorMessage(`Bienvenu sur ${SystemName} 🙂.`, 5000, '#396afc')
             return navigate('/')
           }
         })
@@ -60,7 +62,7 @@ const Login = () => {
   if (promiseIdentifiedUser === undefined) return (null)
 
   return (
-    <>
+    <div className='main'>
       <Log
         Login={true}
         handleChange={handleChange}
@@ -68,7 +70,7 @@ const Login = () => {
         error={error}
         submit={submit}
       />
-    </>
+    </div>
   )
 }
 

@@ -17,7 +17,7 @@ const PageSearch = (props) => {
     if (!promiseIdentifiedUser) return null
 
     return (
-        <>
+        <div className='main'>
             <div className='cter_sect'>
                 <div className='ctent_arti' style={{ display: 'flex', maxWidth: 700, width: '100%', justifyContent: 'space-around', alignItems: 'center', padding: 10, borderRadius: 25, marginTop: 50 }} data-theme={localTheme}>
                     <div style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -47,7 +47,7 @@ const PageSearch = (props) => {
 
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

@@ -1,186 +1,86 @@
+@import "../utils/animation_keyframes";
+
 .image-container-animation {
-  position: relative;
-  //overflow: hidden;
-  
-  animation: swipe-left 200ms ease-in-out;
-}
-@keyframes swipe-left {
-  from {
-    transform: scale(0.98);
-  }
-  to {
-    transform: scale(1);
-  }
-}
-//.image-container-animation-right {
-//  position: relative;
-//  overflow: hidden;
-//  
-//  animation: swipe-right 250ms ease-in-out;
-//}
-//@keyframes swipe-right {
-//  from {
-//    right: 0%;
-//  }
-//  to {
-//    right: -100%;
-//  }
-//}
+  $timer: 250ms;
+  $animation: swipe-mobile;
 
-.open-elementPage {
-  animation: fadein 250ms ease-in-out;
-  //-moz-animation: fadein 300ms; /* Firefox */
-  //-webkit-animation: fadein 300ms; /* Safari et Chrome */
-  //-o-animation: fadein 300ms; /* Opera */
+  animation: $animation $timer ease-in-out;
+  -moz-animation: $animation $timer ease-in-out; /* Firefox */
+  -webkit-animation: $animation $timer ease-in-out; /* Safari et Chrome */
+  -o-animation: $animation $timer ease-in-out; /* Opera */
 }
-@keyframes fadein {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-.open-elementHeightPage {
-  animation: fadeinHeight 250ms ease-in-out;
-  //-moz-animation: fadein 300ms; /* Firefox */
-  //-webkit-animation: fadein 300ms; /* Safari et Chrome */
-  //-o-animation: fadein 300ms; /* Opera */
-}
-@keyframes fadeinHeight {
-  0% {
-    overflow: hidden;
-    height: 0%;
-  }
-  100% {
-    overflow: hidden;
-    height: "max-content";
-  }
-}
-.open-elementHeightPageSide {
-  animation: fadeinSide 250ms ease-in-out;
-  //-moz-animation: fadein 300ms; /* Firefox */
-  //-webkit-animation: fadein 300ms; /* Safari et Chrome */
-  //-o-animation: fadein 300ms; /* Opera */
-}
-@keyframes fadeinSide {
-  0% {
-    margin-left: -500px;
-  }
-  100% {
-    margin-left: 0px;
-  }
-}
-.close-elementHeightPageSide {
-  animation: fadeincloseSide 300ms ease-in-out;
-  //-moz-animation: fadein 300ms; /* Firefox */
-  //-webkit-animation: fadein 300ms; /* Safari et Chrome */
-  //-o-animation: fadein 300ms; /* Opera */
-}
-@keyframes fadeincloseSide {
-  0% {
-    margin-left: 0px;
-  }
-  100% {
-    margin-left: -500px;
-  }
-}
-.open-elementTopPage {
-  animation: fadeinSideTop 500ms ease-in-out;
-  //-moz-animation: fadein 300ms; /* Firefox */
-  //-webkit-animation: fadein 300ms; /* Safari et Chrome */
-  //-o-animation: fadein 300ms; /* Opera */
-}
-@keyframes fadeinSideTop {
-  0% {
-    margin-top: -500px;
-  }
-  100% {
-    margin-top: 0px;
-  }
-}
+.open-err-animation {
+  $timer: 500ms;
+  $animation: err-animation;
 
-.element-a-disparaitre {
-  opacity: 0;
-  transition: opacity 1s ease-in-out; /* La transition dure 0.5 seconde et utilise une accélération/décélération */
+  animation: $animation $timer ease-in-out;
+  -moz-animation: $animation $timer ease-in-out; /* Firefox */
+  -webkit-animation: $animation $timer ease-in-out; /* Safari et Chrome */
+  -o-animation: $animation $timer ease-in-out; /* Opera */
 }
+.open-element-page-melted {
+  $timer: 300ms;
+  $animation: animation-melted;
 
-.element-a-disparaitre:hover {
-  opacity: 0; /* L'élément disparaît lorsqu'il est survolé */
+  animation: $animation $timer ease-in-out;
+  -moz-animation: $animation $timer ease-in-out; /* Firefox */
+  -webkit-animation: $animation $timer ease-in-out; /* Safari et Chrome */
+  -o-animation: $animation $timer ease-in-out; /* Opera */
 }
+.open-element-page-side-left {
+  $timer: 250ms;
+  $animation: animation-open-element-page-side-left;
 
-@keyframes disparition {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
+  animation: $animation $timer ease-in-out;
+  -moz-animation: $animation $timer ease-in-out; /* Firefox */
+  -webkit-animation: $animation $timer ease-in-out; /* Safari et Chrome */
+  -o-animation: $animation $timer ease-in-out; /* Opera */
 }
+.close-element-page-side-left {
+  $timer: 300ms;
+  $animation: animation-close-element-page-side-left;
 
-.fadeOut {
-  opacity: 0;
-  transition: opacity 0.5s ease-out; /* Définissez la durée et l'interpolation de l'animation */
+  animation: $animation $timer ease-in-out;
+  -moz-animation: $animation $timer ease-in-out; /* Firefox */
+  -webkit-animation: $animation $timer ease-in-out; /* Safari et Chrome */
+  -o-animation: $animation $timer ease-in-out; /* Opera */
 }
+.open-element-page-side-right {
+  $timer: 250ms;
+  $animation: animation-open-element-page-side-right;
 
-.hovercursor {
-  transition: 250ms ease-out;
-  cursor: pointer;
-  &:hover {
-  transform: scale(0.97);
-  }
+  animation: $animation $timer ease-in-out;
+  -moz-animation: $animation $timer ease-in-out; /* Firefox */
+  -webkit-animation: $animation $timer ease-in-out; /* Safari et Chrome */
+  -o-animation: $animation $timer ease-in-out;
 }
-.hovershadow {
-  transition: 250ms ease-out;
-  &:hover {
-    box-shadow: 0px 0px 15px #474747; // #7c7c7c
-    //filter: drop-shadow(0 0 0.50rem #ec1c24)
-  }
-}
-@keyframes displayshadow {
-  0% {
-    box-shadow: 0px 0px 10px #ec1c24;
-  }
-  50% {
-    box-shadow: 0px 0px 40px #ec1c24;
-  }
-  100% {
-    box-shadow: 0px 0px 10px #ec1c24;
-  }
+.close-element-page-side-right {
+  $timer: 300ms;
+  $animation: animation-close-element-page-side-right;
+
+  animation: $animation $timer ease-in-out;
+  -moz-animation: $animation $timer ease-in-out; /* Firefox */
+  -webkit-animation: $animation $timer ease-in-out; /* Safari et Chrome */
+  -o-animation: $animation $timer ease-in-out;
 }
 .rotate {
-  animation: loading 1.5s linear infinite;
-  @keyframes loading {
-    0% {
-      transform: rotate(0);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-}
+  $timer: 1.5s;
+  $animation: loading-rotate-refresh-arrows;
 
+  animation: $animation $timer linear infinite;
+  -moz-animation: $animation $timer linear infinite; /* Firefox */
+  -webkit-animation: $animation $timer linear infinite; /* Safari et Chrome */
+  -o-animation: $animation $timer linear infinite;
+}
 .boxBounce {
-  animation: bounce 1.5s infinite;
-}
+  $timer: 1.5s;
+  $animation: bounce;
 
-/* Définissez les keyframes pour l'animation */
-@keyframes bounce {
-  0%,
-  20%,
-  50%,
-  80%,
-  100% {
-    transform: translateY(0); /* Position de départ (sans rebond) */
-  }
-  40% {
-    transform: translateY(-5px); /* Hauteur du rebond */
-  }
-  60% {
-    transform: translateY(-3px); /* Hauteur du deuxième rebond (plus bas) */
-  }
+  animation: $animation $timer infinite;
+  -moz-animation: $animation $timer infinite; /* Firefox */
+  -webkit-animation: $animation $timer infinite; /* Safari et Chrome */
+  -o-animation: $animation $timer infinite;
 }
-
 .ellipsis-animation {
   overflow: hidden; /* Cache le texte supplémentaire */
   white-space: nowrap; /* Empêche le texte de passer à la ligne */
@@ -195,125 +95,34 @@
   animation: ellipsis 5s infinite; /* Animation de clignotement */
 }
 
-@keyframes ellipsis {
-  0% {
-    width: 0; /* Commence avec une largeur de 0 */
-  }
-  25% {
-    width: 25%; /* Augmente progressivement la largeur */
-  }
-  50% {
-    width: 50%;
-  }
-  75% {
-    width: 75%;
-  }
-  100% {
-    width: 100%; /* Finit avec la largeur complète */
-  }
+.progress-containerAnimation {
+  width: 80%;
+  padding: 5px;
+  background: #ffffff;
 }
 
-$bubble-count: 10;
-$sway-type: "sway-left-to-right", "sway-right-to-left";
-
-@function random_range($min, $max) {
-  $rand: random();
-  $random_range: $min + floor($rand * (($max - $min) + 1));
-  @return $random_range;
+.progress-barAnimation {
+  width: 0%;
+  height: 20px;
+  background: linear-gradient(to right, #ee0979, #ff6a00);
 }
 
-@function sample($list) {
-  @return nth($list, random(length($list)));
-}
-
-.bubbles {
-  position: fixed;
-  z-index: -1;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-$picVcolor: rgba(#ec1c24, 0.3);
-$picVcolor2: rgba(#ff0000, 0.3);
-
-.bubble {
-  position: absolute;
-  left: var(--bubble-left-offset);
-  bottom: -75%;
-  display: block;
-  width: var(--bubble-radius);
-  height: var(--bubble-radius);
-  border-radius: 50%;
-  animation: float-up var(--bubble-float-duration) var(--bubble-float-delay)
-    ease-in infinite;
-
-  &::before {
-    position: absolute;
-    content: "";
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: inherit;
-    animation: var(--bubble-sway-type) var(--bubble-sway-duration)
-      var(--bubble-sway-delay) ease-in-out alternate infinite;
-    //background-color: $picVcolor;
-    //box-shadow: 0px 0 60px $picVcolor;
-    box-shadow: inset 0 0 50px $picVcolor2, inset 20px 0 60px $picVcolor,
-      inset -20px 0 60px $picVcolor, inset 20px 0 300px $picVcolor,
-      inset -20px 0 300px $picVcolor, 0 0 50px $picVcolor2,
-      -10px 0 60px $picVcolor, 10px 0 60px $picVcolor;
-  }
-
-  @for $i from 0 through $bubble-count {
-    &:nth-child(#{$i}) {
-      --bubble-left-offset: #{random_range(0vw, 100vw)};
-      --bubble-radius: #{random_range(5vw, 10vw)};
-      --bubble-float-duration: #{random_range(24s, 48s)};
-      --bubble-sway-duration: #{random_range(16s, 24s)};
-      --bubble-float-delay: #{random_range(0s, 16s)};
-      --bubble-sway-delay: #{random_range(0s, 16s)};
-      --bubble-sway-type: #{sample($sway-type)};
-    }
+.hovercursor {
+  transition: 250ms ease-out;
+  cursor: pointer;
+  &:hover {
+    transform: scale(0.97);
   }
 }
-
-@keyframes float-up {
-  to {
-    transform: translateY(-175vh);
+.hovershadow {
+  transition: 250ms ease-out;
+  &:hover {
+    box-shadow: 0px 0px 15px #474747; // #7c7c7c
   }
 }
-
-@keyframes sway-left-to-right {
-  from {
-    transform: translateX(-100%);
-  }
-
-  to {
-    transform: translateX(100%);
-  }
-}
-
-@keyframes sway-right-to-left {
-  from {
-    transform: translateX(100%);
-  }
-
-  to {
-    transform: translateX(-100%);
-  }
-}
-
-// mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
 
 .copy-box {
   position: relative;
-  //display: inline-block;
-  //margin: 0 auto;
-  //width: min-content;
-  //font-family: sans-serif;
   padding-left: 20px;
 }
 .copy-box .line {
@@ -336,286 +145,4 @@ $picVcolor2: rgba(#ff0000, 0.3);
 }
 .copy-box .inner {
   padding: 30px;
-}
-
-// mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm
-
-@mixin backlight($x, $y, $spread, $size, $colorA, $colorB, $duration) {
-  &:after {
-    position: absolute;
-    content: "";
-    top: $y;
-    left: $x;
-    right: 0;
-    z-index: -1;
-    height: 100%;
-    width: 100%;
-    margin: 0 auto;
-    transform: scale($size);
-    -webkit-filter: blur($spread);
-    -moz-filter: blur($spread);
-    -ms-filter: blur($spread);
-    filter: blur($spread);
-    background: linear-gradient(270deg, $colorA, $colorB);
-    background-size: 200% 200%;
-    animation: animateGlow $duration ease infinite;
-
-    @keyframes animateGlow {
-      0% {
-        background-position: 0% 50%;
-      }
-      50% {
-        background-position: 100% 50%;
-      }
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-  }
-}
-
-.bell {
-  -webkit-animation: ring 4s 0.2s ease-in-out infinite;
-  -webkit-transform-origin: 50% 4px;
-  -moz-animation: ring 4s 0.2s ease-in-out infinite;
-  -moz-transform-origin: 50% 4px;
-  animation: ring 4s 0.2s ease-in-out infinite;
-  transform-origin: 50% 4px;
-}
-
-@-webkit-keyframes ring {
-  0% {
-    -webkit-transform: rotateZ(0);
-  }
-  1% {
-    -webkit-transform: rotateZ(30deg);
-  }
-  3% {
-    -webkit-transform: rotateZ(-28deg);
-  }
-  5% {
-    -webkit-transform: rotateZ(34deg);
-  }
-  7% {
-    -webkit-transform: rotateZ(-32deg);
-  }
-  9% {
-    -webkit-transform: rotateZ(30deg);
-  }
-  11% {
-    -webkit-transform: rotateZ(-28deg);
-  }
-  13% {
-    -webkit-transform: rotateZ(26deg);
-  }
-  15% {
-    -webkit-transform: rotateZ(-24deg);
-  }
-  17% {
-    -webkit-transform: rotateZ(22deg);
-  }
-  19% {
-    -webkit-transform: rotateZ(-20deg);
-  }
-  21% {
-    -webkit-transform: rotateZ(18deg);
-  }
-  23% {
-    -webkit-transform: rotateZ(-16deg);
-  }
-  25% {
-    -webkit-transform: rotateZ(14deg);
-  }
-  27% {
-    -webkit-transform: rotateZ(-12deg);
-  }
-  29% {
-    -webkit-transform: rotateZ(10deg);
-  }
-  31% {
-    -webkit-transform: rotateZ(-8deg);
-  }
-  33% {
-    -webkit-transform: rotateZ(6deg);
-  }
-  35% {
-    -webkit-transform: rotateZ(-4deg);
-  }
-  37% {
-    -webkit-transform: rotateZ(2deg);
-  }
-  39% {
-    -webkit-transform: rotateZ(-1deg);
-  }
-  41% {
-    -webkit-transform: rotateZ(1deg);
-  }
-  43% {
-    -webkit-transform: rotateZ(0);
-  }
-  100% {
-    -webkit-transform: rotateZ(0);
-  }
-}
-
-@-moz-keyframes ring {
-  0% {
-    -moz-transform: rotate(0);
-  }
-  1% {
-    -moz-transform: rotate(30deg);
-  }
-  3% {
-    -moz-transform: rotate(-28deg);
-  }
-  5% {
-    -moz-transform: rotate(34deg);
-  }
-  7% {
-    -moz-transform: rotate(-32deg);
-  }
-  9% {
-    -moz-transform: rotate(30deg);
-  }
-  11% {
-    -moz-transform: rotate(-28deg);
-  }
-  13% {
-    -moz-transform: rotate(26deg);
-  }
-  15% {
-    -moz-transform: rotate(-24deg);
-  }
-  17% {
-    -moz-transform: rotate(22deg);
-  }
-  19% {
-    -moz-transform: rotate(-20deg);
-  }
-  21% {
-    -moz-transform: rotate(18deg);
-  }
-  23% {
-    -moz-transform: rotate(-16deg);
-  }
-  25% {
-    -moz-transform: rotate(14deg);
-  }
-  27% {
-    -moz-transform: rotate(-12deg);
-  }
-  29% {
-    -moz-transform: rotate(10deg);
-  }
-  31% {
-    -moz-transform: rotate(-8deg);
-  }
-  33% {
-    -moz-transform: rotate(6deg);
-  }
-  35% {
-    -moz-transform: rotate(-4deg);
-  }
-  37% {
-    -moz-transform: rotate(2deg);
-  }
-  39% {
-    -moz-transform: rotate(-1deg);
-  }
-  41% {
-    -moz-transform: rotate(1deg);
-  }
-  43% {
-    -moz-transform: rotate(0);
-  }
-  100% {
-    -moz-transform: rotate(0);
-  }
-}
-
-@keyframes ring {
-  0% {
-    transform: rotate(0);
-  }
-  1% {
-    transform: rotate(30deg);
-  }
-  3% {
-    transform: rotate(-28deg);
-  }
-  5% {
-    transform: rotate(34deg);
-  }
-  7% {
-    transform: rotate(-32deg);
-  }
-  9% {
-    transform: rotate(30deg);
-  }
-  11% {
-    transform: rotate(-28deg);
-  }
-  13% {
-    transform: rotate(26deg);
-  }
-  15% {
-    transform: rotate(-24deg);
-  }
-  17% {
-    transform: rotate(22deg);
-  }
-  19% {
-    transform: rotate(-20deg);
-  }
-  21% {
-    transform: rotate(18deg);
-  }
-  23% {
-    transform: rotate(-16deg);
-  }
-  25% {
-    transform: rotate(14deg);
-  }
-  27% {
-    transform: rotate(-12deg);
-  }
-  29% {
-    transform: rotate(10deg);
-  }
-  31% {
-    transform: rotate(-8deg);
-  }
-  33% {
-    transform: rotate(6deg);
-  }
-  35% {
-    transform: rotate(-4deg);
-  }
-  37% {
-    transform: rotate(2deg);
-  }
-  39% {
-    transform: rotate(-1deg);
-  }
-  41% {
-    transform: rotate(1deg);
-  }
-  43% {
-    transform: rotate(0);
-  }
-  100% {
-    transform: rotate(0);
-  }
-}
-
-.progress-containerAnimation {
-  width: 80%;
-  padding: 5px;
-  background: #ffffff;
-}
-
-.progress-barAnimation {
-  width: 0%;
-  height: 20px;
-  background: linear-gradient(to right, #ee0979, #ff6a00);
 }
